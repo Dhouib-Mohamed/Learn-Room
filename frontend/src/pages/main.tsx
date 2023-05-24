@@ -1,3 +1,11 @@
+import ClassroomList from "../components/ClassroomList.tsx";
+import {classrooms} from "../data/classrooms.ts";
+
+
 export default function Main() {
-    return <div></div>
+    return (
+        <>
+            <ClassroomList classrooms={classrooms}/>
+        </>
+    )
 }
