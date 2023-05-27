@@ -3,7 +3,7 @@ import {createContext, useState} from "react";
 export const ConnectedContext = createContext({isConnected: null, setIsConnected: null});
 
 function ConnectedProvider(props) {
-    const [isConnected, setIsConnected] = useState(false);
+    const [isConnected, setIsConnected] = useState(true);
     return (
         <ConnectedContext.Provider value={{isConnected, setIsConnected}}>
             {props.children}
