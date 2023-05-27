@@ -29,6 +29,6 @@ export class SupportController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.supportService.remove(+id);
+    return this.supportService.delete(+id);
   }
 }

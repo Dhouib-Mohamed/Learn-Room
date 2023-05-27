@@ -3,6 +3,8 @@ import {useContext} from "react";
 import {ConnectedContext} from "../context/connected.tsx";
 import {useNavigate} from "react-router-dom";
 
+
+
 export default function PreviewHeader() {
     const {setIsConnected} = useContext(ConnectedContext)
     const navigate = useNavigate()
@@ -21,7 +23,7 @@ export default function PreviewHeader() {
                 </Text>
             </Box>
             <Box>
-                <Button colorScheme="blue" size="md" onClick={() => {
+                <Button colorScheme="blue" rounded="full" size="md" onClick={() => {
                     setIsConnected(true);
                     navigate("/home")
                 }}>
