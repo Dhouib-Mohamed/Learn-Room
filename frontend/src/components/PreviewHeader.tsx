@@ -1,8 +1,8 @@
 import {UserContext} from "../context/user.tsx";
 import {useHistory} from "react-router-dom";
-import { Box, Button, Flex, HStack, Text } from "@chakra-ui/react";
+import {Box, Button, Flex, HStack, Text} from "@chakra-ui/react";
 import {useContext} from "react";
-import logo from "../assets/react.svg"
+import logo from "../assets/logo.png";
 
 export default function PreviewHeader() {
     const {setUserId, getUserId} = useContext(UserContext)

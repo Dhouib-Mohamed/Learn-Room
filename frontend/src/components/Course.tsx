@@ -1,10 +1,9 @@
 import {Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box,} from '@chakra-ui/react';
-
-import {useNavigate} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 
 const Course = ({id ,courseName,CourseDate}) => {
-    const navigate = useNavigate()
+    const history = useHistory()
     return (
         <Box>
             <Accordion allowToggle>
@@ -18,8 +17,10 @@ const Course = ({id ,courseName,CourseDate}) => {
                         </AccordionButton>
                     </h2>
                     <AccordionPanel style={{display:"flex",flexDirection:"row"}} pb={4}>
-                       <p onClick={() => {navigate(`/course/${id}`)}}>{courseName}</p>
-                        <p style={{textAlign:"end"}} color={"red"}>{CourseDate}</p>
+                        <p onClick={() => {
+                            history.push(`/course/${id}`)
+                        }}>{courseName}</p>
+                        <p style={{textAlign: "end"}} color={"red"}>{CourseDate}</p>
                 </AccordionPanel>
                 </AccordionItem>
 

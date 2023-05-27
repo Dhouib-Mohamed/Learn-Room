@@ -1,9 +1,6 @@
-import {Box, Image, Text} from '@chakra-ui/react';
 import {useHistory} from "react-router-dom";
 import {Box, Card, CardBody, Heading, Image, Stack, Text} from '@chakra-ui/react';
-// import science from "../assets/science.jpeg" ;
 import {images} from "../data/images.jsx";
-import {useNavigate} from "react-router-dom";
 
 const ClassroomCard = ({id, title, description, imageUrl}) => {
     const history = useHistory()

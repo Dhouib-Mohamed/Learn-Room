@@ -1,6 +1,5 @@
-import { Box, Button, Flex, HStack, Text } from "@chakra-ui/react";
+import {Box, Button, Flex, HStack, Text} from "@chakra-ui/react";
 import logo from "../assets/logo.png";
-import {Box, Button, Flex, Text} from '@chakra-ui/react';
 import {useContext} from "react";
 import {UserContext} from "../context/user.tsx";
 import {useHistory} from "react-router-dom";
