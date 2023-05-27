@@ -1,7 +1,13 @@
 import { Box, Button, Flex, HStack, Text } from "@chakra-ui/react";
 import logo from "../assets/logo.png";
+import {Box, Button, Flex, Text} from '@chakra-ui/react';
+import {useContext} from "react";
+import {UserContext} from "../context/user.tsx";
+import {useHistory} from "react-router-dom";
 
 const Header = () => {
+    const {disconnect} = useContext(UserContext)
+    const history = useHistory()
     return (
         <Flex
         as="header"
@@ -18,7 +24,15 @@ const Header = () => {
                 LearnRoom
             </Text>
         </HStack>
-        
+            <Box>
+                <Button colorScheme="blue" size="md" onClick={() => {
+                    disconnect();
+                    history.push("/preview")
+                }}>
+                    Sign Out
+                </Button>
+            </Box>
+
     </Flex>
     );
 };

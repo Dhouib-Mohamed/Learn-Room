@@ -1,12 +1,12 @@
+import {UserContext} from "../context/user.tsx";
+import {useHistory} from "react-router-dom";
 import { Box, Button, Flex, HStack, Text } from "@chakra-ui/react";
-import { useContext } from "react";
-import { ConnectedContext } from "../context/connected.tsx";
-import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png";
+import {useContext} from "react";
+import logo from "../assets/react.svg"
 
 export default function PreviewHeader() {
-    const { setIsConnected } = useContext(ConnectedContext)
-    const navigate = useNavigate()
+    const {setUserId, getUserId} = useContext(UserContext)
+    const history = useHistory()
     return (
         <Flex
             as="header"
@@ -24,25 +24,19 @@ export default function PreviewHeader() {
                 </Text>
             </HStack>
             <Box>
-                <Button colorScheme="custom" color="#4C4C4C" bgColor="#FFF" borderWidth="1px" borderColor="#828282" rounded="full" size="md"
-                    height="45px" // Set the height of the button
-                    width="150px" fontSize="22px" onClick={() => {
-                        setIsConnected(true);
-                        navigate("/home")
-                    }}
-                >
-                    Sign in
+                <Button colorScheme="blue" size="md" onClick={() => {
+                    setUserId("1");
+                    console.log(getUserId())
+                    history.push("/home")
+                }}>
+                    Sign In
                 </Button>
-
-                <Button marginLeft="10px" colorScheme="custom" color="#FFF" bgColor="#12B7BD"
-                    _hover={{ bgColor: "#12B7BD" }}
-                    _active={{ bgColor: "#12B7BD" }} rounded="full" size="md"
-                    height="45px" // Set the height of the button
-                    width="150px" onClick={() => {
-                        setIsConnected(true);
-                        navigate("/home")
+                <Button colorScheme="blue" size="md" onClick={() => {
+                        setUserId("1");
+                        console.log(getUserId())
+                        history.push("/home")
                     }}>
-                    Sign up
+                        Sign Up
                 </Button>
             </Box>
         </Flex>

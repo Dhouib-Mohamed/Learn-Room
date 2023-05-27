@@ -1,25 +1,21 @@
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {useContext} from "react";
+import {UserContext} from "../context/user.tsx";
+import {Route} from 'react-router-dom';
+import NotFound from "../pages/NotFound.tsx";
 import Header from "../components/Header.tsx";
-import Main from "../pages/main.tsx";
-import Classroom from "../pages/classroom.tsx";
 
-const router = createBrowserRouter([
-    {
-        path: "classroom/:id",
-        element: <Classroom/>,
-    },
-    {
-        path: "/*",
-        element: <Main/>,
-    },
-]);
 
-export default function Connected() {
-    console.log("hello")
+export default function Connected({path, Component}) {
+    const {getUserId} = useContext(UserContext)
     return (
-        <>
-            <Header/>
-            <RouterProvider router={router}/>
-        </>
+        <Route path={path}>
+            {getUserId() ?
+                <>
+                    <Header/>
+                    <Component/>
+                </> :
+                <NotFound/>
+            }
+        </Route>
     );
 }

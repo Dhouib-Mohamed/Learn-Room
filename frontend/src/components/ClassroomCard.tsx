@@ -1,14 +1,15 @@
+import {Box, Image, Text} from '@chakra-ui/react';
+import {useHistory} from "react-router-dom";
 import {Box, Card, CardBody, Heading, Image, Stack, Text} from '@chakra-ui/react';
 // import science from "../assets/science.jpeg" ;
 import {images} from "../data/images.jsx";
 import {useNavigate} from "react-router-dom";
 
-// const images = [science , math ]
 const ClassroomCard = ({id, title, description, imageUrl}) => {
-    const navigate = useNavigate()
+    const history = useHistory()
     return (
       <Box  onClick={() => {
-                   navigate(`/classroom/${id}`)
+          history.push(`/classroom/${id}`)
       }} >
           <Card maxW='sm' style={{ margin: 20}}>
               <CardBody>
