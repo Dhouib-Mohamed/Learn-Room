@@ -1,11 +1,15 @@
-import {Box, Heading, Text} from '@chakra-ui/react';
+import { Box, Heading, Text } from '@chakra-ui/react';
+import Header from '../components/Header';
+import notfound from "../assets/notfound.png";
+
 
 function NotFound() {
     return (
-        <Box textAlign="center">
-            <Heading>404 - Page Not Found</Heading>
-            <Text>Sorry, the page you are looking for does not exist.</Text>
-        </Box>
+        <>
+            <Header />
+            <div style={{ display: 'flex',height:"750px", justifyContent: 'center', alignItems: 'center' }}>
+                <img src={notfound} alt="quote" />
+            </div></>
     );
 }
 

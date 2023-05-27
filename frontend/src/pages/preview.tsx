@@ -8,9 +8,14 @@ import image3 from "../assets/image3.png";
 import image4 from "../assets/image4.png";
 import quote from "../assets/quote.png";
 import Footer from "../components/Footer.tsx";
+import { UserContext } from '../context/user';
+import { useContext } from 'react';
+import { useHistory } from "react-router-dom";
 
 
 export default function Preview() {
+  const {disconnect} = useContext(UserContext)
+  const history =  useHistory()
   return (
     <>
       <PreviewHeader />
@@ -27,7 +32,8 @@ export default function Preview() {
 
             <Button colorScheme="custom" color="#FFF" bgColor="#FF796E" rounded="full" size="md" marginLeft={'180px'}
               height="45px"
-              width="150px" onClick={() => { }}
+              width="150px" onClick={() => {disconnect();
+              history.push("/signup") }}
             >Start</Button>
           </div>
         </div>
@@ -71,7 +77,7 @@ export default function Preview() {
             <h1 style={{ fontSize: '22px', fontWeight: 'normal',textAlign:'center' }}>Access from anywhere </h1>
 
             <p style={{ fontSize: '18px', fontWeight: 'lighter' ,textAlign:'center'}}>
-            Empower teaching and learning from anywhere, on any device, and give your class more flexibility.                        </p>
+            Empower teaching and learning from anywhere, on any device, and give your class more flexibility. </p>
           </div>
         </div>
       </div>

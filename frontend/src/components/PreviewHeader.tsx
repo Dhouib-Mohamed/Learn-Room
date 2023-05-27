@@ -5,7 +5,7 @@ import {useContext} from "react";
 import logo from "../assets/logo.png";
 
 export default function PreviewHeader() {
-    const {setUserId, getUserId} = useContext(UserContext)
+    const {disconnect} = useContext(UserContext)
     const history = useHistory()
     return (
         <Flex
@@ -24,17 +24,21 @@ export default function PreviewHeader() {
                 </Text>
             </HStack>
             <Box>
-                <Button colorScheme="blue" size="md" onClick={() => {
-                    setUserId("1");
-                    console.log(getUserId())
-                    history.push("/home")
+                <Button marginRight={"15px"} colorScheme="custom"
+                    color="grey"
+                    bgColor="#FFF"
+                    borderWidth="1px" // Set the border width
+                    borderColor="grey" rounded="full" size="md" onClick={() => {
+                        disconnect();
+                    history.push("/signin")
                 }}>
                     Sign In
                 </Button>
-                <Button colorScheme="blue" size="md" onClick={() => {
-                        setUserId("1");
-                        console.log(getUserId())
-                        history.push("/home")
+                <Button colorScheme="custom"
+                    color="white"
+                    bgColor="#12B7BD" rounded="full" size="md" onClick={() => {
+                        disconnect();
+                        history.push("/signup")
                     }}>
                         Sign Up
                 </Button>
