@@ -4,13 +4,15 @@ import {useParams} from "react-router-dom";
 import {classrooms} from "../data/classrooms.js";
 import {images} from "../data/images.jsx";
 import CourseList from "../components/CourseList";
+import TaskList from "../components/TaskList";
+import Students from "../components/Students";
 
 const Classroom = ({}) => {
     let {id} = useParams();
     console.log(id)
     const classroom = classrooms.find((e) => e.id === +id)
     return (
-        <Box marginLeft={100} marginRight={100} p={4}>
+        <Box paddingTop={0}   marginLeft={100} marginRight={100} p={4}>
             <Heading as="h2" size="lg" mb={4}>
                 <Image
                     style={{objectFit:"cover"}}
@@ -36,7 +38,10 @@ const Classroom = ({}) => {
                         <CourseList classroom={classroom}/>
                     </TabPanel>
                     <TabPanel>
-                        <p>two!</p>
+                        <TaskList classroom={classroom} />
+                    </TabPanel>
+                    <TabPanel>
+                        <Students />
                     </TabPanel>
                 </TabPanels>
             </Tabs>

@@ -1,8 +1,8 @@
-import { Box, Button, Flex, HStack, Text } from "@chakra-ui/react";
+import {Box, Button, Flex, HStack, Text} from "@chakra-ui/react";
 import logo from "../assets/logo.png";
-import { useContext } from "react";
-import { UserContext } from "../context/user.tsx";
-import { useHistory } from "react-router-dom";
+import {useContext} from "react";
+import {UserContext} from "../context/user";
+import {useHistory} from "react-router-dom";
 
 const Header = () => {
     const { disconnect } = useContext(UserContext)

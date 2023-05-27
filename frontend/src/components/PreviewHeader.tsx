@@ -1,4 +1,4 @@
-import {UserContext} from "../context/user.tsx";
+import {UserContext} from "../context/user";
 import {useHistory} from "react-router-dom";
 import {Box, Button, Flex, HStack, Text} from "@chakra-ui/react";
 import {useContext} from "react";

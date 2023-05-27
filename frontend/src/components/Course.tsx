@@ -10,17 +10,17 @@ const Course = ({id ,courseName,CourseDate}) => {
                 <AccordionItem>
                     <h2>
                         <AccordionButton>
-                            <Box as="span" flex='1' fontWeight={700} textAlign='left'>
+                            <Box as="span" flex='1' fontWeight={700} height={"40px"} textAlign='left'>
                                 Course {id}
                             </Box>
                             <AccordionIcon />
                         </AccordionButton>
                     </h2>
-                    <AccordionPanel style={{display:"flex",flexDirection:"row"}} pb={4}>
+                    <AccordionPanel style={{display:"flex",flexDirection:"row", justifyContent:"space-between" ,  width:"100%"}} pb={4}>
                         <p onClick={() => {
                             history.push(`/course/${id}`)
                         }}>{courseName}</p>
-                        <p style={{textAlign: "end"}} color={"red"}>{CourseDate}</p>
+                        <p style={{ fontSize:15 , fontWeight:700 , color:"#d1d4d4"}} >{CourseDate}</p>
                 </AccordionPanel>
                 </AccordionItem>
 
