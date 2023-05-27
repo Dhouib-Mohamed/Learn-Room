@@ -29,6 +29,6 @@ export class PracticeController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.practiceService.remove(+id);
+    return this.practiceService.delete(+id);
   }
 }

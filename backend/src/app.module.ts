@@ -7,6 +7,7 @@ import {SupportModule} from './support/support.module';
 import {StudentModule} from './student/student.module';
 import {TeacherModule} from './teacher/teacher.module';
 import {TypeOrmModule} from "@nestjs/typeorm";
+//import { GenericModule } from './generic/generic.module';
 import * as dotenv from "dotenv";
 
 
@@ -25,7 +26,8 @@ dotenv.config();
       synchronize: true,
 
 
-    })
+    }),
+    
   ],
   controllers: [AppController],
   providers: [AppService],

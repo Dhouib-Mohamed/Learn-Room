@@ -1,26 +1,16 @@
 import {Injectable} from '@nestjs/common';
 import {CreatePracticeDto} from './dto/create-practice.dto';
 import {UpdatePracticeDto} from './dto/update-practice.dto';
+import { GenericService } from 'src/generic/generic.service';
+import { Practice } from './entities/practice.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
-export class PracticeService {
-  create(createPracticeDto: CreatePracticeDto) {
-    return 'This action adds a new practice';
-  }
+export class PracticeService extends GenericService<Practice>  {
+  constructor(
+    @InjectRepository(Practice)
+    private practiceRepository: Repository<Practice>,
+  ) {super(practiceRepository)}
 
-  findAll() {
-    return `This action returns all practice`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} practice`;
-  }
-
-  update(id: number, updatePracticeDto: UpdatePracticeDto) {
-    return `This action updates a #${id} practice`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} practice`;
-  }
 }
