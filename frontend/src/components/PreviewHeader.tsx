@@ -18,25 +18,25 @@ export default function PreviewHeader() {
             borderBottom="0.75px solid #828282"
         >
             <HStack spacing={"2px"}>
-            <img src={logo} alt="Logo" style={{ height: "24px", marginRight: "8px" }} />      
-             <Text fontSize="2xl" fontWeight="bold" color="gray.700">
+                <img src={logo} alt="Logo" style={{ height: "42px", marginRight: "10px", marginLeft: "10px" }} />
+                <Text fontSize="2xl" fontWeight="bolder" color="gray.700">
                     LearnRoom
                 </Text>
             </HStack>
             <Box>
-                <Button colorScheme="custom" color="#4C4C4C" bgColor="#FFF" borderWidth="1px" borderColor="#828282" rounded="full" size="md" 
-          height="45px" // Set the height of the button
-          width="150px" onClick={()=>{
-                    setIsConnected(true);
-                    navigate("/home")
-    }}
-    >
+                <Button colorScheme="custom" color="#4C4C4C" bgColor="#FFF" borderWidth="1px" borderColor="#828282" rounded="full" size="md"
+                    height="45px" // Set the height of the button
+                    width="150px" fontSize="22px" onClick={() => {
+                        setIsConnected(true);
+                        navigate("/home")
+                    }}
+                >
                     Sign in
                 </Button>
-                
+
                 <Button marginLeft="10px" colorScheme="custom" color="#FFF" bgColor="#12B7BD"
                     _hover={{ bgColor: "#12B7BD" }}
-                    _active={{ bgColor: "#12B7BD" }} rounded="full" size="md" 
+                    _active={{ bgColor: "#12B7BD" }} rounded="full" size="md"
                     height="45px" // Set the height of the button
                     width="150px" onClick={() => {
                         setIsConnected(true);
@@ -47,4 +47,4 @@ export default function PreviewHeader() {
             </Box>
         </Flex>
     );
-                }
+}
