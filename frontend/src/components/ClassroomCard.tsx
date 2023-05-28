@@ -6,7 +6,7 @@ const ClassroomCard = ({id, title, description, imageUrl}) => {
     const history = useHistory()
     return (
       <Box  onClick={() => {
-          history.push(`/classroom/${id}`)
+          history.push(`/classroom/${id}/`)
       }} >
           <Card maxW='sm' style={{ margin: 20}}>
               <CardBody>

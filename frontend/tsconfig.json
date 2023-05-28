@@ -1,12 +1,18 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
     "paths": {
-      "~/*": ["src/*"]
-   },
+      "~/*": [
+        "./src/*"
+      ]
+    },
     /* Bundler mode */
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -14,6 +20,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "moduleResolution": "node",
+    "esModuleInterop": true,
     /* Linting */
     "strict": false,
     "noUnusedLocals": true,
