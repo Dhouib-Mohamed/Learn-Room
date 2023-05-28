@@ -1,16 +1,16 @@
-import PreviewHeader from "../components/PreviewHeader.tsx";
-import TextButtom from "../components/textButton.tsx";
+import PreviewHeader from "../components/PreviewHeader";
+import TextButtom from "../components/textButton";
 import image from "../assets/landingImage.png";
-import { Button } from "@chakra-ui/react";
+import {Button} from "@chakra-ui/react";
 import image1 from "../assets/image1.png";
 import image2 from "../assets/image2.png";
 import image3 from "../assets/image3.png";
 import image4 from "../assets/image4.png";
 import quote from "../assets/quote.png";
-import Footer from "../components/Footer.tsx";
-import { UserContext } from '../context/user';
-import { useContext } from 'react';
-import { useHistory } from "react-router-dom";
+import Footer from "../components/Footer";
+import {UserContext} from '../context/user';
+import {useContext} from 'react';
+import {useHistory} from "react-router-dom";
 
 
 export default function Preview() {

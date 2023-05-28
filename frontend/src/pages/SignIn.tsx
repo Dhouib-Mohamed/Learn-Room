@@ -1,10 +1,10 @@
-import { Box, Button, Heading, Text, FormControl, FormLabel, Input, Link } from '@chakra-ui/react';
+import {Box, Button, FormControl, FormLabel, Heading, Input, Link, Text} from '@chakra-ui/react';
 import signup from "../assets/signup.png";
 import Footer from '../components/Footer';
 import logo from "../assets/logo.png";
-import { UserContext } from '../context/user';
-import { useContext } from 'react';
-import { useHistory } from "react-router-dom";
+import {UserContext} from '../context/user';
+import {useContext} from 'react';
+import {useHistory} from "react-router-dom";
 
 
 function SignIn() {
@@ -12,17 +12,17 @@ function SignIn() {
     const history =  useHistory()
     return (
         <>
-        <div style={{ height: '900px', display: 'flex', alignItems: 'center' }}>
-        <div style={{ flex: 2 ,display: "flex", alignItems: "center",justifyContent:'center'}}>
+        <div style={{height: '700px', display: 'flex', alignItems: 'center'}}>
+            <div style={{flex: 2, display: "flex", alignItems: "center", justifyContent: 'center'}}>
 
-            <Box textAlign="center">
+                <Box textAlign="center">
 
-                 <div style={{ display: "flex", alignItems: "center" ,marginBottom:"100px"}}>
-                <img src={logo} alt="Logo" style={{ width: "60px",marginRight:"20px" }} />
-                <Heading>LearnRoom</Heading>
-                </div>
+                    <div style={{display: "flex", alignItems: "center", marginBottom: "100px"}}>
+                        <img src={logo} alt="Logo" style={{width: "60px", marginRight: "20px"}}/>
+                        <Heading>LearnRoom</Heading>
+                    </div>
 
-                <form>
+                    <form>
                     <FormControl id="email" my="4">
                         <FormLabel>Email:</FormLabel>
                         <Input type="email" name="email" />

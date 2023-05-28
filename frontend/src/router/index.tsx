@@ -9,13 +9,19 @@ import SignIn from "../pages/SignIn.tsx";
 import SignUp from "../pages/SignUp.tsx";
 import Task from '../pages/task.tsx';
 import Assignment from '../pages/assignment.tsx';
+import CourseDetails from "../pages/CourseDetails";
+import TaskDetails from "../pages/TaskDetails";
+import AssignmentDetails from "../pages/AssignmentDetails";
 
 const App = () => {
     return (
         <Router>
             <Switch>
                 <Connected path={"/home"} Component={Main}/>
-                <Connected path={"/classroom/:id"} Component={Classroom}/>
+                <Connected path={"/classroom/*/course/:id"} Component={CourseDetails}/>
+                <Connected path={"/classroom/*/task/:id"} Component={TaskDetails}/>
+                <Connected path={"/classroom/*/assignment/:id"} Component={AssignmentDetails}/>
+                <Connected path={"/classroom/:id/"} Component={Classroom}/>
                 <Disconnected path={"/preview"} Component={Preview}/>
                 <Disconnected path={"/signin"} Component={SignIn}/>
                 <Disconnected path={"/task"} Component={Task}/>
