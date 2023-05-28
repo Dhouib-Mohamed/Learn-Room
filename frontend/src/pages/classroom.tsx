@@ -12,18 +12,18 @@ const Classroom = ({}) => {
     console.log(id)
     const classroom = classrooms.find((e) => e.id === +id)
     return (
-        <Box paddingTop={0}   marginLeft={100} marginRight={100} p={4}>
+        <Box marginLeft={100} marginRight={100} p={4} pt={0}>
             <Heading as="h2" size="lg" mb={4}>
                 <Image
-                    style={{objectFit:"cover"}}
+                    style={{objectFit: "cover"}}
                     src={images[classroom.imageUrl]}
                     alt='Green double couch with wooden legs'
-                    borderRadius='lg'
-                    height={"170px"}
+                    borderBottomRadius='lg'
+                    height={"280px"}
                     width={"100%"}
                 />
-                <h3 style={{color:"#41a090"}}> {classroom.title}</h3>
-                <div style={{fontWeight:400, fontSize:18}}>{classroom.description}</div>
+                <h3 style={{color: "#41a090", padding: "15px 0 15px 0"}}> {classroom.title}</h3>
+                <div style={{fontWeight: 400, fontSize: 18}}>{classroom.description}</div>
 
             </Heading>
             <Divider mb={4}/>

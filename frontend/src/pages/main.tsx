@@ -1,4 +1,4 @@
-import ClassroomList from "../components/ClassroomList.tsx";
+import ClassroomList from "../components/ClassroomList";
 import {classrooms} from "../data/classrooms.js";
 
 
