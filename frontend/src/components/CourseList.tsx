@@ -5,7 +5,7 @@ import Course from "../components/Course";
 const CourseList = ({classroom}) => {
     return (
         <Flex direction={"column"} >
-            {classroom.courses.map((cours) => (
+            {classroom.courses?.map((cours) => (
                 <Course
                     key={cours.id}
                     id={cours.id}

@@ -18,12 +18,11 @@ const Course = ({id ,courseName,CourseDate}) => {
                     </h2>
                     <AccordionPanel style={{display:"flex",flexDirection:"row", justifyContent:"space-between" ,  width:"100%"}} pb={4}>
                         <p onClick={() => {
-                            history.push(`/course/${id}`)
+                            history.push(`./course/${id}`)
                         }}>{courseName}</p>
                         <p style={{ fontSize:15 , fontWeight:700 , color:"#d1d4d4"}} >{CourseDate}</p>
                 </AccordionPanel>
                 </AccordionItem>
-
             </Accordion>
         </Box>
     );
