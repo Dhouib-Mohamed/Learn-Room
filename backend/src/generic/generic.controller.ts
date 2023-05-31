@@ -20,16 +20,16 @@ export class GenericController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.genericService.findOne(+id);
+    return this.genericService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateGenericDto: UpdateGenericDto) {
-    return this.genericService.update(+id, updateGenericDto);
+      return this.genericService.update(id, updateGenericDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.genericService.delete(+id);
+      return this.genericService.delete(id);
   }
 }

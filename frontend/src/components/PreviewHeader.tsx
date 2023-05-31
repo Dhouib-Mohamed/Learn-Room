@@ -1,11 +1,9 @@
-import {UserContext} from "../context/user";
 import {useHistory} from "react-router-dom";
 import {Box, Button, Flex, HStack, Text} from "@chakra-ui/react";
-import {useContext} from "react";
 import logo from "../assets/logo.png";
+import {removeItem} from "../../utils/localStorage";
 
 export default function PreviewHeader() {
-    const {disconnect} = useContext(UserContext)
     const history = useHistory()
     return (
         <>
@@ -37,15 +35,15 @@ export default function PreviewHeader() {
                             bgColor="#FFF"
                             borderWidth="1px" // Set the border width
                     borderColor="grey" rounded="full" size="md" onClick={() => {
-                        disconnect();
-                    history.push("/signin")
+                        removeItem("user")
+                        history.push("/signin")
                 }}>
                     Sign In
                 </Button>
                     <Button colorScheme="custom"
                             color="white"
                             bgColor="#12B7BD" rounded="full" size="md" onClick={() => {
-                        disconnect();
+                        removeItem("user")
                         history.push("/signup")
                     }}>
                         Sign Up

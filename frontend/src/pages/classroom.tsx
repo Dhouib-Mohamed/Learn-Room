@@ -16,7 +16,7 @@ const Classroom = ({}) => {
             <Heading as="h2" size="lg" mb={4}>
                 <Image
                     style={{objectFit: "cover"}}
-                    src={images[classroom.imageUrl]}
+                    src={images[classroom.image_id]}
                     alt='Green double couch with wooden legs'
                     borderBottomRadius='lg'
                     height={"280px"}

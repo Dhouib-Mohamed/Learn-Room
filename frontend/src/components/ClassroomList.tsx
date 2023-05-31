@@ -4,13 +4,10 @@ import {Flex} from "@chakra-ui/react";
 const ClassroomList = ({classrooms}) => {
     return (
         <Flex overflowX="auto">
-            {classrooms.map((classroom) => (
+            {classrooms?.map((classroom) => (
                 <ClassroomCard
                     key={classroom.id}
-                    id={classroom.id}
-                    title={classroom.title}
-                    description={classroom.description}
-                    imageUrl={classroom.imageUrl}
+                    classroom={classroom}
                 />
             ))}
         </Flex>
