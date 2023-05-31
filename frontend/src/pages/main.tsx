@@ -38,7 +38,7 @@ export default function Main() {
         <>
             <ClassroomList classrooms={classroom}/>
             {getItem("user").user ?
-                <Button  onClick={onOpen} >Add Classroom</Button> :
+                <Button rounded={"full"}  onClick={onOpen} size={"lg"} style={{backgroundColor:"#20b2aa"  , color:"white" , marginLeft:"45%" , marginTop:"20px" , marginBottom:"50px"}} >Add Classroom</Button> :
                 null
             }
 
