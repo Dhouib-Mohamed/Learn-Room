@@ -4,6 +4,7 @@ import { Button, Divider } from "@chakra-ui/react";
 import {classrooms} from "../data/classrooms.js";
 import {useParams} from "react-router-dom";
 
+
 function AssignmentDetails() {
     let {id} = useParams();
     console.log(id)
