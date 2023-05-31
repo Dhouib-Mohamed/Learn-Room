@@ -8,13 +8,11 @@ import image3 from "../assets/image3.png";
 import image4 from "../assets/image4.png";
 import quote from "../assets/quote.png";
 import Footer from "../components/Footer";
-import {UserContext} from '../context/user';
-import {useContext} from 'react';
 import {useHistory} from "react-router-dom";
+import {removeItem} from "../../utils/localStorage";
 
 
 export default function Preview() {
-  const {disconnect} = useContext(UserContext)
   const history =  useHistory()
   return (
     <>
@@ -30,11 +28,13 @@ export default function Preview() {
 
             <br /><br />
 
-            <Button colorScheme="custom" color="#FFF" bgColor="#FF796E" rounded="full" size="md" marginLeft={'180px'}
-              height="45px"
-              width="150px" _hover={{ bgColor: '#FFBFAE' }} onClick={() => {disconnect();
-              history.push("/signup") }}
-            >Start</Button>
+              <Button colorScheme="custom" color="#FFF" bgColor="#FF796E" rounded="full" size="md" marginLeft={'180px'}
+                      height="45px"
+                      width="150px" onClick={() => {
+                  removeItem("user");
+                  history.push("/signup")
+              }}
+              >Start</Button>
           </div>
         </div>
         <div style={{ flex: 3 }}>

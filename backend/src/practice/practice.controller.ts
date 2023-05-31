@@ -19,16 +19,16 @@ export class PracticeController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.practiceService.findOne(+id);
+    return this.practiceService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePracticeDto: UpdatePracticeDto) {
-    return this.practiceService.update(+id, updatePracticeDto);
+      return this.practiceService.update(id, updatePracticeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.practiceService.delete(+id);
+      return this.practiceService.delete(id);
   }
 }

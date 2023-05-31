@@ -1,11 +1,9 @@
 import {Box, Button, Flex, HStack, Text} from "@chakra-ui/react";
 import logo from "../assets/logo.png";
-import {useContext} from "react";
-import {UserContext} from "../context/user";
 import {useHistory} from "react-router-dom";
+import {removeItem} from "../../utils/localStorage";
 
 const Header = () => {
-    const {disconnect} = useContext(UserContext);
     const history = useHistory();
     return (
         <>
@@ -49,7 +47,7 @@ const Header = () => {
                         rounded="full"
                         size="md"
                         onClick={() => {
-                            disconnect();
+                            removeItem("user")
                             history.push("/preview");
                         }}
                     >

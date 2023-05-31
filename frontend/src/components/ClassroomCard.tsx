@@ -2,30 +2,26 @@ import {useHistory} from "react-router-dom";
 import {Box, Card, CardBody, Heading, Image, Stack, Text} from '@chakra-ui/react';
 import {images} from "../data/images.jsx";
 
-const ClassroomCard = ({id, title, description, imageUrl}) => {
+const ClassroomCard = ({classroom}) => {
+    console.log()
     const history = useHistory()
     return (
-      <Box  onClick={() => {
-          history.push(`/classroom/${id}/`)
-          
-      }}
-       >
-          <Card maxW='sm' _hover={{
-                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
-                    transition: 'box-shadow 0.3s ease-in-out',
-                  }}  style={{ margin: 20}}>
-              <CardBody>
-                  <Image  
-                      src={images[imageUrl]}
-                      alt='Green double couch with wooden legs'
+        <Box onClick={() => {
+            history.push(`/classroom/${classroom.id}/`)
+        }}>
+            <Card maxW='sm' style={{margin: 20}}>
+                <CardBody>
+                    <Image
+                        src={images[classroom.image_id]}
+                        alt='Green double couch with wooden legs'
                       borderRadius='lg'
                       height={"270px"}
                       width={"370px"}
                   />
                   <Stack mt='6' spacing='3'>
-                      <Heading size='md'>{title}</Heading>
+                      <Heading size='md'>{classroom.name}</Heading>
                       <Text>
-                          {description}
+                          {classroom.description}
                       </Text>
                   </Stack>
               </CardBody>

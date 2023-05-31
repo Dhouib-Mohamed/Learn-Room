@@ -1,6 +1,4 @@
 import {Injectable} from '@nestjs/common';
-import {CreatePracticeDto} from './dto/create-practice.dto';
-import {UpdatePracticeDto} from './dto/update-practice.dto';
 import { GenericService } from 'src/generic/generic.service';
 import { Practice } from './entities/practice.entity';
 import { InjectRepository } from '@nestjs/typeorm';

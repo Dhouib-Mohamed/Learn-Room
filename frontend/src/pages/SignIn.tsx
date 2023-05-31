@@ -1,75 +1,72 @@
-import { Box, Button, FormControl, FormLabel, Heading, IconButton, Input, InputGroup, InputRightElement, Link, Text } from '@chakra-ui/react';
+import {Box, Button, Heading, Text, FormControl, FormLabel, Input, Link} from '@chakra-ui/react';
 import signup from "../assets/signup.png";
 import Footer from '../components/Footer';
 import logo from "../assets/logo.png";
-import {UserContext} from '../context/user';
-import {useContext, useState} from 'react';
 import {useHistory} from "react-router-dom";
-import { HiEye, HiEyeOff } from 'react-icons/hi';
-
+import {Formik, Form, Field} from 'formik';
+import {post} from "../helpers/helpers";
+import {setItem} from "../../utils/localStorage";
 
 function SignIn() {
-    const [showPassword, setShowPassword] = useState(false);
+    const history = useHistory();
 
-        const handleTogglePassword = () => {
-            setShowPassword(!showPassword);
-        };
-    const {setUserId, getUserId} = useContext(UserContext)
-    const history =  useHistory()
+    const logIn = async (values) => {
+        const result = await post("user/signin", values)
+        console.log(result)
+        if (result.id) {
+            setItem("user", result);
+            history.push("/home");
+        }
+    }
+
     return (
         <>
-        <div style={{height: '700px', display: 'flex', alignItems: 'center'}}>
-            <div style={{flex: 2, display: "flex", alignItems: "center", justifyContent: 'center'}}>
+            <div style={{height: '700px', display: 'flex', alignItems: 'center'}}>
+                <div style={{flex: 2, display: "flex", alignItems: "center", justifyContent: 'center'}}>
+                    <Box textAlign="center">
+                        <div style={{display: "flex", alignItems: "center", marginBottom: "100px"}}>
+                            <img src={logo} alt="Logo" style={{width: "60px", marginRight: "20px"}}/>
+                            <Heading>LearnRoom</Heading>
+                        </div>
 
-                <Box textAlign="center">
+                        <Formik initialValues={{email: '', password: ''}} onSubmit={logIn}>
+                            <Form>
+                                <Field name="email">
+                                    {({field}) => (
+                                        <FormControl id="email" my="4">
+                                            <FormLabel>Email:</FormLabel>
+                                            <Input {...field} type="email" name="email"/>
+                                        </FormControl>
+                                    )}
+                                </Field>
 
-                    <div style={{display: "flex", alignItems: "center", marginBottom: "100px"}}>
-                        <img src={logo} alt="Logo" style={{width: "60px", marginRight: "20px"}}/>
-                        <Heading>LearnRoom</Heading>
-                    </div>
+                                <Field name="password">
+                                    {({field}) => (
+                                        <FormControl id="password" my="4">
+                                            <FormLabel>Password:</FormLabel>
+                                            <Input {...field} type="password" name="password"/>
+                                        </FormControl>
+                                    )}
+                                </Field>
 
-                    <form>
-                    <FormControl id="email" my="4">
-                        <FormLabel>Email:</FormLabel>
-                        <Input type="email" name="email" />
-                    </FormControl>
+                                <Button colorScheme="custom" color="white" bgColor="#FF796E" rounded="full"
+                                        type="submit" my="4">
+                                    Login
+                                </Button>
+                            </Form>
+                        </Formik>
 
-                    <FormControl id="password" my="4">
-                                    <FormLabel>Password:</FormLabel>
-                                    <InputGroup>
-                                        <Input
-                                            type={showPassword ? 'text' : 'password'}
-                                            name="password"
-                                        />
-                                        <InputRightElement width="4.5rem">
-                                            <IconButton
-                                                aria-label={showPassword ? 'Hide password' : 'Show password'}
-                                                onClick={handleTogglePassword}
-                                                h="1.75rem"
-                                                size="sm"
-                                                icon={showPassword ? <HiEyeOff /> : <HiEye />}
-                                            />
-                                        </InputRightElement>
-                                    </InputGroup> 
-                                    </FormControl>
-                    <Button colorScheme="custom" color="white"  bgColor="#FF796E" rounded="full"  type="submit"  my="4"  onClick={() => {
-                        setUserId("1");
-                        console.log(getUserId())
-                        history.push("/home")
-                    }}>Login</Button>
+                        <Text fontSize={'14px'}>Don't have an account? <Link fontWeight={'bold'} href="/signup">Sign
+                            up</Link></Text>
+                    </Box>
+                </div>
 
-                </form>
-                
-                <Text fontSize={'14px'}>Don't have an account? <Link fontWeight={'bold'} href="/signup">Sign up</Link></Text>
-            </Box>
-        </div>
-
-        <div style={{ flex: 3 }}>
-            <img src={signup} alt="landing image" style={{ width: '1000px',marginTop:'50px' }} />
-
-        </div>
-    </div>
-    <Footer /></>
+                <div style={{flex: 3}}>
+                    <img src={signup} alt="landing image" style={{width: '1000px', marginTop: '50px'}}/>
+                </div>
+            </div>
+            <Footer/>
+        </>
     );
 }
 
