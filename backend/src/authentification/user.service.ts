@@ -24,15 +24,14 @@ export class UserService {
                     throw new NotFoundException("Password Not Found")
                 }
                 teacher.password = teacher.password.length
-                console.log(teacher.classes)
-                return teacher
+                return {...teacher, user: true}
             }
             if (student) {
                 if (student.password !== SignInDto.password) {
                     throw new NotFoundException("Password Not Found")
                 }
                 student.password = student.password.length
-                return student
+                return {...student, user: false}
             }
             throw new NotFoundException("Email Not Found")
         } catch (e) {
@@ -52,6 +51,7 @@ export class UserService {
                 throw new NotFoundException()
             }
             user.password = user.password.length
+            user.user = SignUpDto.user
             return user
         } catch (e) {
             return e.sqlMessage ?? e
