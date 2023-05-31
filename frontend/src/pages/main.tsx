@@ -1,29 +1,111 @@
 import ClassroomList from "../components/ClassroomList";
 import {getItem, setItem} from "../../utils/localStorage";
-import {Button} from "@chakra-ui/react";
+import {
+    Button,
+    FormControl,
+    FormLabel,
+    Input,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    Textarea,
+    useDisclosure
+} from "@chakra-ui/react";
+
+import {Field, Form, Formik} from "formik";
 import {post} from "../helpers/helpers";
 
+import {useHistory} from 'react-router-dom';
 
 export default function Main() {
+    let classroom = getItem("user").classes
 
-    let classrooms = getItem("user").classes
 
-    const addClassroom = async () => {
-        const result = await post("classroom/" + getItem("user").id, {
-            "name": "course",
-            "description": "ijgk efzsdihijovjbiig"
-        })
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const history = useHistory();
+
+
+
+
+    const addClassroom = async (data) => {
+        const result = await post("classroom/" + getItem("user").id, data)
         console.log(result)
-        classrooms = {...getItem("user"), classes: [...getItem("user").classes, result]}
-        setItem("user", classrooms)
+        classroom = {...getItem("user"), classes: [...getItem("user").classes, result]}
+        setItem("user", classroom)
+
+        onClose();
+
+        history.push(`/classroom/${result.id}`);
+
     }
+
+    const handleSubmit = (values) => {
+
+     addClassroom(values)
+
+    };
     return (
         <>
-            <ClassroomList classrooms={classrooms}/>
+            <ClassroomList classrooms={classroom}/>
             {getItem("user").user ?
-                <Button onClick={addClassroom}>Add Classroom</Button> :
+                <Button  onClick={onOpen} >Add Classroom</Button> :
                 null
             }
+
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Add Classroom</ModalHeader>
+                    <ModalCloseButton />
+                    <Formik
+                        initialValues={{
+                            name: '',
+                            description: '',
+                        }}
+                        onSubmit={handleSubmit}
+                    >
+                        {(formikProps) => (
+                            <Form>
+                                <ModalBody>
+                                    <Field name="name">
+                                        {({ field }) => (
+                                            <FormControl>
+                                                <FormLabel>Course Name</FormLabel>
+                                                <Input {...field} />
+                                            </FormControl>
+                                        )}
+                                    </Field>
+                                    <Field name="description">
+                                        {({ field }) => (
+                                            <FormControl>
+                                                <FormLabel>Description</FormLabel>
+                                                <Textarea {...field} />
+                                            </FormControl>
+                                        )}
+                                    </Field>
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button
+                                        type="submit"
+                                        isLoading={formikProps.isSubmitting}
+                                        colorScheme="blue"
+                                    >
+                                        Submit
+                                    </Button>
+                                    <Button onClick={onClose} ml={4}>
+                                        Cancel
+                                    </Button>
+                                </ModalFooter>
+                            </Form>
+                        )}
+                    </Formik>
+                </ModalContent>
+            </Modal>
         </>
     )
 }

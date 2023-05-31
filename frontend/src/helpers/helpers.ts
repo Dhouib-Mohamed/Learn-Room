@@ -35,12 +35,14 @@ const post = async (url, body) => {
                 body: JSON.stringify(body),
             }
         );
+        console.log(response)
         if (!response.ok) {
             return (response.statusText)
         }
         const data = await response.json();
         return (data);
     } catch (error) {
+        console.log(error)
         console.error('Error:', error.message);
     }
 }
