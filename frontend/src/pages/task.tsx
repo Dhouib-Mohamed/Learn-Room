@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import TaskButton from '../components/TaskButton';
-import { Button, Divider } from "@chakra-ui/react";
+import {Divider} from "@chakra-ui/react";
 
 const teacher = "Aymen Sellaouti";
 const date = "25 mars 2023";
