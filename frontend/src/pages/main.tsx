@@ -4,7 +4,7 @@ import {Button, Modal, ModalContent, ModalOverlay, useDisclosure} from "@chakra-
 import {post} from "../helpers/helpers";
 
 import {useHistory} from 'react-router-dom';
-import CourseModal from "~/modals/course.tsx";
+import CourseModal from "../modals/course";
 
 export default function Main() {
     let classroom = getItem("user").classes
