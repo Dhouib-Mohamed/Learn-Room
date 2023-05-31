@@ -1,5 +1,6 @@
 import {Avatar, Box, Divider, Table, TableContainer, Tbody, Td, Tr,} from '@chakra-ui/react';
 // import {useHistory} from "react-router-dom";
+import { Button } from "@chakra-ui/react";
 
 const personnes= [{name:'jean Abrahmov' , email:"jean Abrahmov@gmail.com" , src:'https://bit.ly/abramol' },
     {name: 'Kola Tioluwani' , email:"Kola Tioluwani@gmail.com", src: 'https://bit.ly/tioluwani-kolawole'} ,
@@ -12,6 +13,7 @@ const personnes= [{name:'jean Abrahmov' , email:"jean Abrahmov@gmail.com" , src:
 const Students = () => {
     // const history = useHistory()
     return (
+        <>
         <Box>
             <p style={{color : "#41a090", fontWeight:700 , fontSize:20}} > Teachers</p>
             <Divider style={{margin:"15px 0 15px"}}/>
@@ -35,9 +37,16 @@ const Students = () => {
                     </Tbody>
                 </Table>
             </TableContainer>
-
-
         </Box>
+        <br />
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <Button colorScheme="custom" color="#FFF" bgColor="#66B0F0" rounded="full" size="md" 
+                height="30px"
+                width="120px" onClick={() => {
+                }}
+            >Add Student</Button>
+            </div>
+        </>
     );
 };
 
