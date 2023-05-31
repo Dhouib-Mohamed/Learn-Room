@@ -8,29 +8,38 @@ export class ClassroomController {
   constructor(private readonly classroomService: ClassroomService) {
   }
 
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.classroomService.findOne(id);
+  }
+
   @Post(":id")
   create(@Body() createClassroomDto: CreateClassroomDto, @Param("id") id) {
     return this.classroomService.createClass(id, createClassroomDto);
   }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateClassroomDto: UpdateClassroomDto) {
+    return this.classroomService.update(id, updateClassroomDto);
+  }
+
+  @Patch(":id/:user")
+  addUser(@Param('id') id: string, @Param('user') user: string,) {
+    return this.classroomService.addUser(id, user);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.classroomService.delete(id);
+  }
+
 
   // @Get()
   // findAll() {
   //   return this.classroomService.findAll();
   // }
   //
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   console.log(id)
-  //   return this.classroomService.findOne(id);
-  // }
   //
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateClassroomDto: UpdateClassroomDto) {
-  //   return this.classroomService.update(id, updateClassroomDto);
-  // }
+
   //
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.classroomService.delete(id);
-  // }
 }
