@@ -1,25 +1,10 @@
 import ClassroomList from "../components/ClassroomList";
 import {getItem, setItem} from "../../utils/localStorage";
-import {
-    Button,
-    FormControl,
-    FormLabel,
-    Input,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    Textarea,
-    useDisclosure
-} from "@chakra-ui/react";
-
-import {Field, Form, Formik} from "formik";
+import {Button, Modal, ModalContent, ModalOverlay, useDisclosure} from "@chakra-ui/react";
 import {post} from "../helpers/helpers";
 
 import {useHistory} from 'react-router-dom';
+import CourseModal from "~/modals/course.tsx";
 
 export default function Main() {
     let classroom = getItem("user").classes
@@ -60,50 +45,7 @@ export default function Main() {
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Add Classroom</ModalHeader>
-                    <ModalCloseButton />
-                    <Formik
-                        initialValues={{
-                            name: '',
-                            description: '',
-                        }}
-                        onSubmit={handleSubmit}
-                    >
-                        {(formikProps) => (
-                            <Form>
-                                <ModalBody>
-                                    <Field name="name">
-                                        {({ field }) => (
-                                            <FormControl>
-                                                <FormLabel>Course Name</FormLabel>
-                                                <Input {...field} />
-                                            </FormControl>
-                                        )}
-                                    </Field>
-                                    <Field name="description">
-                                        {({ field }) => (
-                                            <FormControl>
-                                                <FormLabel>Description</FormLabel>
-                                                <Textarea {...field} />
-                                            </FormControl>
-                                        )}
-                                    </Field>
-                                </ModalBody>
-                                <ModalFooter>
-                                    <Button
-                                        type="submit"
-                                        isLoading={formikProps.isSubmitting}
-                                        colorScheme="blue"
-                                    >
-                                        Submit
-                                    </Button>
-                                    <Button onClick={onClose} ml={4}>
-                                        Cancel
-                                    </Button>
-                                </ModalFooter>
-                            </Form>
-                        )}
-                    </Formik>
+                    <CourseModal onClose={onClose} handleSubmit={handleSubmit}/>
                 </ModalContent>
             </Modal>
         </>
