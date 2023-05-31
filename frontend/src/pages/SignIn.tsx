@@ -1,13 +1,19 @@
-import {Box, Button, FormControl, FormLabel, Heading, Input, Link, Text} from '@chakra-ui/react';
+import { Box, Button, FormControl, FormLabel, Heading, IconButton, Input, InputGroup, InputRightElement, Link, Text } from '@chakra-ui/react';
 import signup from "../assets/signup.png";
 import Footer from '../components/Footer';
 import logo from "../assets/logo.png";
 import {UserContext} from '../context/user';
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import {useHistory} from "react-router-dom";
+import { HiEye, HiEyeOff } from 'react-icons/hi';
 
 
 function SignIn() {
+    const [showPassword, setShowPassword] = useState(false);
+
+        const handleTogglePassword = () => {
+            setShowPassword(!showPassword);
+        };
     const {setUserId, getUserId} = useContext(UserContext)
     const history =  useHistory()
     return (
@@ -29,10 +35,23 @@ function SignIn() {
                     </FormControl>
 
                     <FormControl id="password" my="4">
-                        <FormLabel>Password:</FormLabel>
-                        <Input type="password" name="password" />
-                    </FormControl>
-
+                                    <FormLabel>Password:</FormLabel>
+                                    <InputGroup>
+                                        <Input
+                                            type={showPassword ? 'text' : 'password'}
+                                            name="password"
+                                        />
+                                        <InputRightElement width="4.5rem">
+                                            <IconButton
+                                                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                                onClick={handleTogglePassword}
+                                                h="1.75rem"
+                                                size="sm"
+                                                icon={showPassword ? <HiEyeOff /> : <HiEye />}
+                                            />
+                                        </InputRightElement>
+                                    </InputGroup> 
+                                    </FormControl>
                     <Button colorScheme="custom" color="white"  bgColor="#FF796E" rounded="full"  type="submit"  my="4"  onClick={() => {
                         setUserId("1");
                         console.log(getUserId())

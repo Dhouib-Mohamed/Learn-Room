@@ -7,10 +7,15 @@ const ClassroomCard = ({id, title, description, imageUrl}) => {
     return (
       <Box  onClick={() => {
           history.push(`/classroom/${id}/`)
-      }} >
-          <Card maxW='sm' style={{ margin: 20}}>
+          
+      }}
+       >
+          <Card maxW='sm' _hover={{
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+                    transition: 'box-shadow 0.3s ease-in-out',
+                  }}  style={{ margin: 20}}>
               <CardBody>
-                  <Image
+                  <Image  
                       src={images[imageUrl]}
                       alt='Green double couch with wooden legs'
                       borderRadius='lg'

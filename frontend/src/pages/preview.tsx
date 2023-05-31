@@ -32,7 +32,7 @@ export default function Preview() {
 
             <Button colorScheme="custom" color="#FFF" bgColor="#FF796E" rounded="full" size="md" marginLeft={'180px'}
               height="45px"
-              width="150px" onClick={() => {disconnect();
+              width="150px" _hover={{ bgColor: '#FFBFAE' }} onClick={() => {disconnect();
               history.push("/signup") }}
             >Start</Button>
           </div>
