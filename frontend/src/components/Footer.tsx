@@ -2,6 +2,7 @@ import { Box, Flex, } from '@chakra-ui/react';
 
 const Footer = () => {
     return (
+        <div>
         <Flex
             as="footer"
             align="center"
@@ -20,7 +21,12 @@ const Footer = () => {
                 <a style={{  fontWeight: 'lighter' ,textAlign:'center'}} href="#">About us</a>
                 <a style={{  fontWeight: 'lighter' ,textAlign:'center'}} href="#">Terms of Service</a>
             </div>
-        </Box></Flex>
+        </Box>
+        
+        </Flex>
+        <div style={{height:'10px', backgroundColor:'#EDEDED'}}></div>
+
+        </div>
     );
 };
 
