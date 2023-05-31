@@ -9,7 +9,7 @@ const ClassroomCard = ({classroom}) => {
         <Box onClick={() => {
             history.push(`/classroom/${classroom.id}/`)
         }}>
-            <Card maxW='sm' style={{margin: 20}}>
+            <Card maxW='sm' style={{margin: 10}}>
                 <CardBody>
                     <Image
                         src={images[classroom.image_id]}

@@ -1,7 +1,7 @@
-import {Box, Button, Flex, HStack, Text} from "@chakra-ui/react";
+import {Box, Button, Divider, Flex, HStack, Text} from "@chakra-ui/react";
 import logo from "../assets/logo.png";
 import {useHistory} from "react-router-dom";
-import {removeItem} from "../../utils/localStorage";
+import {getItem, removeItem} from "../../utils/localStorage";
 
 const Header = () => {
     const history = useHistory();
@@ -36,6 +36,10 @@ const Header = () => {
                     <Text fontSize="2xl" fontWeight="bolder" color="gray.700">
                         LearnRoom
                     </Text>
+                    <Divider borderColor={"#20b2aa"}   style={{margin:"0 10px" , paddingRight:10 }}  orientation='vertical' height={"30px"}  />
+                    {getItem("user").user ? <Text fontSize="xl" fontWeight="bolder" color="gray.700">Teacher</Text> : <Text fontSize="xl" fontWeight="bolder" color="gray.700">
+                        Student
+                    </Text> }
                 </HStack>
                 <Box>
                     <Button

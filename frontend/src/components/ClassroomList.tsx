@@ -3,7 +3,7 @@ import {Flex} from "@chakra-ui/react";
 
 const ClassroomList = ({classrooms}) => {
     return (
-        <Flex overflowX="auto">
+        <Flex overflowX="auto" flexWrap={"wrap"} style={{margin:30}}>
             {classrooms?.map((classroom) => (
                 <ClassroomCard
                     key={classroom.id}
