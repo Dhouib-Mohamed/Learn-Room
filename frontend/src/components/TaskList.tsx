@@ -1,12 +1,11 @@
-import {Flex} from "@chakra-ui/react";
+import {Button, Flex} from "@chakra-ui/react";
 import Task from "../components/Task";
-import { Button } from "@chakra-ui/react";
 
 const TaskList = ({classroom}) => {
     return (
         <>
         <Flex direction={"column"}>
-            {classroom.tasks.map((task) => (
+            {classroom?.tasks?.map((task) => (
                 <Task
                     key={task.id}
                     id={task.id}

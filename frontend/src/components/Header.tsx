@@ -36,7 +36,7 @@ const Header = () => {
                     <Text fontSize="2xl" fontWeight="bolder" color="gray.700">
                         LearnRoom
                     </Text>
-                    <Divider borderColor={"#20b2aa"}   style={{margin:"0 10px" , paddingRight:10 }}  orientation='vertical' height={"30px"}  />
+                    <Divider borderColor={"#20b2aa"}  sx= { { borderRightWidth: "2.5px" }} style={{margin:"0 10px"  }}  orientation='vertical' height={"30px"}  />
                     {getItem("user").user ? <Text fontSize="xl" fontWeight="bolder" color="gray.700">Teacher</Text> : <Text fontSize="xl" fontWeight="bolder" color="gray.700">
                         Student
                     </Text> }
