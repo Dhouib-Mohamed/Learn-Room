@@ -12,6 +12,7 @@ const CourseList = ({ classroom }) => {
 
     const addCourse = async (data) => {
         console.log(classroom.id)
+        console.log('data',data)
         const result = await post("course/" + classroom.id, data)
         console.log(result)
 
