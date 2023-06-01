@@ -54,6 +54,12 @@ export class ClassroomService extends GenericService<Classroom> {
     }
   };
 
+  async updateClass(id: any, dto): Promise<DeleteResult> {
+    const oldClass = await this.findOne(id)
+    await super.update(id, dto);
+    return {...(await this.teacherService.findOne(oldClass.teacher)), user: true}
+  }
+
   async deleteClass(id: any): Promise<DeleteResult> {
     const oldClass = await this.findOne(id)
     await super.delete(id);

@@ -20,7 +20,7 @@ export class ClassroomController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateClassroomDto: UpdateClassroomDto) {
-    return this.classroomService.update(id, updateClassroomDto);
+    return this.classroomService.updateClass(id, updateClassroomDto);
   }
 
   @Patch(":id/:user")
