@@ -35,10 +35,7 @@ function TaskDetails() {
                     <Divider width="100%" my={4} borderColor={"#A6A6A6"} borderWidth="0.75px" />
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: "center"}}>
                     <TaskButton/>
-
                     </div>
-                    
-
                 </div>
             </div>
             </div>
