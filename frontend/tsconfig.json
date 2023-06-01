@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+    "jsx": "react-jsx",
     "target": "ESNext",
     "lib": [
       "DOM",
@@ -8,17 +10,11 @@
     ],
     "module": "ESNext",
     "skipLibCheck": true,
-    "paths": {
-      "~/*": [
-        "./src/*"
-      ]
-    },
     /* Bundler mode */
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
     "moduleResolution": "node",
     /* Linting */
     "strict": false,
