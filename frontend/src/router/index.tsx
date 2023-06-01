@@ -11,8 +11,6 @@ import CourseDetails from "../pages/CourseDetails";
 import TaskDetails from "../pages/TaskDetails";
 import AssignmentDetails from "../pages/AssignmentDetails";
 import {getItem} from "../../utils/localStorage";
-import Header from "../components/Header";
-import PreviewHeader from "../components/PreviewHeader";
 
 const App = () => {
     return (
@@ -28,7 +26,6 @@ const App = () => {
                 <Disconnected path={"/signin"} Component={SignIn}/>
                 <Disconnected path={"/signup"} Component={SignUp}/>
                 <Route path="/*">
-                    {getItem("user") ? <Header/> : <PreviewHeader/>}
                     <NotFound/>
                 </Route>
             </Switch>

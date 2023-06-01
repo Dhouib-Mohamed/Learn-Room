@@ -2,7 +2,6 @@ import {Route} from 'react-router-dom';
 import NotFound from "../pages/NotFound";
 import Header from "../components/Header";
 import {getItem} from "../../utils/localStorage";
-import PreviewHeader from "../components/PreviewHeader";
 
 
 export default function Connected({path, Component}) {
@@ -13,10 +12,7 @@ export default function Connected({path, Component}) {
                     <Header/>
                     <Component/>
                 </> :
-                <>
-                    <PreviewHeader/>
-                    <NotFound/>
-                </>
+                <NotFound/>
             }
         </Route>
     );
