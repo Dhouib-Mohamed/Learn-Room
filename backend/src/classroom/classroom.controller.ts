@@ -13,6 +13,11 @@ export class ClassroomController {
     return this.classroomService.findOne(id);
   }
 
+  @Get('course/:id')
+  getCourses(@Param('id') id: string) {
+    return this.classroomService.getAllCourses(id);
+  }
+
   @Get('task/:id')
   getTasks(@Param('id') id: string) {
     return this.classroomService.getAllTasks(id);

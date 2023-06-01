@@ -10,6 +10,7 @@ import {StudentService} from "../student/student.service";
 import {Practice} from "../practice/entities/practice.entity";
 import {Task} from "../task/entities/task.entity";
 import {CourseService} from "../course/course.service";
+import {Course} from "../course/entities/course.entity";
 
 @Injectable()
 export class ClassroomService extends GenericService<Classroom> {
@@ -18,6 +19,8 @@ export class ClassroomService extends GenericService<Classroom> {
   constructor(
       @InjectRepository(Classroom)
       private classRepository: Repository<Classroom>,
+      @InjectRepository(Course)
+      private courseRepository: Repository<Course>,
       @InjectRepository(Student)
       private studentRepository: Repository<Student>,
       private readonly teacherService: TeacherService,
@@ -75,11 +78,21 @@ export class ClassroomService extends GenericService<Classroom> {
     }
   }
 
-  async getAllTasks(id: any): Promise<Task[]> {
+  async getAllCourses(id: any): Promise<Course[]> {
     try {
       const classroom = await this.findOne(id)
+      return await this.courseRepository.findBy({class: classroom})
+    } catch (e) {
+      console.log(e);
+      return e.sqlmessage ?? e;
+    }
+  }
+
+  async getAllTasks(id: any): Promise<Task[]> {
+    try {
+      const classes = await this.getAllCourses(id)
       let tasks = []
-      for (const e of classroom.classes) {
+      for (const e of classes) {
         tasks = {...tasks, ...(await this.courseService.getAllTasks(e.id))}
       }
       return tasks
@@ -91,9 +104,9 @@ export class ClassroomService extends GenericService<Classroom> {
 
   async getAllAssignments(id: any): Promise<Practice[]> {
     try {
-      const classroom = await this.findOne(id)
+      const classes = await this.getAllCourses(id)
       let assignments = []
-      for (const e of classroom.classes) {
+      for (const e of classes) {
         assignments = {...assignments, ...(await this.courseService.getAllAssignments(e.id))}
       }
       return assignments
