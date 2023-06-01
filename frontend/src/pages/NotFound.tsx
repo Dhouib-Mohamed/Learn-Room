@@ -1,15 +1,17 @@
-import { Box, Heading, Text } from '@chakra-ui/react';
-import Header from '../components/Header';
 import notfound from "../assets/notfound.png";
+import {getItem} from "../../utils/localStorage";
+import Header from "../components/Header";
+import PreviewHeader from "../components/PreviewHeader";
 
 
 function NotFound() {
     return (
         <>
-            <Header />
-            <div style={{ display: 'flex',height:"750px", justifyContent: 'center', alignItems: 'center' }}>
-                <img src={notfound} alt="quote" />
-            </div></>
+            {getItem("user") ? <Header/> : <PreviewHeader/>}
+            <div style={{display: 'flex', height: "750px", justifyContent: 'center', alignItems: 'center'}}>
+                <img src={notfound} alt="quote"/>
+            </div>
+        </>
     );
 }
 
