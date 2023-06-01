@@ -31,6 +31,7 @@ import {useEffect, useState} from "react";
 import {AiOutlineMore} from "react-icons/ai";
 import {getItem, setItem} from "../../utils/localStorage";
 import ClassroomModal from "../modals/classroom";
+import Footer from '../components/Footer.js';
 
 
 const Classroom = ({}) => {
@@ -134,6 +135,7 @@ const [classroom,setClassroom] = useState({})
 
 
             </Box>
+            <Footer/>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>

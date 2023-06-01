@@ -1,5 +1,6 @@
 import {Button, Flex, Modal, ModalContent, ModalOverlay, useDisclosure} from "@chakra-ui/react";
 import Course from "../components/Course";
+import EmptyStatePlaceholder from "../components/EmptyStatePlaceholder";
 import CourseModal from "../modals/course";
 import {useHistory} from 'react-router-dom';
 import {post} from "../helpers/helpers";
@@ -27,6 +28,7 @@ const CourseList = ({ classroom }) => {
 
     return (
         <>
+        <EmptyStatePlaceholder user={"student"} type={"course"}/>
             <Flex direction={"column"} >
                 {classroom.courses?.map((cours) => (
                     <Course
