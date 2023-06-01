@@ -13,6 +13,16 @@ export class CourseController {
         return this.courseService.findOne(id);
     }
 
+    @Get('task/:id')
+    getTasks(@Param('id') id: string) {
+        return this.courseService.getAllTasks(id);
+    }
+
+    @Get('assignment/:id')
+    getAssignments(@Param('id') id: string) {
+        return this.courseService.getAllAssignments(id);
+    }
+
     @Post(":id")
     create(@Body() createClassroomDto: CreateCourseDto, @Param("id") id) {
         return this.courseService.createCourse(id, createClassroomDto);

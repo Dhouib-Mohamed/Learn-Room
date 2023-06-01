@@ -6,5 +6,5 @@ export class CreateCourseDto {
     name: string;
     @IsDefined()
     @IsString()
-    description: string;
+    content: string;
 }

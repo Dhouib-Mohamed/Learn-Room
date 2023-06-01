@@ -26,9 +26,6 @@ export class ClassroomService extends GenericService<Classroom> {
       private readonly courseService: CourseService
   ) {
     super(classRepository);
-    // this.teacherService = new TeacherService(teacherRepository)
-    // this.studentService = new StudentService(studentRepository)
-    // this.courseService = new CourseService(courseRepository,classRepository,teacherRepository,studentRepository,practiceRepository,taskRepository)
   }
 
   createClass = async (id, createClassroomDto: CreateClassroomDto) => {

@@ -37,9 +37,7 @@ export class CourseService extends GenericService<Course> {
     async getAllTasks(id: any): Promise<Task[]> {
         try {
             const course = await this.findOne(id)
-            return await this.taskRepository.find({
-                where: {course},
-            })
+            return await this.taskRepository.findBy({course})
         } catch (e) {
             console.log(e);
             return e.sqlmessage ?? e;

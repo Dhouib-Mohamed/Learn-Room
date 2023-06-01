@@ -13,6 +13,16 @@ export class ClassroomController {
     return this.classroomService.findOne(id);
   }
 
+  @Get('task/:id')
+  getTasks(@Param('id') id: string) {
+    return this.classroomService.getAllTasks(id);
+  }
+
+  @Get('assignment/:id')
+  getAssignments(@Param('id') id: string) {
+    return this.classroomService.getAllAssignments(id);
+  }
+
   @Post(":id")
   create(@Body() createClassroomDto: CreateClassroomDto, @Param("id") id) {
     return this.classroomService.createClass(id, createClassroomDto);
