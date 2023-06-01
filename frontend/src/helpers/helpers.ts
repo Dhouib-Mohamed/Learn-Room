@@ -15,9 +15,6 @@ const get = async (url) => {
                 method: 'GET', // *GET, POST, PUT, DELETE, etc.
             }
         );
-        if (!response.ok) {
-            return (response.statusText)
-        }
         const data = await response.json();
         return (data);
     } catch (error) {
@@ -36,9 +33,6 @@ const post = async (url, body) => {
             }
         );
         console.log(response)
-        if (!response.ok) {
-            return (response.statusText)
-        }
         const data = await response.json();
         return (data);
     } catch (error) {
@@ -56,9 +50,6 @@ const patch = async (url, body) => {
                 body: JSON.stringify(body),
             }
         );
-        if (!response.ok) {
-            return (response.statusText)
-        }
         const data = await response.json();
         return (data);
     } catch (error) {
@@ -75,9 +66,6 @@ const remove = async (url) => {
                 method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
             }
         );
-        if (!response.ok) {
-            return (response.statusText)
-        }
         const data = await response.json();
         return (data);
     } catch (error) {
