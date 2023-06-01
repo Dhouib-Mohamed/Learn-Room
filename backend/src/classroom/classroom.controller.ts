@@ -24,8 +24,8 @@ export class ClassroomController {
   }
 
   @Patch(":id/:user")
-  addUser(@Param('id') id: string, @Param('user') user: string,) {
-    return this.classroomService.addUser(id, user);
+  addUser(@Param('email') email: string, @Param('user') user: string,) {
+    return this.classroomService.addUser(email, user);
   }
 
   @Delete(':id')

@@ -1,12 +1,11 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
-import {Generic} from './entities/generic.entity';
 import {InjectRepository} from '@nestjs/typeorm';
-import {DeleteResult, FindOptionsWhere, Repository, UpdateResult} from 'typeorm';
+import {DeleteResult, EntitySchema, FindOptionsWhere, Repository, UpdateResult} from 'typeorm';
 
 @Injectable()
 export class GenericService<Entity> {
     constructor(
-        @InjectRepository(Generic)
+        @InjectRepository(EntitySchema)
         private readonly repository: Repository<Entity>) {
     }
 
