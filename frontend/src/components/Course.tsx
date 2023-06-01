@@ -2,7 +2,7 @@ import {Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel
 import {useHistory} from "react-router-dom";
 
 
-const Course = ({id ,courseName,CourseDate}) => {
+const Course = ({id ,courseName,CourseDate,content}) => {
     const history = useHistory()
     return (
         <Box>
@@ -11,7 +11,7 @@ const Course = ({id ,courseName,CourseDate}) => {
                     <h2>
                         <AccordionButton>
                             <Box as="span" flex='1' fontWeight={700} height={"40px"} textAlign='left'>
-                                Course {id}
+                               {courseName}
                             </Box>
                             <AccordionIcon />
                         </AccordionButton>
@@ -19,7 +19,7 @@ const Course = ({id ,courseName,CourseDate}) => {
                     <AccordionPanel style={{display:"flex",flexDirection:"row", justifyContent:"space-between" ,  width:"100%"}} pb={4}>
                         <p onClick={() => {
                             history.push(`./course/${id}`)
-                        }}>{courseName}</p>
+                        }}>{content}</p>
                         <p style={{ fontSize:15 , fontWeight:700 , color:"#d1d4d4"}} >{CourseDate}</p>
                 </AccordionPanel>
                 </AccordionItem>

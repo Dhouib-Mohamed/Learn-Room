@@ -35,6 +35,7 @@ import Footer from '../components/Footer.js';
 
 
 const Classroom = ({}) => {
+
     const [update, setUpdate] = useState(true)
     let {id} = useParams();
 const [classroom,setClassroom] = useState({})
@@ -98,7 +99,6 @@ const [classroom,setClassroom] = useState({})
                             <MenuList style={{ fontSize: "15px" }}>
                                 <MenuItem onClick={() => {
                                     onOpen()
-
                                 }} >Edit Classroom</MenuItem>
 
                                 <MenuItem onClick={deleteClassroom} >Delete Classroom</MenuItem>
@@ -116,15 +116,19 @@ const [classroom,setClassroom] = useState({})
                 <Tabs variant='soft-rounded' colorScheme='green' >
                     <TabList>
                         <Tab>Courses</Tab>
-                        <Tab>Tasks and assignments</Tab>
+                        <Tab>Tasks </Tab>
+                        <Tab>Assignments</Tab>
                         <Tab>Students</Tab>
                     </TabList>
                     <TabPanels>
                         <TabPanel>
-                            <CourseList classroom={classroom} />
+                            <CourseList  id={id} />
                         </TabPanel>
                         <TabPanel>
-                            <TaskList taskAssignList={classroom?.taskassignlist} />
+                            <TaskList id={id} />
+                        </TabPanel>
+                        <TabPanel>
+                            <TaskList id={id} />
                         </TabPanel>
                         <TabPanel>
                             <Students />

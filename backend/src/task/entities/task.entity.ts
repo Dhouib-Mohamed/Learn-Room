@@ -1,7 +1,7 @@
 import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Course} from "../../course/entities/course.entity";
 
-@Entity('practice')
+@Entity('task')
 export class Task {
     @PrimaryGeneratedColumn("uuid")
     id: string;

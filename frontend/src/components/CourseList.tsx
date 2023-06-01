@@ -3,17 +3,33 @@ import Course from "../components/Course";
 import EmptyStatePlaceholder from "../components/EmptyStatePlaceholder";
 import CourseModal from "../modals/course";
 import {useHistory} from 'react-router-dom';
-import {post} from "../helpers/helpers";
+import {get, post} from "../helpers/helpers";
+import {useEffect, useState} from "react";
 
 
-const CourseList = ({ classroom }) => {
+const CourseList = ({ id }) => {
+    const [update, setUpdate] = useState(true)
+
     const { isOpen, onOpen, onClose } = useDisclosure();
     const history = useHistory();
 
+    const [courses,setCourses] = useState([])
+    const getCourses = async () => {
+        console.log("id  ",id)
+        const result = await get("classroom/course/" + id)
+        console.log("courselist",result)
+        setCourses(result)
+
+    }
+
+    useEffect(() => {
+        getCourses()
+    }, [update])
+
     const addCourse = async (data) => {
-        console.log(classroom.id)
+        console.log(id)
         console.log('data',data)
-        const result = await post("course/" + classroom.id, data)
+        const result = await post("course/" + id, data)
         console.log(result)
 
         onClose();
@@ -31,12 +47,15 @@ const CourseList = ({ classroom }) => {
         <>
         <EmptyStatePlaceholder user={"student"} type={"course"}/>
             <Flex direction={"column"} >
-                {classroom.courses?.map((cours) => (
+                {courses?.map((cours) => (
+                   
                     <Course
                         key={cours.id}
                         id={cours.id}
-                        courseName={cours.title}
-                        CourseDate={cours.CourseDate}
+                        courseName={cours.name}
+                        CourseDate={cours.date}
+                        content={cours.content}
+                        
                     />
                 ))}
             </Flex>
