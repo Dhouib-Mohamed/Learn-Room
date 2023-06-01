@@ -3,7 +3,7 @@ import {CreateClassroomDto} from './dto/create-classroom.dto';
 import {Classroom} from './entities/classroom.entity';
 import {GenericService} from 'src/generic/generic.service';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Repository} from 'typeorm';
+import {DeleteResult, Repository} from 'typeorm';
 import {TeacherService} from "../teacher/Teacher.service";
 import {Teacher} from "../teacher/entities/teacher.entity";
 import {Student} from "../student/entities/student.entity";
@@ -20,7 +20,7 @@ export class ClassroomService extends GenericService<Classroom> {
       @InjectRepository(Teacher)
       private teacherRepository: Repository<Teacher>,
       @InjectRepository(Student)
-      private studentRepository: Repository<Teacher>,
+      private studentRepository: Repository<Student>,
   ) {
     super(classRepository);
     this.teacherService = new TeacherService(teacherRepository)
@@ -30,29 +30,35 @@ export class ClassroomService extends GenericService<Classroom> {
   createClass = async (id, createClassroomDto: CreateClassroomDto) => {
     try {
       const teacher = await this.teacherService.findOne(id);
-      const classes = await this.create({...createClassroomDto, image_id: Math.floor(Math.random() * (2)), teacher});
-      const currentClasses = teacher.classes ?? []
-      await this.teacherService.update(id, {classes: [...currentClasses, classes]})
-      return classes
+      return await this.create({...createClassroomDto, image_id: Math.floor(Math.random() * 2), teacher, students: []});
     } catch (e) {
-      return e.sqlmessage ?? e
+      return e.sqlmessage ?? e;
     }
   }
 
+
   addUser = async (id, user) => {
     try {
-      console.log(id)
-      console.log(user)
       const student = await this.studentService.findOne(user);
-      const currentClass = await this.findOne(id)
-      console.log(student)
-      console.log(currentClass)
-      const res = await this.studentService.update(user, {classes: [...user.classes, currentClass]})
-      console.log(res)
-      return await this.update(id, [...currentClass.students, student])
+      const currentClass = await this.findOne(id);
+      student.classes = student.classes ?? [];
+      student.classes.push(currentClass);
+      await this.studentService.create(student);
+      currentClass.students = currentClass.students ?? [];
+      currentClass.students.push(student);
+      await this.create(currentClass);
+      return currentClass;
     } catch (e) {
-      return e.sqlmessage ?? e
+      console.log(e);
+      return e.sqlmessage ?? e;
     }
+  };
+
+  async deleteClass(id: any): Promise<DeleteResult> {
+    const oldClass = await this.findOne(id)
+    await super.delete(id);
+    return await this.teacherService.findOne(oldClass.teacher)
   }
+
 
 }

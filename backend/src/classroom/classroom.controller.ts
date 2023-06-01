@@ -30,7 +30,7 @@ export class ClassroomController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.classroomService.delete(id);
+    return this.classroomService.deleteClass(id);
   }
 
 
