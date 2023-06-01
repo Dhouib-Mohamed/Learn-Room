@@ -1,5 +1,4 @@
 import {Box, Divider, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs,} from '@chakra-ui/react';
-
 import {useParams} from "react-router-dom";
 import {images} from "../data/images.jsx";
 import CourseList from "../components/CourseList";
@@ -11,6 +10,9 @@ import {useEffect, useState} from "react";
 
 
 const Classroom = ({}) => {
+    
+   
+
     let {id} = useParams();
 const [classroom,setClassroom] = useState({})
     const getClassroom = async () => {
@@ -23,6 +25,7 @@ const [classroom,setClassroom] = useState({})
         } , [])
     console.log(classroom)
     return (
+        <>
         <Box marginLeft={100} marginRight={100} p={4} pt={0}>
             <Heading as="h2" size="lg" mb={4}>
                 <Image
@@ -56,6 +59,8 @@ const [classroom,setClassroom] = useState({})
                     </TabPanel>
                 </TabPanels>
             </Tabs>
+         
+            
             {/*<Flex mb={4}>*/}
             {/*    <Box w="50%">*/}
             {/*        <Heading as="h3" size="md" mb={2}>*/}
@@ -85,7 +90,12 @@ const [classroom,setClassroom] = useState({})
             {/*    </Box>*/}
             {/*</Flex>*/}
         </Box>
+        </>
     );
 };
 
 export default Classroom;
+function useDisclosure(): { isOpen: any; onOpen: any; onClose: any; } {
+    throw new Error('Function not implemented.');
+}
+

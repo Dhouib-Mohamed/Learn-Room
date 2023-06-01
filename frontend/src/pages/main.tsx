@@ -2,9 +2,8 @@ import ClassroomList from "../components/ClassroomList";
 import {getItem, setItem} from "../../utils/localStorage";
 import {Button, Modal, ModalContent, ModalOverlay, useDisclosure} from "@chakra-ui/react";
 import {post} from "../helpers/helpers";
-
 import {useHistory} from 'react-router-dom';
-import CourseModal from "../modals/course";
+import ClassroomModal from "../modals/classroom";
 
 export default function Main() {
     let classroom = getItem("user").classes
@@ -45,7 +44,7 @@ export default function Main() {
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <CourseModal onClose={onClose} handleSubmit={handleSubmit}/>
+                    <ClassroomModal onClose={onClose} handleSubmit={handleSubmit}/>
                 </ModalContent>
             </Modal>
         </>

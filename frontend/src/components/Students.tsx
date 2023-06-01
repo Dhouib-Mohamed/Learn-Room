@@ -1,6 +1,10 @@
 import {Avatar, Box, Divider, Table, TableContainer, Tbody, Td, Tr,} from '@chakra-ui/react';
 // import {useHistory} from "react-router-dom";
-import { Button } from "@chakra-ui/react";
+import StudentModal from '../modals/student';
+import {Button, Modal, ModalContent, ModalOverlay, useDisclosure} from "@chakra-ui/react";
+import {useHistory} from 'react-router-dom';
+
+
 
 const personnes= [{name:'jean Abrahmov' , email:"jean Abrahmov@gmail.com" , src:'https://bit.ly/abramol' },
     {name: 'Kola Tioluwani' , email:"Kola Tioluwani@gmail.com", src: 'https://bit.ly/tioluwani-kolawole'} ,
@@ -11,7 +15,23 @@ const personnes= [{name:'jean Abrahmov' , email:"jean Abrahmov@gmail.com" , src:
     {name:'Segun Adebayo', email:"Segun Adebayo@gmail.com" , src:'https://bit.ly/sage-adebayo' }
 ]
 const Students = () => {
-    // const history = useHistory()
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const history = useHistory();
+
+    const addStudent = async (data) => {
+        // const result = await post("classroom/" + getItem("user").id, data)
+        // console.log(result)
+        // onClose();
+        // history.push(`/classroom/${result.id}`);
+    }
+   
+    const handleSubmit = (values) => {
+
+        addStudent(values)
+   
+    };
+
+
     return (
         <>
         <Box>
@@ -43,9 +63,17 @@ const Students = () => {
             <Button colorScheme="custom" color="#FFF" bgColor="#66B0F0" rounded="full" size="md" 
                 height="30px"
                 width="120px" onClick={() => {
+                    onOpen()
                 }}
             >Add Student</Button>
             </div>
+
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <StudentModal onClose={onClose} handleSubmit={handleSubmit}/>
+                </ModalContent>
+            </Modal>
         </>
     );
 };

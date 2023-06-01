@@ -1,9 +1,30 @@
 import { Flex } from "@chakra-ui/react";
 import Course from "../components/Course";
-import { Button } from "@chakra-ui/react";
+import {Button, Modal, ModalContent, ModalOverlay, useDisclosure} from "@chakra-ui/react";
+import CourseModal from "../modals/course";
+import {useHistory} from 'react-router-dom';
+import {post} from "../helpers/helpers";
+
 
 
 const CourseList = ({ classroom }) => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const history = useHistory();
+
+    const addCourse = async (data) => {
+        // const result = await post("classroom/" + getItem("user").id, data)
+        // console.log(result)
+        // onClose();
+        // history.push(`/classroom/${result.id}`);
+    }
+   
+    const handleSubmit = (values) => {
+
+        addCourse(values)
+   
+    };
+       
+
     return (
         <>
             <Flex direction={"column"} >
@@ -21,9 +42,17 @@ const CourseList = ({ classroom }) => {
             <Button colorScheme="custom" color="#FFF" bgColor="#66B0F0" rounded="full" size="md" 
                 height="30px"
                 width="120px" onClick={() => {
+                    onOpen()
                 }}
             >Add course</Button>
             </div>
+
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <CourseModal onClose={onClose} handleSubmit={handleSubmit}/>
+                </ModalContent>
+            </Modal>
         </>
     );
 };
