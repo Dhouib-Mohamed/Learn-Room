@@ -25,16 +25,18 @@ import { images } from "../data/images.jsx";
 import CourseList from "../components/CourseList";
 import TaskList from "../components/TaskList";
 import Students from "../components/Students";
-import { get, post, remove } from "../helpers/helpers";
-import { useEffect, useState } from "react";
-import { AiOutlineMore } from "react-icons/ai";
-import { getItem, setItem } from "../../utils/localStorage";
+
+import {get, patch, remove} from "../helpers/helpers";
+import {useEffect, useState} from "react";
+import {AiOutlineMore} from "react-icons/ai";
+import {getItem, setItem} from "../../utils/localStorage";
 import ClassroomModal from "../modals/classroom";
 
 
-const Classroom = ({ }) => {
-    let { id } = useParams();
-    const [classroom, setClassroom] = useState({})
+const Classroom = ({}) => {
+    const [update, setUpdate] = useState(true)
+    let {id} = useParams();
+const [classroom,setClassroom] = useState({})
     const history = useHistory();
     const getClassroom = async () => {
         const result = await get("classroom/" + id)
@@ -49,18 +51,17 @@ const Classroom = ({ }) => {
 
 
 
-    useEffect(() => {
-        getClassroom()
-    }, [])
+        useEffect(() => {
+            getClassroom()
+        }, [update])
     console.log(classroom)
 
     const editClassroom = async (data) => {
-        const result = await post("classroom/" + id, data)
-        console.log(result)
+        const result = await patch("classroom/" + id, data)
+        console.log("res:", result)
         setItem("user", result)
         onClose();
-        history.push(`/classroom/${result.id}`);
-
+        setUpdate(!update)
     }
 
     const handleSubmit = (values) => {
@@ -136,7 +137,8 @@ const Classroom = ({ }) => {
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ClassroomModal title={"Edit Classroom"} onClose={onClose} handleSubmit={handleSubmit} />
+                    <ClassroomModal title={"Edit Classroom"} onClose={onClose} handleSubmit={handleSubmit}
+                                    values={classroom}/>
                 </ModalContent>
             </Modal>
         </>
