@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Course} from "../../course/entities/course.entity";
 
 @Entity('practice')
 export class Task {
@@ -10,4 +11,7 @@ export class Task {
     content: string;
     @Column()
     completed: boolean = false
+    @ManyToOne(() => Course, (e) => e.tasks)
+    @JoinColumn({name: "course_task"})
+    course: Course
 }

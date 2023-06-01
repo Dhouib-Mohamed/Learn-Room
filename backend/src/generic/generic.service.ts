@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { Generic } from './entities/generic.entity';
+import {Injectable, NotFoundException} from '@nestjs/common';
+import {Generic} from './entities/generic.entity';
 import {InjectRepository} from '@nestjs/typeorm';
-import {DeepPartial, DeleteResult, FindOptionsWhere, Repository, UpdateResult} from 'typeorm';
+import {DeleteResult, FindOptionsWhere, Repository, UpdateResult} from 'typeorm';
 
 @Injectable()
 export class GenericService<Entity> {
@@ -39,10 +39,11 @@ export class GenericService<Entity> {
         }
     }
 
-    async update(id: any, dto): Promise<UpdateResult> {
+    async update(id: string, dto): Promise<UpdateResult> {
         try {
             return await this.repository.update(id, dto);
         } catch (e) {
+            console.log(e)
             return e.sqlmessage ?? e
         }
     }

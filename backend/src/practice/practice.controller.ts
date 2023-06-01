@@ -5,16 +5,7 @@ import {UpdatePracticeDto} from './dto/update-practice.dto';
 
 @Controller('practice')
 export class PracticeController {
-  constructor(private readonly practiceService: PracticeService) {}
-
-  @Post()
-  create(@Body() createPracticeDto: CreatePracticeDto) {
-    return this.practiceService.create(createPracticeDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.practiceService.findAll();
+  constructor(private readonly practiceService: PracticeService) {
   }
 
   @Get(':id')
@@ -22,13 +13,18 @@ export class PracticeController {
     return this.practiceService.findOne(id);
   }
 
+  @Post(":id")
+  create(@Body() createClassroomDto: CreatePracticeDto, @Param("id") id) {
+    return this.practiceService.createPractice(id, createClassroomDto);
+  }
+
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePracticeDto: UpdatePracticeDto) {
-      return this.practiceService.update(id, updatePracticeDto);
+  update(@Param('id') id: string, @Body() updateClassroomDto: UpdatePracticeDto) {
+    return this.practiceService.update(id, updateClassroomDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-      return this.practiceService.delete(id);
+    return this.practiceService.delete(id);
   }
 }
