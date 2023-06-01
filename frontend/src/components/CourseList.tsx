@@ -33,7 +33,7 @@ const CourseList = ({ id }) => {
         console.log(result)
 
         onClose();
-        history.push(`./course/${result.id}`);
+        history.push(`classroom/${id}/course/${result.id}`);
     }
    
     const handleSubmit = (values) => {
