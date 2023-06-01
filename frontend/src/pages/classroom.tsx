@@ -1,4 +1,21 @@
-import {Box, Divider, Heading, Image, Tab, TabList, TabPanel, TabPanels, Tabs,} from '@chakra-ui/react';
+import {
+    Box,
+    Divider,
+    Flex,
+    Heading,
+    IconButton,
+    Image,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
+    Tabs,
+} from '@chakra-ui/react';
+
 import {useParams} from "react-router-dom";
 import {images} from "../data/images.jsx";
 import CourseList from "../components/CourseList";
@@ -7,6 +24,7 @@ import Students from "../components/Students";
 
 import {get} from "../helpers/helpers";
 import {useEffect, useState} from "react";
+import {AiOutlineMore} from "react-icons/ai";
 
 
 const Classroom = ({}) => {
@@ -36,12 +54,34 @@ const [classroom,setClassroom] = useState({})
                     height={"280px"}
                     width={"100%"}
                 />
-                <h3 style={{color: "#41a090", padding: "15px 0 15px 0"}}> {classroom?.title}</h3>
+                <Flex style={{flexDirection:'row', padding: "15px 0 15px 0" }}>
+                <h3 style={{color: "#41a090", width:"99%"}}> {classroom?.name}</h3>
+                    <Menu>
+                        <MenuButton
+                            fontSize={"25px"}
+                            style={{marginTop:2 }}
+                            as={IconButton}
+                            aria-label='Options'
+                            icon={<AiOutlineMore/>}
+                            variant='outline'
+                            border={false}
+                        />
+                        <MenuList style={{fontSize:"15px"}}>
+                            <MenuItem>Edit Classroom
+
+                            </MenuItem>
+
+                            <MenuItem>Delete Classroom</MenuItem>
+
+                        </MenuList>
+                    </Menu>
+                </Flex>
                 <div style={{fontWeight: 400, fontSize: 18}}>{classroom?.description}</div>
 
             </Heading>
             <Divider mb={4}/>
-            <Tabs variant='soft-rounded' colorScheme='green'>
+
+            <Tabs variant='soft-rounded' colorScheme='green' >
                 <TabList>
                     <Tab>Courses</Tab>
                     <Tab>Tasks and assignments</Tab>
@@ -58,6 +98,7 @@ const [classroom,setClassroom] = useState({})
                         <Students />
                     </TabPanel>
                 </TabPanels>
+
             </Tabs>
          
             
