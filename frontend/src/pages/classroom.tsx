@@ -16,32 +16,40 @@ import {
     Tabs,
 } from '@chakra-ui/react';
 
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {images} from "../data/images.jsx";
 import CourseList from "../components/CourseList";
 import TaskList from "../components/TaskList";
 import Students from "../components/Students";
 
-import {get} from "../helpers/helpers";
+import {get, remove} from "../helpers/helpers";
 import {useEffect, useState} from "react";
 import {AiOutlineMore} from "react-icons/ai";
 
 
 const Classroom = ({}) => {
-    
-   
-
     let {id} = useParams();
 const [classroom,setClassroom] = useState({})
+    const history = useHistory();
     const getClassroom = async () => {
         const result = await get("classroom/"+id)
          setClassroom(result)
     }
 
+    const deleteClassroom = async () => {
+      await remove ("classroom/"+id)
+        history.push('/home');
+    }
+
+
         useEffect( ()=> {
            getClassroom()
         } , [])
     console.log(classroom)
+
+
+
+
     return (
         <>
         <Box marginLeft={100} marginRight={100} p={4} pt={0}>
@@ -67,11 +75,13 @@ const [classroom,setClassroom] = useState({})
                             border={false}
                         />
                         <MenuList style={{fontSize:"15px"}}>
-                            <MenuItem>Edit Classroom
+                            <MenuItem onClick={()=> {
 
-                            </MenuItem>
+                            }} >Edit Classroom</MenuItem>
 
-                            <MenuItem>Delete Classroom</MenuItem>
+
+
+                            <MenuItem onClick={deleteClassroom} >Delete Classroom</MenuItem>
 
                         </MenuList>
                     </Menu>
@@ -136,7 +146,5 @@ const [classroom,setClassroom] = useState({})
 };
 
 export default Classroom;
-function useDisclosure(): { isOpen: any; onOpen: any; onClose: any; } {
-    throw new Error('Function not implemented.');
-}
+
 
