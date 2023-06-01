@@ -44,7 +44,7 @@ export default function Main() {
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ClassroomModal onClose={onClose} handleSubmit={handleSubmit}/>
+                    <ClassroomModal title={"Add Classroom"} onClose={onClose} handleSubmit={handleSubmit}/>
                 </ModalContent>
             </Modal>
         </>

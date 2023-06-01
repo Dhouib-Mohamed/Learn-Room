@@ -2,6 +2,7 @@ import Header from '../components/Header';
 
 
 function CourseDetails() {
+
     return (
         <>
             <Header/>

@@ -1,10 +1,8 @@
-import { Flex } from "@chakra-ui/react";
+import {Button, Flex, Modal, ModalContent, ModalOverlay, useDisclosure} from "@chakra-ui/react";
 import Course from "../components/Course";
-import {Button, Modal, ModalContent, ModalOverlay, useDisclosure} from "@chakra-ui/react";
 import CourseModal from "../modals/course";
 import {useHistory} from 'react-router-dom';
 import {post} from "../helpers/helpers";
-
 
 
 const CourseList = ({ classroom }) => {
@@ -12,10 +10,12 @@ const CourseList = ({ classroom }) => {
     const history = useHistory();
 
     const addCourse = async (data) => {
-        // const result = await post("classroom/" + getItem("user").id, data)
-        // console.log(result)
-        // onClose();
-        // history.push(`/classroom/${result.id}`);
+        console.log(classroom.id)
+        const result = await post("course/" + classroom.id, data)
+        console.log(result)
+
+        onClose();
+        history.push(`./course/${result.id}`);
     }
    
     const handleSubmit = (values) => {

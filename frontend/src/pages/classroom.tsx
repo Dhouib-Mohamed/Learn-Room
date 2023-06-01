@@ -9,11 +9,15 @@ import {
     MenuButton,
     MenuItem,
     MenuList,
+    Modal,
+    ModalContent,
+    ModalOverlay,
     Tab,
     TabList,
     TabPanel,
     TabPanels,
     Tabs,
+    useDisclosure,
 } from '@chakra-ui/react';
 
 import {useHistory, useParams} from "react-router-dom";
@@ -22,9 +26,11 @@ import CourseList from "../components/CourseList";
 import TaskList from "../components/TaskList";
 import Students from "../components/Students";
 
-import {get, remove} from "../helpers/helpers";
+import {get, post, remove} from "../helpers/helpers";
 import {useEffect, useState} from "react";
 import {AiOutlineMore} from "react-icons/ai";
+import {getItem, setItem} from "../../utils/localStorage";
+import ClassroomModal from "../modals/classroom";
 
 
 const Classroom = ({}) => {
@@ -35,11 +41,13 @@ const [classroom,setClassroom] = useState({})
         const result = await get("classroom/"+id)
          setClassroom(result)
     }
-
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const deleteClassroom = async () => {
-      await remove ("classroom/"+id)
+     const response=  await remove ("classroom/"+id)
+        setItem("user",response)
         history.push('/home');
     }
+
 
 
         useEffect( ()=> {
@@ -47,6 +55,20 @@ const [classroom,setClassroom] = useState({})
         } , [])
     console.log(classroom)
 
+    const editClassroom = async (data) => {
+        const result = await post("classroom/" + id, data)
+        console.log(result)
+        setItem("user", result)
+        onClose();
+        history.push(`/classroom/${result.id}`);
+
+    }
+
+    const handleSubmit = (values) => {
+
+        editClassroom(values)
+
+    };
 
 
 
@@ -64,7 +86,7 @@ const [classroom,setClassroom] = useState({})
                 />
                 <Flex style={{flexDirection:'row', padding: "15px 0 15px 0" }}>
                 <h3 style={{color: "#41a090", width:"99%"}}> {classroom?.name}</h3>
-                    <Menu>
+                    {getItem("user").user ?  <Menu>
                         <MenuButton
                             fontSize={"25px"}
                             style={{marginTop:2 }}
@@ -75,16 +97,16 @@ const [classroom,setClassroom] = useState({})
                             border={false}
                         />
                         <MenuList style={{fontSize:"15px"}}>
-                            <MenuItem onClick={()=> {
+                            <MenuItem onClick={()=> {onOpen()
 
                             }} >Edit Classroom</MenuItem>
-
-
 
                             <MenuItem onClick={deleteClassroom} >Delete Classroom</MenuItem>
 
                         </MenuList>
-                    </Menu>
+
+                    </Menu> : null }
+
                 </Flex>
                 <div style={{fontWeight: 400, fontSize: 18}}>{classroom?.description}</div>
 
@@ -110,37 +132,15 @@ const [classroom,setClassroom] = useState({})
                 </TabPanels>
 
             </Tabs>
-         
-            
-            {/*<Flex mb={4}>*/}
-            {/*    <Box w="50%">*/}
-            {/*        <Heading as="h3" size="md" mb={2}>*/}
-            {/*            Tasks*/}
-            {/*        </Heading>*/}
-            {/*        <List spacing={3}>*/}
-            {/*            {classroom.tasks.map((task) => (*/}
-            {/*                <ListItem key={task.id}>*/}
-            {/*                    <ListIcon as={CheckCircleIcon} color="green.500"/>*/}
-            {/*                    {task.title}*/}
-            {/*                </ListItem>*/}
-            {/*            ))}*/}
-            {/*        </List>*/}
-            {/*    </Box>*/}
-            {/*    <Box w="50%">*/}
-            {/*        <Heading as="h3" size="md" mb={2}>*/}
-            {/*            Assignments*/}
-            {/*        </Heading>*/}
-            {/*        <List spacing={3}>*/}
-            {/*            {classroom.assignments.map((assignment) => (*/}
-            {/*                <ListItem key={assignment.id}>*/}
-            {/*                    <ListIcon as={CheckCircleIcon} color="green.500"/>*/}
-            {/*                    {assignment.title}*/}
-            {/*                </ListItem>*/}
-            {/*            ))}*/}
-            {/*        </List>*/}
-            {/*    </Box>*/}
-            {/*</Flex>*/}
+
+
         </Box>
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ClassroomModal title={"Edit Classroom"} onClose={onClose} handleSubmit={handleSubmit}/>
+                </ModalContent>
+            </Modal>
         </>
     );
 };

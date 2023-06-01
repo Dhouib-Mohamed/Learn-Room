@@ -11,9 +11,9 @@ import {
 } from "@chakra-ui/react";
 import {Field, Form, Formik} from "formik";
 
-export default function ClassroomModal({handleSubmit, onClose, values = {name: '', description: '',}}) {
+export default function ClassroomModal({title , handleSubmit, onClose, values = {name: '', description: '',}}) {
     return (
-        <><ModalHeader>Add Classroom</ModalHeader><ModalCloseButton/><Formik
+        <><ModalHeader>{title}</ModalHeader><ModalCloseButton/><Formik
             initialValues={values}
             onSubmit={handleSubmit}
         >
