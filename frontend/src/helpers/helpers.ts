@@ -6,7 +6,7 @@ const init = {
         'Content-Type': 'application/json',
     }
 }
-const get = async (url) => {
+const get = async (url,setError) => {
     try {
         const response = await fetch(
             BASE_URL + url,
@@ -20,7 +20,8 @@ const get = async (url) => {
         if (data.message) {
          let errorMessage=data.message;
          console.log("error msg",errorMessage)
-         return errorMessage;
+         setError(errorMessage);
+         throw new Error;
         }
         return (data);
     } catch (error) {
@@ -28,7 +29,7 @@ const get = async (url) => {
     }
 }
 
-const post = async (url, body) => {
+const post = async (url, body,setError) => {
     try {
         console.log("body",body)
         const response = await fetch(
@@ -45,7 +46,8 @@ const post = async (url, body) => {
         if (data.message) {
          let errorMessage=data.message;
          console.log(errorMessage)
-         return errorMessage;
+         setError(errorMessage);
+         throw new Error;
         }
         return (data);
     } catch (error) {
@@ -53,7 +55,7 @@ const post = async (url, body) => {
         console.error('Error:', error.message);
     }
 }
-const patch = async (url, body) => {
+const patch = async (url, body,setError) => {
     try {
         const response = await fetch(
             BASE_URL + url,
@@ -64,16 +66,19 @@ const patch = async (url, body) => {
             }
         );
         const data = await response.json();
-        if (!response.ok){
-            console.log("response",response);
-        }
+        if (data.message) {
+            let errorMessage=data.message;
+            console.log(errorMessage)
+            setError(errorMessage);
+            throw new Error;
+           }
         return (data);
     } catch (error) {
         console.error('Error:', error.message);
     }
 }
 
-const remove = async (url) => {
+const remove = async (url,setError) => {
     try {
         const response = await fetch(
             BASE_URL + url,
@@ -83,6 +88,12 @@ const remove = async (url) => {
             }
         );
         const data = await response.json();
+        if (data.message) {
+            let errorMessage=data.message;
+            console.log(errorMessage)
+            setError(errorMessage);
+            throw new Error;
+           }
         return (data);
     } catch (error) {
         console.error('Error:', error.message);
