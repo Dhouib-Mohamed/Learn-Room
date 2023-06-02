@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import {get, patch} from '../helpers/helpers';
 import StudentModal from '../modals/student';
+import { getItem } from '../../utils/localStorage';
 import {useEffect, useState} from "react";
 
 const personnes = [
@@ -85,6 +86,8 @@ const Students = ({id}) => {
                 </TableContainer>
             </Box>
             <br/>
+            {getItem("user").user ?
+
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
                 <Button
                     colorScheme="custom"
@@ -101,6 +104,7 @@ const Students = ({id}) => {
                     Add Student
                 </Button>
             </div>
+            : null}
 
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay/>

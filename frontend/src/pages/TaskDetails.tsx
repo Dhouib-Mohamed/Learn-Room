@@ -15,15 +15,15 @@ import {
     ModalOverlay,
     useDisclosure
 } from "@chakra-ui/react";
-import {useHistory, useParams} from 'react-router-dom';
-import {getItem} from "../../utils/localStorage";
-import {AiOutlineMore} from "react-icons/ai";
-import {useEffect, useState} from "react";
-import {get, patch, remove} from "../helpers/helpers";
+import { useHistory, useParams } from 'react-router-dom';
+import { getItem } from "../../utils/localStorage";
+import { AiOutlineMore } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import { get, patch, remove } from "../helpers/helpers";
 import TaskModal from "../modals/task";
 
 function TaskDetails() {
-    let {id} = useParams();
+    let { id } = useParams();
     console.log(id)
     const [update, setUpdate] = useState(false)
     const {isOpen, onOpen, onClose} = useDisclosure();
@@ -55,7 +55,7 @@ function TaskDetails() {
     };
     return (
         <>
-            <Flex style={{minHeight: "89vh",}}>
+            <Flex style={{ minHeight: "89vh", }}>
                 <Header />
                 <br />
                 <br />
@@ -94,19 +94,21 @@ function TaskDetails() {
                         <pre>{task.content}</pre>
 
                     </div>
-                    <br/>
-                    <Divider width="100%" my={4} borderColor={"#A6A6A6"} borderWidth="0.75px"/>
-                    <div style={{display: 'flex', alignItems: 'center', justifyContent: "center"}}>
-                        <TaskButton/>
-                    </div>
-
+                    <br />
+                    {getItem("user").user ? null :
+                        <>
+                            <Divider width="100%" my={4} borderColor={"#A6A6A6"} borderWidth="0.75px" />
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: "center" }}>
+                                <TaskButton />
+                            </div></>
+                    }
                 </Flex>
             </Flex>
-            <Footer/>
+            <Footer />
             <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay/>
+                <ModalOverlay />
                 <ModalContent>
-                    <TaskModal onClose={onClose} handleSubmit={handleSubmit} values={task}/>
+                    <TaskModal onClose={onClose} handleSubmit={handleSubmit} values={task} />
                 </ModalContent>
             </Modal>
         </>

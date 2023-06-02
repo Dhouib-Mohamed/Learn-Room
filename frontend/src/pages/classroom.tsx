@@ -123,10 +123,10 @@ const Classroom = ({}) => {
                             <CourseList  id={id} />
                         </TabPanel>
                         <TabPanel>
-                            <TaskList url={"classroom/task/" + id} path={"/classroom/" + id + "/task/"}/>
+                            <TaskList url={"classroom/task/" + id} task={true} path={"/classroom/" + id + "/task/"}/>
                         </TabPanel>
                         <TabPanel>
-                            <TaskList url={"classroom/assignment/" + id} path={"/classroom/" + id + "/assignment/"}/>
+                            <TaskList url={"classroom/assignment/" + id} task={false}  path={"/classroom/" + id + "/assignment/"}/>
                         </TabPanel>
                         <TabPanel>
                             <Students id={id}/>

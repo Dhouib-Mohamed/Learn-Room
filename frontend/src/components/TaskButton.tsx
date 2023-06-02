@@ -5,7 +5,7 @@ import gradcap from "../assets/gradcap.png";
 
 function TaskButton() {
     const [showImage, setShowImage] = useState(true);
-    const [buttonColor, setButtonColor] = useState("#66B0F0");
+    const [buttonColor, setButtonColor] = useState("#FF8076");
 
     const handleClick = () => {
         setShowImage(!showImage);
