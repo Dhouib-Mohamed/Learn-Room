@@ -5,8 +5,11 @@ import {patch, post} from "../helpers/helpers";
 import {useHistory} from 'react-router-dom';
 import ClassroomModal from "../modals/classroom";
 import ClassroomIdModal from "../modals/classroomId";
+import { useContext } from "react";
+import { ErrorContext } from "../context/error";
 
 export default function Main() {
+    const {setErrorModal}=useContext(ErrorContext);
 
     let classroom = getItem("user").classes
 
@@ -15,7 +18,7 @@ export default function Main() {
     const history = useHistory();
 
     const addClassroom = async (data) => {
-        const result = await post("classroom/" + getItem("user").id, data)
+        const result = await post("classroom/" + getItem("user").id, data,setErrorModal)
         console.log(result)
         classroom = {...getItem("user"), classes: [...getItem("user").classes, result]}
         setItem("user", classroom)
@@ -23,7 +26,7 @@ export default function Main() {
         history.push(`/classroom/${result.id}`);
     }
     const addStudent = async ({id}) => {
-        const result = await patch("classroom/" + id + "/" + getItem("user").email, {})
+        const result = await patch("classroom/" + id + "/" + getItem("user").email, {},setErrorModal)
         setItem("user", result)
         onClose2();
     }
@@ -51,7 +54,7 @@ export default function Main() {
                     marginLeft: "45%",
                     marginTop: "20px",
                     marginBottom: "50px"
-                }}>enroll into Classroom</Button>
+                }}>Enroll in a Classroom</Button>
             }
 
             <Modal isOpen={isOpen1} onClose={onClose1}>

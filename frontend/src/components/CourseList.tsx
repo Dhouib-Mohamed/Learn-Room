@@ -4,18 +4,20 @@ import EmptyStatePlaceholder from "../components/EmptyStatePlaceholder";
 import CourseModal from "../modals/course";
 import { useHistory } from 'react-router-dom';
 import { get, post } from "../helpers/helpers";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getItem } from "../../utils/localStorage";
+import { ErrorContext } from "../context/error";
 
 
 const CourseList = ({ id }) => {
+    const {setErrorModal}=useContext(ErrorContext);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const history = useHistory();
 
     const [courses, setCourses] = useState([])
     const getCourses = async () => {
-        const result = await get("classroom/course/" + id)
+        const result = await get("classroom/course/" + id,setErrorModal)
         console.log("courselist", result)
         setCourses(result)
 
@@ -26,7 +28,7 @@ const CourseList = ({ id }) => {
     }, [])
 
     const addCourse = async (data) => {
-        const result = await post("course/" + id, data)
+        const result = await post("course/" + id, data,setErrorModal)
         onClose();
         history.push(`/classroom/${id}/course/${result.id}`);
     }

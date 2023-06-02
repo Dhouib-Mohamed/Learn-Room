@@ -6,12 +6,16 @@ import {useHistory} from "react-router-dom";
 import {Formik, Form, Field} from 'formik';
 import {post} from "../helpers/helpers";
 import {setItem} from "../../utils/localStorage";
+import { useContext } from 'react';
+import { ErrorContext } from '../context/error';
 
 function SignIn() {
     const history = useHistory();
 
+    const {setErrorModal}=useContext(ErrorContext);
+
     const logIn = async (values) => {
-        const result = await post("user/signin", values)
+        const result = await post("user/signin", values,setErrorModal)
         console.log("res",result)
         if (result.id) {
             setItem("user", result);

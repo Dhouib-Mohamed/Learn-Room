@@ -14,7 +14,7 @@ export class GenericService<Entity> {
         try {
             return await this.repository.save(dto);
         } catch (e) {
-            return e.sqlmessage ?? e
+            return e
         }
     }
 
@@ -22,9 +22,10 @@ export class GenericService<Entity> {
         try {
             return await this.repository.find();
         } catch (e) {
-            return e.sqlmessage ?? e
+            return e
         }
     }
+
 
     async findOne(id: any): Promise<any> {
         try {
@@ -34,7 +35,43 @@ export class GenericService<Entity> {
             }
             return result
         } catch (e) {
-            return e.sqlmessage ?? e
+            return e
+        }
+    }
+
+    async findOneByCriteria(dto): Promise<any> {
+        try {
+            const result = await this.repository.findOneBy(dto as FindOptionsWhere<Entity>);
+            if (!result) {
+                throw new NotFoundException()
+            }
+            return result
+        } catch (e) {
+            return e
+        }
+    }
+
+    async findByCriteria(dto): Promise<any> {
+        try {
+            const result = await this.repository.findBy(dto as FindOptionsWhere<Entity>);
+            if (!result) {
+                throw new NotFoundException()
+            }
+            return result
+        } catch (e) {
+            return e
+        }
+    }
+
+    async find(dto): Promise<any> {
+        try {
+            const result = await this.repository.find(dto);
+            if (!result) {
+                throw new NotFoundException()
+            }
+            return result
+        } catch (e) {
+            return e
         }
     }
 

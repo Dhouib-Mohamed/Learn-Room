@@ -19,9 +19,12 @@ import { useHistory } from "react-router-dom";
 import { Formik, Form, Field } from 'formik';
 import { post } from "../helpers/helpers";
 import { setItem } from "../../utils/localStorage";
+import { ErrorContext } from '../context/error';
+import { useContext } from 'react';
 
 function SignUp() {
     const history = useHistory();
+    const {setErrorModal}=useContext(ErrorContext);
 
     const handleSubmit = async (values) => {
         try {
@@ -30,7 +33,7 @@ function SignUp() {
                 email: values.email,
                 password: values.password,
                 user: values.role === "teacher"
-            });
+            },setErrorModal);
             console.log("res",result)
             if (result.id) {
                 setItem("user", result);

@@ -1,18 +1,20 @@
 import {Flex} from "@chakra-ui/react";
 import Task from "../components/Task";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {get} from "../helpers/helpers";
 // import {useHistory} from 'react-router-dom';
 import EmptyStatePlaceholder from "./EmptyStatePlaceholder";
 import { getItem } from "../../utils/localStorage";
+import { ErrorContext } from "../context/error";
 
 
 const TaskList = ({url, path,task}) => {
     // const history = useHistory();
+    const {setErrorModal}=useContext(ErrorContext);
 
     const [tasks, setTasks] = useState([])
     const getTasks = async () => {
-        const result = await get(url)
+        const result = await get(url,setErrorModal)
         console.log("task lisk", result)
         if (result) {
             setTasks(result)

@@ -18,18 +18,20 @@ import {
     Textarea,
     useDisclosure
 } from "@chakra-ui/react";
-import {getItem} from "../../utils/localStorage";
-import {AiOutlineMore} from "react-icons/ai";
-import {useEffect, useState} from "react";
-import {get, patch, remove} from "../helpers/helpers";
+import { getItem } from "../../utils/localStorage";
+import { AiOutlineMore } from "react-icons/ai";
+import { useContext, useEffect, useState } from "react";
+import { get, patch, remove } from "../helpers/helpers";
 import AssignmentModal from "../modals/assignment";
-import {useHistory, useParams} from 'react-router-dom';
-import {Field, Form, Formik} from 'formik';
+import { useHistory, useParams } from 'react-router-dom';
+import { Formik, Form, Field } from 'formik';
+import { ErrorContext } from '../context/error';
 
 
 function AssignmentDetails() {
     let { id } = useParams();
     console.log(id)
+    const {setErrorModal}=useContext(ErrorContext);
     const [update, setUpdate] = useState(true)
     const [submit, setSubmit] = useState({})
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -39,11 +41,11 @@ function AssignmentDetails() {
 
 
     const getAssignment = async () => {
-        const result = await get("assignment/" + id)
+        const result = await get("assignment/" + id,setErrorModal)
         setAssignment(result)
     }
     const getResponseAssignment = async () => {
-        const result = await get("response-assignment/" + id + "/"+ getItem("user").id )
+        const result = await get("response-assignment/" + id + "/"+ getItem("user").id ,setErrorModal)
         console.log("resuklt assign",result)
         setSubmit(result)
     }
@@ -55,12 +57,12 @@ function AssignmentDetails() {
 
     }, [update])
     const deleteAssignment = async () => {
-        await remove("assignment/" + id)
+        await remove("assignment/" + id,setErrorModal)
         history.goBack();
     }
 
     const editTask = async (data) => {
-        const result = await patch("assignment/" + id, data)
+        const result = await patch("assignment/" + id, data,setErrorModal)
         console.log("res:", result)
         onClose();
         setUpdate(!update)
@@ -84,7 +86,7 @@ function AssignmentDetails() {
 
     const submitAssignment = async (data) => {
 
-        const result = await patch("response-assignment/" + submit.id , data)
+        const result = await patch("response-assignment/" + submit.id , data,setErrorModal)
         console.log("res:", result)
         onClose();
         setSubmit(result)

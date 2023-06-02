@@ -26,26 +26,28 @@ import TaskList from "../components/TaskList";
 import Students from "../components/Students";
 
 import {get, patch, remove} from "../helpers/helpers";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {AiOutlineMore} from "react-icons/ai";
 import {getItem, setItem} from "../../utils/localStorage";
 import ClassroomModal from "../modals/classroom";
 import Footer from '../components/Footer.js';
+import { ErrorContext } from '../context/error.js';
 
 
 const Classroom = ({}) => {
+    const {setErrorModal}=useContext(ErrorContext);
 
     const [update, setUpdate] = useState(true)
     let {id} = useParams();
     const [classroom, setClassroom] = useState({image_id: null, description: "", name: ""})
     const history = useHistory();
     const getClassroom = async () => {
-        const result = await get("classroom/" + id)
+        const result = await get("classroom/" + id, setErrorModal )
         setClassroom(result)
     }
     const { isOpen, onOpen, onClose } = useDisclosure();
     const deleteClassroom = async () => {
-        const response = await remove("classroom/" + id)
+        const response = await remove("classroom/" + id,setErrorModal)
         setItem("user", response)
         history.push('/home');
     }
@@ -58,7 +60,7 @@ const Classroom = ({}) => {
     console.log(classroom)
 
     const editClassroom = async (data) => {
-        const result = await patch("classroom/" + id, data)
+        const result = await patch("classroom/" + id, data,setErrorModal)
         console.log("res:", result)
         setItem("user", result)
         onClose();

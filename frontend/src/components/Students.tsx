@@ -16,7 +16,8 @@ import {
 import {get, patch} from '../helpers/helpers';
 import StudentModal from '../modals/student';
 import { getItem } from '../../utils/localStorage';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import { ErrorContext } from '../context/error';
 
 const personnes = [
     {name: 'jean Abrahmov', email: "jean Abrahmov@gmail.com", src: 'https://bit.ly/abramol'},
@@ -29,11 +30,13 @@ const personnes = [
 ];
 
 const Students = ({id}) => {
+    const {setErrorModal}=useContext(ErrorContext);
+
     const [users, setUsers] = useState({students: [], teacher: {}})
     const [update, setUpdate] = useState(false)
     const {isOpen, onOpen, onClose} = useDisclosure();
     const getUsers = async () => {
-        const result = await get("classroom/users/" + id)
+        const result = await get("classroom/users/" + id,setErrorModal)
         console.log(result)
         setUsers(result)
     }
@@ -42,7 +45,7 @@ const Students = ({id}) => {
     }, [update])
     const addStudent = async ({email}) => {
         console.log(email)
-        const result = await patch("classroom/" + id + "/" + email, {})
+        const result = await patch("classroom/" + id + "/" + email, {},setErrorModal)
         console.log(result)
         setUpdate(!update)
         onClose();
