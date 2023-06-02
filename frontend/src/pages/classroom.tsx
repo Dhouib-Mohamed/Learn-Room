@@ -129,7 +129,7 @@ const Classroom = ({}) => {
                             <TaskList url={"classroom/assignment/" + id} path={"/classroom/" + id + "/assignment/"}/>
                         </TabPanel>
                         <TabPanel>
-                            <Students />
+                            <Students id={id}/>
                         </TabPanel>
                     </TabPanels>
 

@@ -49,9 +49,7 @@ function AssignmentDetails() {
     }
 
     const handleSubmit = (values) => {
-
         editTask(values)
-
     };
 
 

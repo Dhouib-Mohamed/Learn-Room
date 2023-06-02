@@ -28,6 +28,11 @@ export class ClassroomController {
     return this.classroomService.getAllAssignments(id);
   }
 
+  @Get('users/:id')
+  getUsers(@Param('id') id: string) {
+    return this.classroomService.getUsers(id);
+  }
+
   @Post(":id")
   create(@Body() createClassroomDto: CreateClassroomDto, @Param("id") id) {
     return this.classroomService.createClass(id, createClassroomDto);
@@ -38,9 +43,9 @@ export class ClassroomController {
     return this.classroomService.updateClass(id, updateClassroomDto);
   }
 
-  @Patch(":id/:user")
-  addUser(@Param('email') email: string, @Param('user') user: string,) {
-    return this.classroomService.addUser(email, user);
+  @Patch(":id/:email")
+  addUser(@Param('email') email: string, @Param('id') id: string,) {
+    return this.classroomService.addUser(id, email);
   }
 
   @Delete(':id')
