@@ -5,14 +5,14 @@ import {ResponseTask} from "./entities/response_task.entity";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {StudentService} from "../student/student.service";
-import {PracticeService} from "../practice/practice.service";
+import {TaskService} from "../task/task.service";
 
 @Injectable()
 export class ResponseTaskService extends GenericService<ResponseTask> {
     constructor(
         @InjectRepository(ResponseTask)
         private responseTaskRepository: Repository<ResponseTask>,
-        private readonly PracticeService: PracticeService,
+        private readonly TaskService: TaskService,
         private readonly StudentService: StudentService,
     ) {
         super(responseTaskRepository);
@@ -20,7 +20,7 @@ export class ResponseTaskService extends GenericService<ResponseTask> {
 
     getResponseTask = async (idTask, idStudent) => {
         try {
-            const task = await this.PracticeService.findOne(idTask);
+            const task = await this.TaskService.findOne(idTask);
             const student = await this.StudentService.findOne(idStudent)
             return await this.responseTaskRepository.findOneBy({student, task})
 
