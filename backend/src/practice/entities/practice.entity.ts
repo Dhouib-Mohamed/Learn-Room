@@ -17,8 +17,7 @@ export class Practice {
     @ManyToOne(() => Course, (e) => e.practices)
     @JoinColumn({name: "course_practice"})
     course: Course
-
-    @OneToMany(() => ResponseAssignment , (e) => e.assignment)
+    @OneToMany(() => ResponseAssignment, (e) => e.assignment, {eager: true})
     responseAssignments: ResponseAssignment[]
 
 }

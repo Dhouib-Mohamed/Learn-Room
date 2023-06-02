@@ -29,16 +29,13 @@ import {ErrorContext} from '../context/error';
 
 
 function AssignmentDetails() {
-    let { id } = useParams();
-    console.log(id)
-    const {setErrorModal}=useContext(ErrorContext);
+    let {id} = useParams();
+    const {setErrorModal} = useContext(ErrorContext);
     const [update, setUpdate] = useState(true)
-    const [submit, setSubmit] = useState({})
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [assignment, setAssignment] = useState({ name: "", content: "", deadline: "", teacher: {} })
+    const [submit, setSubmit] = useState({content: ""})
+    const {isOpen, onOpen, onClose} = useDisclosure();
+    const [assignment, setAssignment] = useState({name: "", content: "", deadline: "", teacher: {}})
     const history = useHistory();
-
-
 
     const getAssignment = async () => {
         const result = await get("assignment/" + id,setErrorModal)
@@ -46,15 +43,11 @@ function AssignmentDetails() {
     }
     const getResponseAssignment = async () => {
         const result = await get("response-assignment/" + id + "/"+ getItem("user").id ,setErrorModal)
-        console.log("resuklt assign",result)
         setSubmit(result)
     }
     useEffect(() => {
+        getAssignment(),
             getResponseAssignment()
-    }, [])
-    useEffect(() => {
-        getAssignment()
-
     }, [update])
     const deleteAssignment = async () => {
         await remove("assignment/" + id,setErrorModal)
@@ -69,40 +62,41 @@ function AssignmentDetails() {
     }
 
     const handleSubmit = (values) => {
+        console.log("hi")
         editTask(values)
     };
 
-    const validateForm = (values) => {
+    const validateForm = () => {
         const errors = {};
 
-        if (!values.content) {
+        if (!submit.content) {
             errors.content = 'Your response is required';
-        } else if (values.content.length < 10){
+        } else if (submit.content.length < 10) {
             errors.content = 'Your response must be at least 10 characters long';
         }
         return errors;
     };
 
 
-    const submitAssignment = async (data) => {
+    const submitAssignment = async () => {
 
-        const result = await patch("response-assignment/" + submit.id , data,setErrorModal)
+        const result = await patch("response-assignment/" + submit.id, {content: submit.content}, setErrorModal)
         console.log("res:", result)
         onClose();
-        setSubmit(result)
     }
 
-    function handleSubmit2(values) {
-        submitAssignment({ content: values.content })
+    function handleSubmit2() {
+        submitAssignment()
     }
 
     return (
         <>
-            <div style={{ minHeight: "89vh", }}>
-                <Header />
+            <div style={{minHeight: "89vh",}}>
+                <Header/>
 
                 <Flex style={{
-                    flexDirection: "column", margin: "0px 100px" }}>
+                    flexDirection: "column", margin: "0px 100px"
+                }}>
 
                     <Flex flexDirection={"row"}>
                         <div style={{ width: "99%" }}>
@@ -147,31 +141,34 @@ function AssignmentDetails() {
                             >
                                 {(formikProps) => (
                                     <Form>
-                                        
-                                            <Field name="content">
-                                                {({ field, form }) => (
-                                                    <FormControl isInvalid={form.errors.content && form.touched.content}>
-                                                        <FormLabel>Description</FormLabel>
-                                                        <Textarea {...field} />
-                                                        <FormErrorMessage>{form.errors.content}</FormErrorMessage>
-                                                    </FormControl>
-                                                )}
-                                            </Field>
-                                        <br />
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: "center" }}>
+
+                                        <Field name="content">
+                                            {({field, form}) => (
+                                                <FormControl isInvalid={form.errors.content && form.touched.content}>
+                                                    <FormLabel>Description</FormLabel>
+                                                    <Textarea value={submit.content} onChange={(e) => {
+                                                        setSubmit({...submit, content: e.target.value})
+                                                    }}/>
+                                                    <FormErrorMessage>{form.errors.content}</FormErrorMessage>
+                                                </FormControl>
+                                            )}
+                                        </Field>
+                                        <br/>
+                                        <div style={{display: 'flex', alignItems: 'center', justifyContent: "center"}}>
                                             <Button colorScheme="custom" color="grey"
                                                     bgColor="#FFF"
                                                     borderWidth="1px"
-                                                    borderColor="grey" rounded="full" type="submit" my="4" >Submit homework</Button>
+                                                    borderColor="grey" rounded="full" type="submit" my="4">Submit
+                                                homework</Button>
                                         </div>
 
                                     </Form>
                                 )}
                             </Formik>
 
-                        </> 
-                        //change it 
-                        }
+                        </>
+                        //change it
+                    }
                 </Flex>
             </div>
             <Footer />

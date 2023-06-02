@@ -12,7 +12,7 @@ export class Task {
     content: string;
     @Column()
     completed: boolean = false
-    @ManyToOne(() => Course, (e) => e.tasks)
+    @ManyToOne(() => Course, (e) => e.tasks, {eager: true})
     @JoinColumn({name: "course_task"})
     course: Course
 
