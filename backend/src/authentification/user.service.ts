@@ -2,12 +2,21 @@ import {Injectable, NotFoundException} from '@nestjs/common';
 import {SignInDto} from "./dto/sign-in.dto";
 import {TeacherService} from "../teacher/Teacher.service";
 import {StudentService} from "../student/student.service";
+import {Teacher} from "../teacher/entities/teacher.entity";
+import {InjectRepository} from "@nestjs/typeorm";
+import {Repository} from "typeorm";
+import {Student} from "../student/entities/student.entity";
 
 @Injectable()
 export class UserService {
     constructor(
         private readonly teacherService: TeacherService,
-        private readonly studentService: StudentService) {
+        private readonly studentService: StudentService,
+        @InjectRepository(Teacher)
+        private teacherRepository: Repository<Teacher>,
+        @InjectRepository(Student)
+        private classRepository: Repository<Student>,
+    ) {
     }
 
     async signIn(SignInDto: SignInDto) {
@@ -38,8 +47,8 @@ export class UserService {
 
         try {
             let user
-            const noTeacher = await this.teacherService.findOneByCriteria({email: SignUpDto.email})
-            const noStudent = await this.teacherService.findOneByCriteria({email: SignUpDto.email})
+            const noTeacher = await this.teacherRepository.findOneBy({email: SignUpDto.email})
+            const noStudent = await this.teacherRepository.findOneBy({email: SignUpDto.email})
             if (noTeacher || noStudent) {
                 throw new NotFoundException("Email Is already used")
             }
