@@ -5,13 +5,11 @@ import {GenericService} from 'src/generic/generic.service';
 import {InjectRepository} from '@nestjs/typeorm';
 import {DeleteResult, Repository} from 'typeorm';
 import {TeacherService} from "../teacher/Teacher.service";
-import {Student} from "../student/entities/student.entity";
 import {StudentService} from "../student/student.service";
 import {Practice} from "../practice/entities/practice.entity";
 import {Task} from "../task/entities/task.entity";
 import {CourseService} from "../course/course.service";
 import {Course} from "../course/entities/course.entity";
-import {Teacher} from "../teacher/entities/teacher.entity";
 
 @Injectable()
 export class ClassroomService extends GenericService<Classroom> {
@@ -20,12 +18,6 @@ export class ClassroomService extends GenericService<Classroom> {
   constructor(
       @InjectRepository(Classroom)
       private classRepository: Repository<Classroom>,
-      @InjectRepository(Course)
-      private courseRepository: Repository<Course>,
-      @InjectRepository(Student)
-      private studentRepository: Repository<Student>,
-      @InjectRepository(Teacher)
-      private teacherRepository: Repository<Teacher>,
       private readonly teacherService: TeacherService,
       private readonly studentService: StudentService,
       @Inject(forwardRef(() => CourseService))
@@ -45,17 +37,17 @@ export class ClassroomService extends GenericService<Classroom> {
 
   async addUser(id: string, email: string) {
     try {
-      const student = await this.studentRepository.findOneBy({email});
+      const student = await this.studentService.findOneByCriteria({email});
       console.log(student);
       const currentClass = await this.findOne(id);
       student.classes = student.classes ?? [];
       student.classes.push(currentClass);
       await this.studentService.create(student);
-      currentClass.students = await this.studentRepository.findBy({classes: currentClass}) ?? [];
+      currentClass.students = await this.studentService.findByCriteria({classes: currentClass}) ?? [];
       const {classes, ...studentData} = student;
       currentClass.students.push(studentData);
       await this.create(currentClass);
-      return await this.studentRepository.findOneBy({email})
+      return await this.studentService.findOneByCriteria({email})
     } catch (e) {
       console.log(e);
       return e.sqlmessage ?? e;
@@ -66,8 +58,8 @@ export class ClassroomService extends GenericService<Classroom> {
     try {
       const currentClass = await this.findOne(id);
       return ({
-        teacher: await this.teacherRepository.findOneBy({classes: currentClass}),
-        students: (await this.studentRepository.findBy({classes: currentClass}) ?? [])
+        teacher: await this.teacherService.findOneByCriteria({classes: currentClass}),
+        students: (await this.studentService.findByCriteria({classes: currentClass}) ?? [])
       });
     } catch (e) {
       console.log(e);
@@ -89,8 +81,7 @@ export class ClassroomService extends GenericService<Classroom> {
   async getAllCourses(id: any): Promise<Course[]> {
     try {
       const classroom = await this.findOne(id)
-      const res = [...(await this.courseRepository.findBy({class: classroom}))]
-      return res
+      return [...(await this.courseService.findByCriteria({class: classroom}))]
     } catch (e) {
       console.log(e);
       return e.sqlmessage ?? e;

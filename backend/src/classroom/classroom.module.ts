@@ -1,26 +1,20 @@
 import {forwardRef, Module} from '@nestjs/common';
 import {ClassroomService} from './classroom.service';
 import {ClassroomController} from './classroom.controller';
-import {Classroom} from "./entities/classroom.entity";
-import {TypeOrmModule} from "@nestjs/typeorm";
+import {TypeOrmModule} from '@nestjs/typeorm';
+import {Classroom} from './entities/classroom.entity';
+import {CourseModule} from '../course/course.module';
 import {TeacherModule} from "../teacher/teacher.module";
-import {Student} from "../student/entities/student.entity";
 import {StudentModule} from "../student/student.module";
-import {CourseModule} from "../course/course.module";
-import {Course} from "../course/entities/course.entity";
-import {Teacher} from "../teacher/entities/teacher.entity";
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([Classroom]),
-        TypeOrmModule.forFeature([Student]),
-        TypeOrmModule.forFeature([Course]),
-        TypeOrmModule.forFeature([Teacher]),
         TeacherModule, StudentModule, forwardRef(() => CourseModule),
     ],
-    controllers: [ClassroomController],
     providers: [ClassroomService],
     exports: [ClassroomService],
+    controllers: [ClassroomController],
 })
 export class ClassroomModule {
 }
