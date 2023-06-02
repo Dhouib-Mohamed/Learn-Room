@@ -1,4 +1,4 @@
-import {IsDefined, IsString} from "class-validator";
+import {IsDefined, IsNumber, IsString} from "class-validator";
 
 export class CreatePracticeDto {
     @IsDefined()
@@ -9,4 +9,8 @@ export class CreatePracticeDto {
     content: string;
     @IsDefined()
     deadline: string;
+    @IsNumber()
+    @IsDefined()
+    points: number;
+
 }

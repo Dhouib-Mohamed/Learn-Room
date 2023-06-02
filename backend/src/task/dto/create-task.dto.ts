@@ -1,4 +1,4 @@
-import {IsDefined, IsString} from "class-validator";
+import {IsDefined, IsNumber, IsString} from "class-validator";
 
 export class CreateTaskDto {
     @IsDefined()
@@ -7,4 +7,7 @@ export class CreateTaskDto {
     @IsDefined()
     @IsString()
     content: string;
+    @IsNumber()
+    @IsDefined()
+    points: number;
 }
