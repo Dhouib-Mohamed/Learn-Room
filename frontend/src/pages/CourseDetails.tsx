@@ -21,23 +21,27 @@ import { useHistory, useParams } from 'react-router-dom';
 import { AiOutlineMore } from 'react-icons/ai';
 import { getItem } from "../../utils/localStorage";
 import { get, patch, post, remove } from '../helpers/helpers.js';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CourseModal from '../modals/course.js';
+import { ErrorContext } from '../context/error.js';
 
 
 function CourseDetails() {
+
+    const {setErrorModal}=useContext(ErrorContext);
+
     const [update, setUpdate] = useState(true)
     let { id, classId } = useParams();
     const [course, setCourse] = useState({ name: "", content: "" })
     const history = useHistory();
     const getCourse = async () => {
-        const result = await get("course/" + id)
+        const result = await get("course/" + id,setErrorModal)
         setCourse(result)
     }
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const deleteCourse = async () => {
-        const response = await remove("course/" + id)
+        const response = await remove("course/" + id,setErrorModal)
         history.push('../');
     }
 
@@ -46,7 +50,7 @@ function CourseDetails() {
     }, [update])
 
     const editCourse = async (data) => {
-        const result = await patch("course/" + id, data)
+        const result = await patch("course/" + id, data,setErrorModal)
         console.log("res:", result)
         onClose();
         setUpdate(!update)
@@ -63,13 +67,13 @@ function CourseDetails() {
 
 
     const addTask = async (data) => {
-        const result = await post("task/" + id, data)
+        const result = await post("task/" + id, data,setErrorModal)
         console.log(result)
         onClose();
         history.push(`/classroom/${classId}/task/${result.id}`);
     }
     const addAssignment = async (data) => {
-        const result = await post("assignment/" + id, data)
+        const result = await post("assignment/" + id, data,setErrorModal)
         console.log(result)
         onClose();
         history.push(`/classroom/${classId}/assignment/${result.id}`);

@@ -18,31 +18,33 @@ import {
 import { useHistory, useParams } from 'react-router-dom';
 import { getItem } from "../../utils/localStorage";
 import { AiOutlineMore } from "react-icons/ai";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { get, patch, remove } from "../helpers/helpers";
 import TaskModal from "../modals/task";
+import { ErrorContext } from '../context/error';
 
 function TaskDetails() {
     let { id } = useParams();
+    const {setErrorModal}=useContext(ErrorContext);
     console.log(id)
     const [update, setUpdate] = useState(false)
     const {isOpen, onOpen, onClose} = useDisclosure();
     const [task, setTask] = useState({name: "", content: "", deadline: "", teacher: {}})
     const history = useHistory();
     const getCourse = async () => {
-        const result = await get("task/" + id)
+        const result = await get("task/" + id,setErrorModal)
         setTask(result)
     }
     useEffect(() => {
         getCourse()
     }, [update])
     const deleteTask = async () => {
-        await remove("task/" + id)
+        await remove("task/" + id,setErrorModal)
         history.goBack();
     }
 
     const editTask = async (data) => {
-        const result = await patch("task/" + id, data)
+        const result = await patch("task/" + id, data,setErrorModal)
         console.log("res:", result)
         onClose();
         setUpdate(!update)

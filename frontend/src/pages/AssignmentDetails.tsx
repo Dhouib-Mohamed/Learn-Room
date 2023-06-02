@@ -23,34 +23,36 @@ import {
 } from "@chakra-ui/react";
 import { getItem } from "../../utils/localStorage";
 import { AiOutlineMore } from "react-icons/ai";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { get, patch, remove } from "../helpers/helpers";
 import AssignmentModal from "../modals/assignment";
 import { useHistory, useParams } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
+import { ErrorContext } from '../context/error';
 
 
 function AssignmentDetails() {
     let { id } = useParams();
     console.log(id)
+    const {setErrorModal}=useContext(ErrorContext);
     const [update, setUpdate] = useState(true)
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [assignment, setAssignment] = useState({ name: "", content: "", deadline: "", teacher: {} })
     const history = useHistory();
     const getAssignment = async () => {
-        const result = await get("assignment/" + id)
+        const result = await get("assignment/" + id,setErrorModal)
         setAssignment(result)
     }
     useEffect(() => {
         getAssignment()
     }, [update])
     const deleteAssignment = async () => {
-        await remove("assignment/" + id)
+        await remove("assignment/" + id,setErrorModal)
         history.goBack();
     }
 
     const editTask = async (data) => {
-        const result = await patch("assignment/" + id, data)
+        const result = await patch("assignment/" + id, data,setErrorModal)
         console.log("res:", result)
         onClose();
         setUpdate(!update)
