@@ -48,7 +48,6 @@ export class ClassroomService extends GenericService<Classroom> {
       const student = await this.studentRepository.findOneBy({email});
       console.log(student);
       const currentClass = await this.findOne(id);
-
       student.classes = student.classes ?? [];
       student.classes.push(currentClass);
       await this.studentService.create(student);
@@ -56,8 +55,7 @@ export class ClassroomService extends GenericService<Classroom> {
       const {classes, ...studentData} = student;
       currentClass.students.push(studentData);
       await this.create(currentClass);
-
-      return currentClass;
+      return await this.studentRepository.findOneBy({email})
     } catch (e) {
       console.log(e);
       return e.sqlmessage ?? e;

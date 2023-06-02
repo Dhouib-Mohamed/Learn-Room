@@ -27,7 +27,7 @@ function AssignmentDetails() {
     console.log(id)
     const [update, setUpdate] = useState(true)
     const {isOpen, onOpen, onClose} = useDisclosure();
-    const [assignment, setAssignment] = useState({name: "", content: "", deadline: ""})
+    const [assignment, setAssignment] = useState({name: "", content: "", deadline: "", teacher: {}})
     const history = useHistory();
     const getAssignment = async () => {
         const result = await get("assignment/" + id)
@@ -66,11 +66,11 @@ function AssignmentDetails() {
                         <div style={{ width: "99%" }}>
                             <h3 style={{fontWeight: '600', fontSize: "24px"}}>{assignment.name}</h3>
                             <p style={{fontSize: '15px', fontWeight: 'lighter'}}>
-                                {assignment.teacher}  &#9679; {assignment.deadline}
+                                {assignment.teacher.name}  &#9679; {assignment.deadline}
                             </p>
                             <div style={{height: '10px'}}></div>
-                            <p style={{ fontSize: '16px', fontWeight: 'normal' }}>
-                                {assignment.points} points
+                            <p style={{fontSize: '16px', fontWeight: 'normal'}}>
+                                {assignment.points ?? 100} points
                             </p> </div>
 
                         {getItem("user").user ? <Menu flip={true} direction={"rtl"} >

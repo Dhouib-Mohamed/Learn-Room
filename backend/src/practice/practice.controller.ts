@@ -10,7 +10,7 @@ export class PracticeController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.practiceService.findOne(id);
+    return this.practiceService.getPractice(id);
   }
 
   @Post(":id")

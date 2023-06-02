@@ -20,7 +20,7 @@ export class TaskController {
 
     @Get(':id')
     findOne(@Param('id') id: string) {
-        return this.taskService.findOne(id);
+        return this.taskService.getTask(id);
     }
 
     @Patch(':id')

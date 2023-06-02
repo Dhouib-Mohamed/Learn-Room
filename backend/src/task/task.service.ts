@@ -5,6 +5,9 @@ import {Repository} from 'typeorm';
 import {Task} from "./entities/task.entity";
 import {CourseService} from "../course/course.service";
 import {CreateTaskDto} from "./dto/create-task.dto";
+import {Course} from "../course/entities/course.entity";
+import {Teacher} from "../teacher/entities/teacher.entity";
+import {Classroom} from "../classroom/entities/classroom.entity";
 
 @Injectable()
 export class TaskService extends GenericService<Task> {
@@ -12,10 +15,15 @@ export class TaskService extends GenericService<Task> {
     constructor(
         @InjectRepository(Task)
         private taskRepository: Repository<Task>,
+        @InjectRepository(Course)
+        private courseRepository: Repository<Course>,
+        @InjectRepository(Teacher)
+        private teacherRepository: Repository<Teacher>,
+        @InjectRepository(Classroom)
+        private classRepository: Repository<Classroom>,
         private readonly courseService: CourseService
     ) {
         super(taskRepository);
-        // this.courseService = new CourseService(courseRepository, classRepository, teacherRepository, studentRepository,practiceRepository,taskRepository)
     }
 
     createTask = async (id, createTaskDto: CreateTaskDto) => {
@@ -26,5 +34,14 @@ export class TaskService extends GenericService<Task> {
             return e.sqlmessage ?? e;
         }
     }
-
+    getTask = async (id) => {
+        try {
+            const task = await this.findOne(id);
+            const course = await this.courseRepository.findOneBy({tasks: task})
+            const currentClass = await this.classRepository.findOneBy({courses: course})
+            return {...task, teacher: (await this.teacherRepository.findOneBy({classes: currentClass}))}
+        } catch (e) {
+            return e.sqlmessage ?? e;
+        }
+    }
 }

@@ -27,7 +27,7 @@ function TaskDetails() {
     console.log(id)
     const [update, setUpdate] = useState(false)
     const {isOpen, onOpen, onClose} = useDisclosure();
-    const [task, setTask] = useState({name: "", content: "", deadline: ""})
+    const [task, setTask] = useState({name: "", content: "", deadline: "", teacher: {}})
     const history = useHistory();
     const getCourse = async () => {
         const result = await get("task/" + id)
@@ -67,7 +67,7 @@ function TaskDetails() {
                         <div style={{ width: "99%" }}>
                             <h3 style={{fontWeight: '600', fontSize: "24px"}}>{task.name}</h3>
                             <p style={{fontSize: '15px', fontWeight: 'lighter'}}>
-                                {task.teacher}  &#9679; {task.deadline}
+                                {task.teacher.name}  &#9679; {task.deadline}
                             </p>
                         </div>
                         <div style={{ height: '10px' }}></div>
