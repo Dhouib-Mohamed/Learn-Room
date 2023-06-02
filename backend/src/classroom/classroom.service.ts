@@ -29,7 +29,7 @@ export class ClassroomService extends GenericService<Classroom> {
   createClass = async (id, createClassroomDto: CreateClassroomDto) => {
     try {
       const teacher = await this.teacherService.findOne(id);
-      return await this.create({...createClassroomDto, image_id: Math.floor(Math.random() * 2), teacher, students: []});
+      return await this.create({...createClassroomDto, image_id: Math.floor(Math.random() * 8), teacher, students: []});
     } catch (e) {
       return e.sqlmessage ?? e;
     }

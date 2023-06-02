@@ -15,9 +15,9 @@ import {
 } from '@chakra-ui/react';
 import {get, patch} from '../helpers/helpers';
 import StudentModal from '../modals/student';
-import { getItem } from '../../utils/localStorage';
+import {getItem} from '../../utils/localStorage';
 import {useContext, useEffect, useState} from "react";
-import { ErrorContext } from '../context/error';
+import {ErrorContext} from '../context/error';
 
 const personnes = [
     {name: 'jean Abrahmov', email: "jean Abrahmov@gmail.com", src: 'https://bit.ly/abramol'},
@@ -67,11 +67,12 @@ const Students = ({id}) => {
                     justifyContent: "space-between"
                 }}>
                     <div style={{display: "flex", fontWeight: "700", flexDirection: "row", alignItems: "center"}}>
-                        <Avatar size='2xl' marginRight={10} name={users.teacher.name} bg={users.teacher.avatar_color}/>
+                        <Avatar size='xl' marginRight={10} name={users.teacher.name} bg={users.teacher.avatar_color}/>
                         <p style={{margin: 0}}>{users.teacher.name}</p>
                     </div>
                     <p style={{color: "grey"}}>{users.teacher.email}</p>
                 </div>
+                <br/>
                 <p style={{color: "#41a090", fontWeight: 700, fontSize: 20}}>Students</p>
                 <Divider style={{margin: "20px 0 15px"}}/>
                 <TableContainer>
