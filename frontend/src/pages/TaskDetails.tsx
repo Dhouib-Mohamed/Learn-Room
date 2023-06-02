@@ -30,7 +30,8 @@ function TaskDetails() {
     const [update, setUpdate] = useState(false)
     const {isOpen, onOpen, onClose} = useDisclosure();
     const [submit, setSubmit] = useState({completed:false}) ;
-    const [task, setTask] = useState({name: "", content: "", deadline: "", teacher: {}})
+    const [task, setTask] = useState({name: "", content: "", deadline: "", teacher: {}, points: 100
+    })
     const history = useHistory();
 
 
@@ -91,6 +92,9 @@ function TaskDetails() {
                             <h3 style={{fontWeight: '600', fontSize: "24px"}}>{task.name}</h3>
                             <p style={{fontSize: '15px', fontWeight: 'lighter'}}>
                                 {task.teacher.name}
+                            </p>
+                            <p style={{ fontSize: '16px', fontWeight: 'normal' }}>
+                                {task.points ?? 100} points
                             </p>
                         </div>
                         <div style={{ height: '10px' }}></div>

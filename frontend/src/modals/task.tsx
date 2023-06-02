@@ -8,6 +8,8 @@ import {
     ModalCloseButton,
     ModalFooter,
     ModalHeader,
+    NumberInput,
+    NumberInputField,
     Textarea
 } from "@chakra-ui/react";
 import {Field, Form, Formik} from "formik";
@@ -15,7 +17,9 @@ import {Field, Form, Formik} from "formik";
 export default function TaskModal({handleSubmit, onClose, values = {name: '', content: '',}}) {
     const validateForm = (values) => {
         const errors = {};
-    
+        if (!values.points) {
+            errors.points = 'Task points is required';
+        }
         if (!values.name) {
             errors.name = 'Task Title is required';
         }
@@ -52,6 +56,17 @@ export default function TaskModal({handleSubmit, onClose, values = {name: '', co
                                     <FormLabel>Description</FormLabel>
                                     <Textarea {...field} />
                                     <FormErrorMessage>{form.errors.content}</FormErrorMessage>
+                                </FormControl>
+                            )}
+                        </Field>
+                        <Field name="points">
+                            {({ field, form }) => (
+                                <FormControl isInvalid={form.errors.points && form.touched.points}>
+                                    <FormLabel>Max Points</FormLabel>
+                                    <NumberInput value={field.value}>
+                                        <NumberInputField {...field} />
+                                    </NumberInput>
+                                    <FormErrorMessage>{form.errors.points}</FormErrorMessage>
                                 </FormControl>
                             )}
                         </Field>

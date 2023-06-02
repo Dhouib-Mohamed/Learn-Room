@@ -17,13 +17,13 @@ import {
     useDisclosure
 } from "@chakra-ui/react";
 import TaskModal from "../modals/task";
-import { useHistory, useParams } from 'react-router-dom';
-import { AiOutlineMore } from 'react-icons/ai';
-import { getItem } from "../../utils/localStorage";
-import { get, patch, post, remove } from '../helpers/helpers.js';
-import { useContext, useEffect, useState } from 'react';
+import {useHistory, useParams} from 'react-router-dom';
+import {AiOutlineMore} from 'react-icons/ai';
+import {getItem} from "../../utils/localStorage";
+import {get, patch, post, remove} from '../helpers/helpers.js';
+import {useContext, useEffect, useState} from 'react';
 import CourseModal from '../modals/course.js';
-import { ErrorContext } from '../context/error.js';
+import {ErrorContext} from '../context/error.js';
 
 
 function CourseDetails() {
@@ -67,12 +67,14 @@ function CourseDetails() {
 
 
     const addTask = async (data) => {
+        data.points=+data.points
         const result = await post("task/" + id, data,setErrorModal)
         console.log(result)
         onClose();
         history.push(`/classroom/${classId}/task/${result.id}`);
     }
     const addAssignment = async (data) => {
+        data.points=+data.points
         const result = await post("assignment/" + id, data,setErrorModal)
         console.log(result)
         onClose();

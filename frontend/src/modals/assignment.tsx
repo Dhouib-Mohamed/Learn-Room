@@ -8,9 +8,11 @@ import {
     ModalCloseButton,
     ModalFooter,
     ModalHeader,
+    NumberInput,
+    NumberInputField,
     Textarea
 } from "@chakra-ui/react";
-import { Field, Form, Formik } from "formik";
+import {Field, Form, Formik} from "formik";
 
 export default function AssignmentModal({
     handleSubmit,
@@ -20,7 +22,9 @@ export default function AssignmentModal({
 
     const validateForm = (values) => {
         const errors = {};
-
+        if (!values.points) {
+            errors.points = 'Assignment points is required';
+        }
         if (!values.name) {
             errors.name = 'Assignment Title is required';
         }
@@ -64,6 +68,17 @@ export default function AssignmentModal({
                                     <FormLabel>Description</FormLabel>
                                     <Textarea {...field} />
                                     <FormErrorMessage>{form.errors.content}</FormErrorMessage>
+                                </FormControl>
+                            )}
+                        </Field>
+                        <Field name="points">
+                            {({ field, form }) => (
+                                <FormControl isInvalid={form.errors.points && form.touched.points}>
+                                    <FormLabel>Max Points</FormLabel>
+                                    <NumberInput value={field.value}>
+                                        <NumberInputField {...field} />
+                                    </NumberInput>
+                                    <FormErrorMessage>{form.errors.points}</FormErrorMessage>
                                 </FormControl>
                             )}
                         </Field>

@@ -40,7 +40,8 @@ function AssignmentDetails() {
         content: "",
         deadline: "",
         teacher: {},
-        responseAssignments: []
+        responseAssignments: [],
+        points: 100
     })
     const history = useHistory();
 
@@ -155,7 +156,7 @@ function AssignmentDetails() {
                                             {({form}) => (
                                                 <FormControl isInvalid={form.errors.content && form.touched.content}>
                                                     <FormLabel>Description</FormLabel>
-                                                    <Textarea value={submit.content} onChange={(e) => {
+                                                    <Textarea disabled={(new Date(assignment.deadline) < new Date()) }  value={submit.content} onChange={(e) => {
                                                         setSubmit({...submit, content: e.target.value})
                                                     }}/>
                                                     <FormErrorMessage>{form.errors.content}</FormErrorMessage>
@@ -164,7 +165,7 @@ function AssignmentDetails() {
                                         </Field>
                                         <br/>
                                         <div style={{display: 'flex', alignItems: 'center', justifyContent: "center"}}>
-                                            <Button colorScheme="custom" color="grey"
+                                            <Button disabled={(new Date(assignment.deadline) - new Date())<0 } colorScheme="custom" color="grey"
                                                     bgColor="#FFF"
                                                     borderWidth="1px"
                                                     borderColor="grey" rounded="full" type="submit" my="4">Submit
