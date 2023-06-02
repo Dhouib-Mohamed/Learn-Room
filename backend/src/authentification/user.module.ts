@@ -6,12 +6,13 @@ import {StudentModule} from "../student/student.module";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {Teacher} from "../teacher/entities/teacher.entity";
 import {Student} from "../student/entities/student.entity";
+import {ClassroomModule} from "../classroom/classroom.module";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Teacher]),
     TypeOrmModule.forFeature([Student]),
-    TeacherModule, StudentModule],
+    TeacherModule, StudentModule, ClassroomModule],
   controllers: [UserController],
   providers: [UserService]
 })

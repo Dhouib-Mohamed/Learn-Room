@@ -1,4 +1,4 @@
-import {Body, Controller, Post} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post} from '@nestjs/common';
 import {SignInDto} from "./dto/sign-in.dto";
 import {SignUpDto} from "./dto/sign-up.dto";
 import {UserService} from "./user.service";
@@ -17,5 +17,10 @@ export class UserController {
   @Post("signup")
   signup(@Body() SignUpDto: SignUpDto) {
     return this.userService.signup(SignUpDto);
+  }
+
+  @Get(":id/:type")
+  all(@Param("id") id, @Param("type") type) {
+    return this.userService.getAll(id, type)
   }
 }
