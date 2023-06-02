@@ -1,6 +1,7 @@
 import {
     Button,
     FormControl,
+    FormErrorMessage,
     FormLabel,
     Input,
     ModalBody,
@@ -12,27 +13,46 @@ import {
 import {Field, Form, Formik} from "formik";
 
 export default function ClassroomModal({handleSubmit, onClose, values = {name: '', description: '',}}) {
+
+    const validateForm = (values) => {
+        const errors = {};
+    
+        if (!values.name) {
+            errors.name = 'Classroom Name is required';
+        }
+    
+        if (!values.description) {
+            errors.description = 'Description is required';
+        }
+    
+        return errors;
+    };
+
     return (
-        <><ModalHeader>{"Add Classroom"}</ModalHeader><ModalCloseButton/><Formik
+        <><ModalHeader>{"Add Classroom"}</ModalHeader><ModalCloseButton/>
+        <Formik
             initialValues={values}
             onSubmit={handleSubmit}
+            validate={validateForm}
         >
             {(formikProps) => (
                 <Form>
                     <ModalBody>
                         <Field name="name">
-                            {({field}) => (
-                                <FormControl>
+                            {({field,form}) => (
+                                <FormControl isInvalid={form.errors.name && form.touched.name}>
                                     <FormLabel>Classroom Name</FormLabel>
                                     <Input {...field} />
+                                    <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                                 </FormControl>
                             )}
                         </Field>
                         <Field name="description">
-                            {({field}) => (
-                                <FormControl>
+                            {({field,form}) => (
+                                <FormControl isInvalid={form.errors.description && form.touched.description}> 
                                     <FormLabel>Description</FormLabel>
                                     <Textarea {...field} />
+                                    <FormErrorMessage>{form.errors.description}</FormErrorMessage>
                                 </FormControl>
                             )}
                         </Field>
