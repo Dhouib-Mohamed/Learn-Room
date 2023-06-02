@@ -14,12 +14,16 @@ import {Classroom} from "./classroom/entities/classroom.entity";
 import {TaskModule} from './task/task.module';
 import {UserModule} from "./authentification/user.module";
 import {TeacherModule} from "./teacher/teacher.module";
+import {ResponseTaskModule} from './response_task/response_task.module';
+import {ResponseAssignmentModule} from './response_assignment/response_assignment.module';
+import {ResponseTask} from "./response_task/entities/response_task.entity";
+import {ResponseAssignment} from "./response_assignment/entities/response_assignment.entity";
 
 
 dotenv.config();
 
 @Module({
-    imports: [ClassroomModule, CourseModule, PracticeModule, UserModule, TaskModule, TeacherModule,
+    imports: [ClassroomModule, CourseModule, PracticeModule, UserModule, TaskModule, TeacherModule, ResponseTaskModule , ResponseAssignmentModule ,
         TypeOrmModule.forRoot({
             type: "mysql",
             host: process.env.DB_HOST,
@@ -27,11 +31,10 @@ dotenv.config();
             username: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
             database: process.env.DB_NAME,
-              // synchronize: true,
+               synchronize: true,
             autoLoadEntities : true ,
-            entities: [Teacher, Student, Course, Classroom, Practice]
-        }),
-        TaskModule,
+            entities: [Teacher, Student, Course, Classroom, Practice, ResponseTask , ResponseAssignment]
+        })
     ],
   controllers: [AppController],
   providers: [AppService],

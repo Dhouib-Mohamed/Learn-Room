@@ -1,5 +1,6 @@
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Course} from "../../course/entities/course.entity";
+import {ResponseAssignment} from "../../response_assignment/entities/response_assignment.entity";
 
 @Entity('practice')
 export class Practice {
@@ -16,5 +17,8 @@ export class Practice {
     @ManyToOne(() => Course, (e) => e.practices)
     @JoinColumn({name: "course_practice"})
     course: Course
+
+    @OneToMany(() => ResponseAssignment , (e) => e.assignment)
+    responseAssignments: ResponseAssignment[]
 
 }

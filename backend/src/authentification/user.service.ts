@@ -42,20 +42,25 @@ export class UserService {
 
     async signup(SignUpDto: SignUpDto) {
         try {
-            const repository = SignUpDto.user ? this.teacherRepository : this.studentRepository
-            const user: any = await repository.save({
+            const repository = SignUpDto.user ? this.teacherRepository : this.studentRepository;
+            const user  = await repository.save({
                 ...SignUpDto,
                 avatar_color: "#" + Math.floor(Math.random() * 16777215).toString(16),
-                classes: []
-            })
+                classes: [], responseTasks : [] , responseAssignments : [] ,
+            });
+
             if (!user) {
-                throw new NotFoundException()
+                throw new NotFoundException();
             }
+
             user.password = user.password.length
-            user.user = SignUpDto.user
-            return user
+            user.user = SignUpDto.user;
+            return user;
         } catch (e) {
-            return e.sqlMessage ?? e
+            // Handle and log the error appropriately
+            console.error(e);
+            throw new Error('An error occurred during signup.');
         }
     }
 }
+
