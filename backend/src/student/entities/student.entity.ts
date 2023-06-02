@@ -16,8 +16,6 @@ export class Student {
     @Exclude()
     password: string;
     @Column()
-    salt:string;
-    @Column()
     name: string;
     @Column()
     avatar_color: string;
