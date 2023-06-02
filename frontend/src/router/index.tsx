@@ -18,10 +18,10 @@ const App = () => {
             <Switch>
                 <Redirect exact from="/" to={getItem("user") ? "/home" : "preview"}/>
                 <Connected path={"/home"} Component={Main}/>
-                <Connected path={"/classroom/*/course/:id"} Component={CourseDetails}/>
-                <Connected path={"/classroom/*/task/:id"} Component={TaskDetails}/>
-                <Connected path={"/classroom/*/assignment/:id"} Component={AssignmentDetails}/>
-                <Connected path={"/classroom/:id/"} Component={Classroom}/>
+                <Connected path={"/classroom/:classId/course/:id"} Component={CourseDetails}/>
+                <Connected path={"/classroom/:classId/task/:id"} Component={TaskDetails}/>
+                <Connected path={"/classroom/:classId/assignment/:id"} Component={AssignmentDetails}/>
+                <Connected path={"/classroom/:id"} Component={Classroom}/>
                 <Disconnected path={"/preview"} Component={Preview}/>
                 <Disconnected path={"/signin"} Component={SignIn}/>
                 <Disconnected path={"/signup"} Component={SignUp}/>

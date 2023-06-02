@@ -1,35 +1,56 @@
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { Button, Divider, Flex, IconButton, Menu, MenuButton, MenuItem, MenuList, useDisclosure } from "@chakra-ui/react";
-import { classrooms } from "../data/classrooms.js";
-import { useParams } from "react-router-dom";
-import { getItem } from "../../utils/localStorage";
-import { AiOutlineMore } from "react-icons/ai";
+import {
+    Button,
+    Divider,
+    Flex,
+    IconButton,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    Modal,
+    ModalContent,
+    ModalOverlay,
+    useDisclosure
+} from "@chakra-ui/react";
+import {getItem} from "../../utils/localStorage";
+import {AiOutlineMore} from "react-icons/ai";
+import {useEffect, useState} from "react";
+import {get, patch, remove} from "../helpers/helpers";
+import AssignmentModal from "../modals/assignment";
+import {useHistory, useParams} from 'react-router-dom';
 
 
 function AssignmentDetails() {
-    let { id } = useParams();
+    let {id} = useParams();
     console.log(id)
-    console.log(classrooms[0])
-    const assignment = classrooms[0].assignments[0];
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const deleteClassroom = async () => {
-        // const response=  await remove ("classroom/"+id)
-        // setItem("user",response)
-        // history.push('/home');
+    const [update, setUpdate] = useState(true)
+    const {isOpen, onOpen, onClose} = useDisclosure();
+    const [assignment, setAssignment] = useState({name: "", content: "", deadline: ""})
+    const history = useHistory();
+    const getAssignment = async () => {
+        const result = await get("assignment/" + id)
+        setAssignment(result)
+    }
+    useEffect(() => {
+        getAssignment()
+    }, [update])
+    const deleteAssignment = async () => {
+        await remove("assignment/" + id)
+        history.goBack();
     }
 
-    const editClassroom = async (data) => {
-        // const result = await patch("classroom/" + id, data)
-        // console.log("res:", result)
-        // setItem("user", result)
-        // onClose();
-        // setUpdate(!update)
+    const editTask = async (data) => {
+        const result = await patch("assignment/" + id, data)
+        console.log("res:", result)
+        onClose();
+        setUpdate(!update)
     }
 
     const handleSubmit = (values) => {
 
-        editClassroom(values)
+        editTask(values)
 
     };
 
@@ -45,11 +66,11 @@ function AssignmentDetails() {
 
                     <Flex flexDirection={"row"}>
                         <div style={{ width: "99%" }}>
-                            <h3 style={{ fontWeight: '600', fontSize: "24px" }}>{assignment.title}</h3>
-                            <p style={{ fontSize: '15px', fontWeight: 'lighter' }}>
-                                {assignment.teacher}  &#9679; {assignment.date}
+                            <h3 style={{fontWeight: '600', fontSize: "24px"}}>{assignment.name}</h3>
+                            <p style={{fontSize: '15px', fontWeight: 'lighter'}}>
+                                {assignment.teacher}  &#9679; {assignment.deadline}
                             </p>
-                            <div style={{ height: '10px' }}></div>
+                            <div style={{height: '10px'}}></div>
                             <p style={{ fontSize: '16px', fontWeight: 'normal' }}>
                                 {assignment.points} points
                             </p> </div>
@@ -69,7 +90,7 @@ function AssignmentDetails() {
 
                                 }} >Edit Assignment</MenuItem>
 
-                                <MenuItem onClick={deleteClassroom} >Delete Assignment</MenuItem>
+                                <MenuItem onClick={deleteAssignment}>Delete Assignment</MenuItem>
 
                             </MenuList>
 
@@ -80,20 +101,26 @@ function AssignmentDetails() {
                     <Divider width="100%" my={4} borderColor={"#A6A6A6"} borderWidth="0.75px" />
 
                     <div style={{ width: "100%" }}>
-                        <pre >{assignment.description}</pre>
+                        <pre>{assignment.content}</pre>
                     </div>
                     <br />
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: "center" }}>
                         <Button colorScheme="custom" color="grey"
-                            bgColor="#FFF"
-                            borderWidth="1px"
-                            borderColor="grey" rounded="full" type="submit" my="4" onClick={() => {
-                            }}>Submit homework</Button>
+                                bgColor="#FFF"
+                                borderWidth="1px"
+                                borderColor="grey" rounded="full" type="submit" my="4" onClick={() => {
+                        }}>Submit homework</Button>
                     </div>
 
                 </Flex>
             </div>
-            <Footer />
+            <Footer/>
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay/>
+                <ModalContent>
+                    <AssignmentModal onClose={onClose} handleSubmit={handleSubmit} values={assignment}/>
+                </ModalContent>
+            </Modal>
         </>
     );
 }

@@ -28,7 +28,8 @@ export class CourseService extends GenericService<Course> {
     createCourse = async (id, createCourseDto: CreateCourseDto) => {
         try {
             const classroom = await this.classService.findOne(id);
-            return await this.create({...createCourseDto, class: classroom, tasks: [], assignments: []});
+            const course = await this.create({...createCourseDto, class: classroom, tasks: [], assignments: []});
+            return course
         } catch (e) {
             return e.sqlmessage ?? e;
         }

@@ -1,6 +1,5 @@
 import {
     Box,
-    Button,
     Divider,
     Flex,
     Heading,
@@ -20,8 +19,8 @@ import {
     Tabs,
     useDisclosure,
 } from '@chakra-ui/react';
-import { useHistory, useParams } from "react-router-dom";
-import { images } from "../data/images.jsx";
+import {useHistory, useParams} from "react-router-dom";
+import {images} from "../data/images.jsx";
 import CourseList from "../components/CourseList";
 import TaskList from "../components/TaskList";
 import Students from "../components/Students";
@@ -38,7 +37,7 @@ const Classroom = ({}) => {
 
     const [update, setUpdate] = useState(true)
     let {id} = useParams();
-const [classroom,setClassroom] = useState({})
+    const [classroom, setClassroom] = useState({image_id: null, description: "", name: ""})
     const history = useHistory();
     const getClassroom = async () => {
         const result = await get("classroom/" + id)
@@ -94,7 +93,6 @@ const [classroom,setClassroom] = useState({})
                                 aria-label='Options'
                                 icon={<AiOutlineMore />}
                                 variant='outline'
-                                border={false}
                             />
                             <MenuList style={{ fontSize: "15px" }}>
                                 <MenuItem onClick={() => {
@@ -125,10 +123,10 @@ const [classroom,setClassroom] = useState({})
                             <CourseList  id={id} />
                         </TabPanel>
                         <TabPanel>
-                            <TaskList id={id} />
+                            <TaskList url={"classroom/task/" + id} path={"/classroom/" + id + "/task/"}/>
                         </TabPanel>
                         <TabPanel>
-                            <TaskList id={id} />
+                            <TaskList url={"classroom/assignment/" + id} path={"/classroom/" + id + "/assignment/"}/>
                         </TabPanel>
                         <TabPanel>
                             <Students />
@@ -143,7 +141,7 @@ const [classroom,setClassroom] = useState({})
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ClassroomModal title={"Edit Classroom"} onClose={onClose} handleSubmit={handleSubmit}
+                    <ClassroomModal onClose={onClose} handleSubmit={handleSubmit}
                                     values={classroom}/>
                 </ModalContent>
             </Modal>

@@ -1,4 +1,4 @@
-import {IsDate, IsDefined, IsString} from "class-validator";
+import {IsDefined, IsString} from "class-validator";
 
 export class CreatePracticeDto {
     @IsDefined()
@@ -8,6 +8,5 @@ export class CreatePracticeDto {
     @IsString()
     content: string;
     @IsDefined()
-    @IsDate()
-    deadline: Date;
+    deadline: string;
 }

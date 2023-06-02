@@ -3,7 +3,6 @@ import {Box, Card, CardBody, Heading, Image, Stack, Text} from '@chakra-ui/react
 import {images} from "../data/images.jsx";
 
 const ClassroomCard = ({classroom}) => {
-    console.log()
     const history = useHistory()
     return (
         <Box onClick={() => {

@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
     "allowJs": true,
     "jsx": "react-jsx",
     "target": "ESNext",
@@ -18,8 +20,6 @@
     "moduleResolution": "node",
     /* Linting */
     "strict": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true
   },

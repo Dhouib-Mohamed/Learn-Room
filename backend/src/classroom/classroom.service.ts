@@ -81,7 +81,8 @@ export class ClassroomService extends GenericService<Classroom> {
   async getAllCourses(id: any): Promise<Course[]> {
     try {
       const classroom = await this.findOne(id)
-      return await this.courseRepository.findBy({class: classroom})
+      const res = [...(await this.courseRepository.findBy({class: classroom}))]
+      return res
     } catch (e) {
       console.log(e);
       return e.sqlmessage ?? e;
@@ -93,7 +94,7 @@ export class ClassroomService extends GenericService<Classroom> {
       const classes = await this.getAllCourses(id)
       let tasks = []
       for (const e of classes) {
-        tasks = {...tasks, ...(await this.courseService.getAllTasks(e.id))}
+        tasks = [...tasks, ...(await this.courseService.getAllTasks(e.id))]
       }
       return tasks
     } catch (e) {
@@ -107,7 +108,7 @@ export class ClassroomService extends GenericService<Classroom> {
       const classes = await this.getAllCourses(id)
       let assignments = []
       for (const e of classes) {
-        assignments = {...assignments, ...(await this.courseService.getAllAssignments(e.id))}
+        assignments = [...assignments, ...(await this.courseService.getAllAssignments(e.id))]
       }
       return assignments
     } catch (e) {

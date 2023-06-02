@@ -10,7 +10,7 @@ export class Practice {
     @Column()
     content: string;
     @Column()
-    deadline: Date;
+    deadline: string;
     @Column()
     response: string = null
     @ManyToOne(() => Course, (e) => e.practices)

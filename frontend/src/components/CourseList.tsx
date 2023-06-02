@@ -8,14 +8,12 @@ import {useEffect, useState} from "react";
 
 
 const CourseList = ({ id }) => {
-    const [update, setUpdate] = useState(true)
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const history = useHistory();
 
     const [courses,setCourses] = useState([])
     const getCourses = async () => {
-        console.log("id  ",id)
         const result = await get("classroom/course/" + id)
         console.log("courselist",result)
         setCourses(result)
@@ -24,16 +22,12 @@ const CourseList = ({ id }) => {
 
     useEffect(() => {
         getCourses()
-    }, [update])
+    }, [])
 
     const addCourse = async (data) => {
-        console.log(id)
-        console.log('data',data)
         const result = await post("course/" + id, data)
-        console.log(result)
-
         onClose();
-        history.push(`classroom/${id}/course/${result.id}`);
+        history.push(`/classroom/${id}/course/${result.id}`);
     }
    
     const handleSubmit = (values) => {
@@ -45,28 +39,25 @@ const CourseList = ({ id }) => {
 
     return (
         <>
-        <EmptyStatePlaceholder user={"student"} type={"course"}/>
-            <Flex direction={"column"} >
-                {courses?.map((cours) => (
-                   
-                    <Course
-                        key={cours.id}
-                        id={cours.id}
-                        courseName={cours.name}
-                        CourseDate={cours.date}
-                        content={cours.content}
-                        
-                    />
-                ))}
-            </Flex>
-            <br />
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <Button colorScheme="custom" color="#FFF" bgColor="#66B0F0" rounded="full" size="md" 
-                height="30px"
-                width="120px" onClick={() => {
+            {courses.length > 0 ?
+                <Flex direction={"column"}>
+                    {courses?.map((course) => (
+
+                        <Course
+                            key={course.id}
+                            course={course}
+                            classroomId={id}/>
+                    ))}
+                </Flex>
+                : <EmptyStatePlaceholder user={"student"} type={"course"}/>}
+            <br/>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+                <Button colorScheme="custom" color="#FFF" bgColor="#66B0F0" rounded="full" size="md"
+                        height="30px"
+                        width="120px" onClick={() => {
                     onOpen()
                 }}
-            >Add course</Button>
+                >Add course</Button>
             </div>
 
             <Modal isOpen={isOpen} onClose={onClose}>

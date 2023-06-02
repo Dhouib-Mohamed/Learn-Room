@@ -11,7 +11,11 @@ import {
 } from "@chakra-ui/react";
 import {Field, Form, Formik} from "formik";
 
-export default function AssignmentModal({handleSubmit, onClose, values = {name: '', description: '',}}) {
+export default function AssignmentModal({
+                                            handleSubmit,
+                                            onClose,
+                                            values = {name: '', content: '', deadline: undefined}
+                                        }) {
     return (
         <><ModalHeader>Add Classroom</ModalHeader><ModalCloseButton/><Formik
             initialValues={values}
@@ -28,11 +32,19 @@ export default function AssignmentModal({handleSubmit, onClose, values = {name: 
                                 </FormControl>
                             )}
                         </Field>
-                        <Field name="description">
+                        <Field name="content">
                             {({field}) => (
                                 <FormControl>
                                     <FormLabel>Description</FormLabel>
                                     <Textarea {...field} />
+                                </FormControl>
+                            )}
+                        </Field>
+                        <Field name="deadline">
+                            {({field}) => (
+                                <FormControl>
+                                    <FormLabel>Deadline</FormLabel>
+                                    <input {...field} type={"date"}/>
                                 </FormControl>
                             )}
                         </Field>
@@ -41,7 +53,7 @@ export default function AssignmentModal({handleSubmit, onClose, values = {name: 
                         <Button
                             type="submit"
                             isLoading={formikProps.isSubmitting}
-                            rounded="full"  colorScheme="custom" color="#FFF" bgColor="#66B0F0"
+                            rounded="full" colorScheme="custom" color="#FFF" bgColor="#66B0F0"
                         >
                             Submit
                         </Button>

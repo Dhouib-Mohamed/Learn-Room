@@ -1,44 +1,47 @@
-import {Flex, useDisclosure} from "@chakra-ui/react";
+import {Flex} from "@chakra-ui/react";
 import Task from "../components/Task";
-import { useState, useEffect } from "react";
-import { get, post } from "../helpers/helpers";
-import {useHistory} from 'react-router-dom';
+import {useEffect, useState} from "react";
+import {get} from "../helpers/helpers";
+// import {useHistory} from 'react-router-dom';
+import EmptyStatePlaceholder from "./EmptyStatePlaceholder";
 
 
-const TaskList = ({id}) => {
-    
-    const [update, setUpdate] = useState(true)
-
+const TaskList = ({url, path}) => {
     // const history = useHistory();
 
-    const [tasks,setTasks] = useState([])
+    const [tasks, setTasks] = useState([])
     const getTasks = async () => {
-        console.log("id task ",id)
-        const result = await get("classroom/task/" + id)
-        console.log("task lisk",result)
-        setTasks(result)
-
+        const result = await get(url)
+        console.log("task lisk", result)
+        if (result) {
+            setTasks(result)
+        }
     }
 
     useEffect(() => {
         getTasks()
-    }, [update])
+    }, [])
 
 
    
 
     return (
         <>
-        <Flex direction={"column"}>
-            {/* {tasks?.map((task) => (
-                <Task
-                    key={task.id}
-                    id={task.id}
-                    title={task.title}
-                />
-            ))} */}
-        </Flex>
-        
+            {tasks.length > 0 ?
+                <Flex direction={"column"}>
+                    {tasks?.map((task) => {
+                        console.log(task);
+                        return (
+                            <Task
+                                key={task.id}
+                                path={`${path}${task.id}`}
+                                task={task}
+                            />
+                        )
+                    })}
+                </Flex>
+                : <EmptyStatePlaceholder user={"student"} type={"course"}/>}
+
         </>
     );
 };

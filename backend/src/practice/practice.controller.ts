@@ -3,7 +3,7 @@ import {PracticeService} from './practice.service';
 import {CreatePracticeDto} from './dto/create-practice.dto';
 import {UpdatePracticeDto} from './dto/update-practice.dto';
 
-@Controller('practice')
+@Controller('assignment')
 export class PracticeController {
   constructor(private readonly practiceService: PracticeService) {
   }
