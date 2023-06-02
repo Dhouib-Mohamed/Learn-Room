@@ -1,5 +1,5 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, } from '@chakra-ui/react';
-import { useHistory } from "react-router-dom";
+import {Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box,} from '@chakra-ui/react';
+import {useHistory} from "react-router-dom";
 
 
 const Course = ({ course, classroomId }) => {
@@ -10,10 +10,10 @@ const Course = ({ course, classroomId }) => {
                 <AccordionItem>
                     <h2>
                         <AccordionButton>
-                            <Box as="span" flex='1' fontWeight={700} height={"40px"} textAlign='left'>
+                            <Box as="span" flex='1' fontWeight={700} height={"40px"} textAlign='left' fontSize={21}>
                                 {course.name}
                             </Box>
-                            <AccordionIcon />
+                            <AccordionIcon/>
                         </AccordionButton>
                     </h2>
                     <AccordionPanel

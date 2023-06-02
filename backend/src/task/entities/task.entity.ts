@@ -11,12 +11,11 @@ export class Task {
     @Column()
     content: string;
     @Column()
-    completed: boolean = false
-    @ManyToOne(() => Course, (e) => e.tasks, {eager: true})
+    points: number
+    @ManyToOne(() => Course, (e) => e.tasks)
     @JoinColumn({name: "course_task"})
     course: Course
-
-    @OneToMany(() => ResponseTask , (e) => e.task)
+    @OneToMany(() => ResponseTask, (e) => e.task)
     responseTasks: ResponseTask[]
 
 }

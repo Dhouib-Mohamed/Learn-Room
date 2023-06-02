@@ -13,11 +13,10 @@ export class Practice {
     @Column()
     deadline: string;
     @Column()
-    response: string = null
+    points: number
     @ManyToOne(() => Course, (e) => e.practices)
     @JoinColumn({name: "course_practice"})
     course: Course
     @OneToMany(() => ResponseAssignment, (e) => e.assignment, {eager: true})
     responseAssignments: ResponseAssignment[]
-
 }
