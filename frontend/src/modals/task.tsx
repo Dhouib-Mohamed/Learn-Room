@@ -13,7 +13,7 @@ import {Field, Form, Formik} from "formik";
 
 export default function TaskModal({handleSubmit, onClose, values = {name: '', content: '',}}) {
     return (
-        <><ModalHeader>Add Classroom</ModalHeader><ModalCloseButton/><Formik
+        <><ModalHeader>Add New Task</ModalHeader><ModalCloseButton/><Formik
             initialValues={values}
             onSubmit={handleSubmit}
         >

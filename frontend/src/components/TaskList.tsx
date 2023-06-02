@@ -4,9 +4,10 @@ import {useEffect, useState} from "react";
 import {get} from "../helpers/helpers";
 // import {useHistory} from 'react-router-dom';
 import EmptyStatePlaceholder from "./EmptyStatePlaceholder";
+import { getItem } from "../../utils/localStorage";
 
 
-const TaskList = ({url, path}) => {
+const TaskList = ({url, path,task}) => {
     // const history = useHistory();
 
     const [tasks, setTasks] = useState([])
@@ -28,7 +29,7 @@ const TaskList = ({url, path}) => {
     return (
         <>
             {tasks.length > 0 ?
-                <Flex direction={"column"}>
+                <Flex direction={"column"} width={"100%"}>
                     {tasks?.map((task) => {
                         console.log(task);
                         return (
@@ -40,7 +41,7 @@ const TaskList = ({url, path}) => {
                         )
                     })}
                 </Flex>
-                : <EmptyStatePlaceholder user={"student"} type={"course"}/>}
+                : <EmptyStatePlaceholder user={getItem("user").user?"teacher":"student"} type={task?"task":"assignment"}/>}
 
         </>
     );

@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 // import { useHistory } from 'react-router-dom';
 import StudentModal from '../modals/student';
+import { getItem } from '../../utils/localStorage';
 
 const personnes = [
     {name: 'jean Abrahmov', email: "jean Abrahmov@gmail.com", src: 'https://bit.ly/abramol'},
@@ -75,6 +76,8 @@ const Students = () => {
                 </TableContainer>
             </Box>
             <br/>
+            {getItem("user").user ?
+
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
                 <Button
                     colorScheme="custom"
@@ -91,6 +94,7 @@ const Students = () => {
                     Add Student
                 </Button>
             </div>
+            : null}
 
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay/>

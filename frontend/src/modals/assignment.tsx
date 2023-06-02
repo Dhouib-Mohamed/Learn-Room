@@ -17,7 +17,7 @@ export default function AssignmentModal({
                                             values = {name: '', content: '', deadline: undefined}
                                         }) {
     return (
-        <><ModalHeader>Add Classroom</ModalHeader><ModalCloseButton/><Formik
+        <><ModalHeader>Add New Assignments</ModalHeader><ModalCloseButton/><Formik
             initialValues={values}
             onSubmit={handleSubmit}
         >

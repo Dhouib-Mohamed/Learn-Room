@@ -1,10 +1,11 @@
-import {Button, Flex, Modal, ModalContent, ModalOverlay, useDisclosure} from "@chakra-ui/react";
+import { Button, Flex, Modal, ModalContent, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import Course from "../components/Course";
 import EmptyStatePlaceholder from "../components/EmptyStatePlaceholder";
 import CourseModal from "../modals/course";
-import {useHistory} from 'react-router-dom';
-import {get, post} from "../helpers/helpers";
-import {useEffect, useState} from "react";
+import { useHistory } from 'react-router-dom';
+import { get, post } from "../helpers/helpers";
+import { useEffect, useState } from "react";
+import { getItem } from "../../utils/localStorage";
 
 
 const CourseList = ({ id }) => {
@@ -12,10 +13,10 @@ const CourseList = ({ id }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const history = useHistory();
 
-    const [courses,setCourses] = useState([])
+    const [courses, setCourses] = useState([])
     const getCourses = async () => {
         const result = await get("classroom/course/" + id)
-        console.log("courselist",result)
+        console.log("courselist", result)
         setCourses(result)
 
     }
@@ -29,13 +30,13 @@ const CourseList = ({ id }) => {
         onClose();
         history.push(`/classroom/${id}/course/${result.id}`);
     }
-   
+
     const handleSubmit = (values) => {
 
         addCourse(values)
-   
+
     };
-       
+
 
     return (
         <>
@@ -46,24 +47,27 @@ const CourseList = ({ id }) => {
                         <Course
                             key={course.id}
                             course={course}
-                            classroomId={id}/>
+                            classroomId={id} />
                     ))}
                 </Flex>
-                : <EmptyStatePlaceholder user={"student"} type={"course"}/>}
-            <br/>
-            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-                <Button colorScheme="custom" color="#FFF" bgColor="#66B0F0" rounded="full" size="md"
+                : <EmptyStatePlaceholder user={getItem("user").user ? "teacher" : "student"} type={"course"} />}
+
+            <br />
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                {getItem("user").user ?
+                    <Button colorScheme="custom" color="#FFF" bgColor="#66B0F0" rounded="full" size="md"
                         height="30px"
                         width="120px" onClick={() => {
-                    onOpen()
-                }}
-                >Add course</Button>
+                            onOpen()
+                        }}
+                    >Add course</Button>
+                    : null}
             </div>
 
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <CourseModal onClose={onClose} handleSubmit={handleSubmit}/>
+                    <CourseModal onClose={onClose} handleSubmit={handleSubmit} />
                 </ModalContent>
             </Modal>
         </>

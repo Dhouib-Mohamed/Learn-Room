@@ -13,7 +13,7 @@ import {Field, Form, Formik} from "formik";
 
 export default function StudentModal({handleSubmit, onClose, values = {name: ''}}) {
     return (
-        <><ModalHeader>Add Classroom</ModalHeader><ModalCloseButton/><Formik
+        <><ModalHeader>Enroll Student</ModalHeader><ModalCloseButton/><Formik
             initialValues={values}
             onSubmit={handleSubmit}
         >

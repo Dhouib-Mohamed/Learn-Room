@@ -14,20 +14,20 @@ import {
     ModalOverlay,
     useDisclosure
 } from "@chakra-ui/react";
-import {getItem} from "../../utils/localStorage";
-import {AiOutlineMore} from "react-icons/ai";
-import {useEffect, useState} from "react";
-import {get, patch, remove} from "../helpers/helpers";
+import { getItem } from "../../utils/localStorage";
+import { AiOutlineMore } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import { get, patch, remove } from "../helpers/helpers";
 import AssignmentModal from "../modals/assignment";
-import {useHistory, useParams} from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 
 function AssignmentDetails() {
-    let {id} = useParams();
+    let { id } = useParams();
     console.log(id)
     const [update, setUpdate] = useState(true)
-    const {isOpen, onOpen, onClose} = useDisclosure();
-    const [assignment, setAssignment] = useState({name: "", content: "", deadline: ""})
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [assignment, setAssignment] = useState({ name: "", content: "", deadline: "" })
     const history = useHistory();
     const getAssignment = async () => {
         const result = await get("assignment/" + id)
@@ -66,11 +66,11 @@ function AssignmentDetails() {
 
                     <Flex flexDirection={"row"}>
                         <div style={{ width: "99%" }}>
-                            <h3 style={{fontWeight: '600', fontSize: "24px"}}>{assignment.name}</h3>
-                            <p style={{fontSize: '15px', fontWeight: 'lighter'}}>
-                                {assignment.teacher}  &#9679; {assignment.deadline}
+                            <h3 style={{ fontWeight: '600', fontSize: "24px" }}>{assignment.name}</h3>
+                            <p style={{ fontSize: '15px', fontWeight: 'lighter' }}>
+                                {getItem("user").user ?"":"${assignment.teacher} &#9679;" }  {assignment.deadline}
                             </p>
-                            <div style={{height: '10px'}}></div>
+                            <div style={{ height: '10px' }}></div>
                             <p style={{ fontSize: '16px', fontWeight: 'normal' }}>
                                 {assignment.points} points
                             </p> </div>
@@ -103,22 +103,24 @@ function AssignmentDetails() {
                     <div style={{ width: "100%" }}>
                         <pre>{assignment.content}</pre>
                     </div>
-                    <br />
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: "center" }}>
-                        <Button colorScheme="custom" color="grey"
-                                bgColor="#FFF"
-                                borderWidth="1px"
-                                borderColor="grey" rounded="full" type="submit" my="4" onClick={() => {
-                        }}>Submit homework</Button>
-                    </div>
-
+                    {getItem("user").user ? null :
+                        <>
+                            <br />
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: "center" }}>
+                                <Button colorScheme="custom" color="grey"
+                                    bgColor="#FFF"
+                                    borderWidth="1px"
+                                    borderColor="grey" rounded="full" type="submit" my="4" onClick={() => {
+                                    }}>Submit homework</Button>
+                            </div>
+                        </>}
                 </Flex>
             </div>
-            <Footer/>
+            <Footer />
             <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay/>
+                <ModalOverlay />
                 <ModalContent>
-                    <AssignmentModal onClose={onClose} handleSubmit={handleSubmit} values={assignment}/>
+                    <AssignmentModal onClose={onClose} handleSubmit={handleSubmit} values={assignment} />
                 </ModalContent>
             </Modal>
         </>
