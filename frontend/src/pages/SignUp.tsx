@@ -2,6 +2,7 @@ import {
     Box,
     Button,
     FormControl,
+    FormErrorMessage,
     FormLabel,
     Heading,
     Input,
@@ -14,10 +15,10 @@ import {
 import signin from "../assets/signin.png";
 import Footer from '../components/Footer';
 import logo from "../assets/logo.png";
-import {useHistory} from "react-router-dom";
-import {Formik, Form, Field} from 'formik';
-import {post} from "../helpers/helpers";
-import {setItem} from "../../utils/localStorage";
+import { useHistory } from "react-router-dom";
+import { Formik, Form, Field } from 'formik';
+import { post } from "../helpers/helpers";
+import { setItem } from "../../utils/localStorage";
 
 function SignUp() {
     const history = useHistory();
@@ -30,6 +31,7 @@ function SignUp() {
                 password: values.password,
                 user: values.role === "teacher"
             });
+            console.log("res",result)
             if (result.id) {
                 setItem("user", result);
                 history.push("/home");
@@ -39,15 +41,50 @@ function SignUp() {
         }
     };
 
+    const isValidEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    const validateForm = (values) => {
+        const errors = {};
+
+        if (!values.name) {
+            errors.name = 'Name is required';
+        }
+
+        if (!values.surname) {
+            errors.surname = 'Surname is required';
+        }
+
+        if (!values.email) {
+            errors.email = 'Email is required';
+        } else if (!isValidEmail(values.email)) {
+            errors.email = 'Invalid email format';
+        }
+
+        if (!values.password) {
+            errors.password = 'Password is required';
+        } else if (values.password.length < 7) {
+            errors.password = 'Password must be at least 7 characters long';
+        }
+
+        if (!values.role) {
+            errors.role = 'User type is required';
+        }
+
+        return errors;
+    };
+
     return (
         <>
-            <div style={{height: '800px', display: 'flex', alignItems: 'center'}}>
-                <div style={{flex: 2, display: "flex", alignItems: "center", justifyContent: 'center'}}>
+            <div style={{ height: '800px', display: 'flex', alignItems: 'center' }}>
+                <div style={{ flex: 2, display: "flex", alignItems: "center", justifyContent: 'center' }}>
 
                     <Box textAlign="center">
 
-                        <div style={{display: "flex", alignItems: "center", marginBottom: "100px"}}>
-                            <img src={logo} alt="Logo" style={{width: "60px", marginRight: "20px"}}/>
+                        <div style={{ display: "flex", alignItems: "center", marginBottom: "100px" }}>
+                            <img src={logo} alt="Logo" style={{ width: "60px", marginRight: "20px" }} />
                             <Heading>LearnRoom</Heading>
                         </div>
 
@@ -60,46 +97,51 @@ function SignUp() {
                                 role: "student",
                             }}
                             onSubmit={handleSubmit}
+                            validate={validateForm}
                         >
                             <Form>
                                 <Field name="name">
-                                    {({field}) => (
-                                        <FormControl id="name" my="4">
+                                    {({ field, form }) => (
+                                        <FormControl id="name" my="4" isInvalid={form.errors.name && form.touched.name}>
                                             <FormLabel>Name:</FormLabel>
-                                            <Input {...field} type="text"/>
+                                            <Input {...field} type="text" />
+                                            <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                                         </FormControl>
                                     )}
                                 </Field>
 
                                 <Field name="surname">
-                                    {({field}) => (
-                                        <FormControl id="surname" my="4">
+                                    {({ field,form }) => (
+                                        <FormControl id="surname" my="4" isInvalid={form.errors.name && form.touched.name}>
                                             <FormLabel>Surname:</FormLabel>
-                                            <Input {...field} type="text"/>
+                                            <Input {...field} type="text" />
+                                            <FormErrorMessage>{form.errors.surname}</FormErrorMessage>
                                         </FormControl>
                                     )}
                                 </Field>
 
                                 <Field name="email">
-                                    {({field}) => (
-                                        <FormControl id="email" my="4">
+                                    {({ field,form }) => (
+                                        <FormControl id="email" my="4" isInvalid={form.errors.email && form.touched.email}>
                                             <FormLabel>Email:</FormLabel>
-                                            <Input {...field} type="email"/>
+                                            <Input {...field} type="email" />
+                                            <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                                         </FormControl>
                                     )}
                                 </Field>
 
                                 <Field name="password">
-                                    {({field}) => (
-                                        <FormControl id="password" my="4">
+                                    {({ field,form }) => (
+                                        <FormControl id="password" my="4" isInvalid={form.errors.password && form.touched.password}>
                                             <FormLabel>Password:</FormLabel>
-                                            <Input {...field} type="password"/>
+                                            <Input {...field} type="password" />
+                                            <FormErrorMessage>{form.errors.password}</FormErrorMessage>
                                         </FormControl>
                                     )}
                                 </Field>
 
                                 <Field name="role">
-                                    {({field, form}) => (
+                                    {({ field, form }) => (
                                         <FormControl as="fieldset" my="4">
                                             <FormLabel as="legend">User Type:</FormLabel>
                                             <RadioGroup
@@ -135,11 +177,11 @@ function SignUp() {
                     </Box>
                 </div>
 
-                <div style={{flex: 3}}>
-                    <img src={signin} alt="landing image" style={{width: '1000px'}}/>
+                <div style={{ flex: 3 }}>
+                    <img src={signin} alt="landing image" style={{ width: '1000px' }} />
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </>
     );
 }

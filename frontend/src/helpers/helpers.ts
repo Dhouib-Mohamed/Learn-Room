@@ -16,6 +16,12 @@ const get = async (url) => {
             }
         );
         const data = await response.json();
+        console.log("data",data)
+        if (data.message) {
+         let errorMessage=data.message;
+         console.log("error msg",errorMessage)
+         return errorMessage;
+        }
         return (data);
     } catch (error) {
         console.error('Error:', error.message);
@@ -24,6 +30,7 @@ const get = async (url) => {
 
 const post = async (url, body) => {
     try {
+        console.log("body",body)
         const response = await fetch(
             BASE_URL + url,
             {
@@ -32,11 +39,17 @@ const post = async (url, body) => {
                 body: JSON.stringify(body),
             }
         );
-        console.log(response)
+        console.log("response",response)
         const data = await response.json();
+        console.log("data",data)
+        if (data.message) {
+         let errorMessage=data.message;
+         console.log(errorMessage)
+         return errorMessage;
+        }
         return (data);
     } catch (error) {
-        console.log(error)
+        console.log("error in helper",error)
         console.error('Error:', error.message);
     }
 }
@@ -51,6 +64,9 @@ const patch = async (url, body) => {
             }
         );
         const data = await response.json();
+        if (!response.ok){
+            console.log("response",response);
+        }
         return (data);
     } catch (error) {
         console.error('Error:', error.message);

@@ -43,11 +43,11 @@ const CourseList = ({ id }) => {
             {courses.length > 0 ?
                 <Flex direction={"column"}>
                     {courses?.map((course) => (
-
-                        <Course
-                            key={course.id}
-                            course={course}
-                            classroomId={id} />
+                        <div style={{marginBottom:"10px"}}>
+                            <Course
+                                key={course.id}
+                                course={course}
+                                classroomId={id} /></div>
                     ))}
                 </Flex>
                 : <EmptyStatePlaceholder user={getItem("user").user ? "teacher" : "student"} type={"course"} />}

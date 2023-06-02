@@ -12,7 +12,7 @@ function SignIn() {
 
     const logIn = async (values) => {
         const result = await post("user/signin", values)
-        console.log(result)
+        console.log("res",result)
         if (result.id) {
             setItem("user", result);
             history.push("/home");

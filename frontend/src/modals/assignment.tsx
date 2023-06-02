@@ -1,6 +1,7 @@
 import {
     Button,
     FormControl,
+    FormErrorMessage,
     FormLabel,
     Input,
     ModalBody,
@@ -9,42 +10,69 @@ import {
     ModalHeader,
     Textarea
 } from "@chakra-ui/react";
-import {Field, Form, Formik} from "formik";
+import { Field, Form, Formik } from "formik";
 
 export default function AssignmentModal({
-                                            handleSubmit,
-                                            onClose,
-                                            values = {name: '', content: '', deadline: undefined}
-                                        }) {
+    handleSubmit,
+    onClose,
+    values = { name: '', content: '', deadline: undefined }
+}) {
+
+    const validateForm = (values) => {
+        const errors = {};
+
+        if (!values.name) {
+            errors.name = 'Assignment Title is required';
+        }
+
+        if (!values.content) {
+            errors.content = 'Description is required';
+        }
+
+        if (!values.deadline) {
+            errors.deadline = 'Deadline is required';
+        }
+
+        return errors;
+    };
+
+
+
+
     return (
-        <><ModalHeader>Add New Assignments</ModalHeader><ModalCloseButton/><Formik
+        <><ModalHeader>Add New Assignments</ModalHeader><ModalCloseButton />
+        <Formik
             initialValues={values}
             onSubmit={handleSubmit}
+            validate={validateForm}
         >
             {(formikProps) => (
                 <Form>
                     <ModalBody>
                         <Field name="name">
-                            {({field}) => (
-                                <FormControl>
+                            {({ field, form }) => (
+                                <FormControl isInvalid={form.errors.name && form.touched.name}>
                                     <FormLabel>Assignment Title</FormLabel>
                                     <Input {...field} />
+                                    <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                                 </FormControl>
                             )}
                         </Field>
                         <Field name="content">
-                            {({field}) => (
-                                <FormControl>
+                            {({ field, form }) => (
+                                <FormControl isInvalid={form.errors.content && form.touched.content}>
                                     <FormLabel>Description</FormLabel>
                                     <Textarea {...field} />
+                                    <FormErrorMessage>{form.errors.content}</FormErrorMessage>
                                 </FormControl>
                             )}
                         </Field>
                         <Field name="deadline">
-                            {({field}) => (
-                                <FormControl>
+                            {({ field, form }) => (
+                                <FormControl isInvalid={form.errors.deadline && form.touched.deadline}>
                                     <FormLabel>Deadline</FormLabel>
-                                    <input {...field} type={"date"}/>
+                                    <input {...field} type={"date"} />
+                                    <FormErrorMessage>{form.errors.deadline}</FormErrorMessage>
                                 </FormControl>
                             )}
                         </Field>
@@ -57,7 +85,7 @@ export default function AssignmentModal({
                         >
                             Submit
                         </Button>
-                        <Button onClick={onClose}  rounded="full" colorScheme="custom" color="grey" bgColor="#FFF" borderWidth="1px" borderColor="grey" ml={4}>
+                        <Button onClick={onClose} rounded="full" colorScheme="custom" color="grey" bgColor="#FFF" borderWidth="1px" borderColor="grey" ml={4}>
                             Cancel
                         </Button>
                     </ModalFooter>

@@ -67,7 +67,7 @@ function TaskDetails() {
                         <div style={{ width: "99%" }}>
                             <h3 style={{fontWeight: '600', fontSize: "24px"}}>{task.name}</h3>
                             <p style={{fontSize: '15px', fontWeight: 'lighter'}}>
-                                {task.teacher.name}  &#9679; {task.deadline}
+                                {task.teacher.name}
                             </p>
                         </div>
                         <div style={{ height: '10px' }}></div>
@@ -91,7 +91,7 @@ function TaskDetails() {
                     <Divider width="100%" my={4} borderColor={"#A6A6A6"} borderWidth="0.75px" />
                     <div style={{ width: "100%" }}>
 
-                        <pre>{task.content}</pre>
+                        <pre style={{ whiteSpace: "pre-wrap" }}>{task.content}</pre>
 
                     </div>
                     <br />
