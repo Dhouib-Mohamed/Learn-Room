@@ -51,7 +51,7 @@ export default function Main() {
                     marginLeft: "45%",
                     marginTop: "20px",
                     marginBottom: "50px"
-                }}>Add Classroom</Button>
+                }}>Enroll in a Classroom</Button>
             }
 
             <Modal isOpen={isOpen1} onClose={onClose1}>
