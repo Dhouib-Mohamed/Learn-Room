@@ -28,8 +28,7 @@ export class CourseService extends GenericService<Course> {
     createCourse = async (id, createCourseDto: CreateCourseDto) => {
         try {
             const classroom = await this.classService.findOne(id);
-            const course = await this.create({...createCourseDto, class: classroom, tasks: [], assignments: []});
-            return course
+            return await this.create({...createCourseDto, class: classroom, tasks: [], assignments: []})
         } catch (e) {
             return e.sqlmessage ?? e;
         }
@@ -52,6 +51,23 @@ export class CourseService extends GenericService<Course> {
                 where: {course},
                 order: {deadline: 'ASC'},
             })
+        } catch (e) {
+            console.log(e);
+            return e.sqlmessage ?? e;
+        }
+    }
+
+    async deleteCourse(id) {
+        try {
+            const assignments = await this.getAllAssignments(id)
+            const tasks = await this.getAllTasks(id)
+            for (const e of tasks) {
+                await this.taskRepository.delete(e.id)
+            }
+            for (const e of assignments) {
+                await this.practiceRepository.delete(e.id)
+            }
+            return this.delete(id)
         } catch (e) {
             console.log(e);
             return e.sqlmessage ?? e;

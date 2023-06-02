@@ -11,6 +11,7 @@ import {Practice} from "../practice/entities/practice.entity";
 import {Task} from "../task/entities/task.entity";
 import {CourseService} from "../course/course.service";
 import {Course} from "../course/entities/course.entity";
+import {Teacher} from "../teacher/entities/teacher.entity";
 
 @Injectable()
 export class ClassroomService extends GenericService<Classroom> {
@@ -23,6 +24,8 @@ export class ClassroomService extends GenericService<Classroom> {
       private courseRepository: Repository<Course>,
       @InjectRepository(Student)
       private studentRepository: Repository<Student>,
+      @InjectRepository(Teacher)
+      private teacherRepository: Repository<Teacher>,
       private readonly teacherService: TeacherService,
       private readonly studentService: StudentService,
       @Inject(forwardRef(() => CourseService))
@@ -39,17 +42,35 @@ export class ClassroomService extends GenericService<Classroom> {
       return e.sqlmessage ?? e;
     }
   }
-  addUser = async (id, email) => {
+
+  async addUser(id: string, email: string) {
     try {
       const student = await this.studentRepository.findOneBy({email});
+      console.log(student);
       const currentClass = await this.findOne(id);
+
       student.classes = student.classes ?? [];
       student.classes.push(currentClass);
       await this.studentService.create(student);
-      currentClass.students = currentClass.students ?? [];
-      currentClass.students.push(student);
+      currentClass.students = await this.studentRepository.findBy({classes: currentClass}) ?? [];
+      const {classes, ...studentData} = student;
+      currentClass.students.push(studentData);
       await this.create(currentClass);
+
       return currentClass;
+    } catch (e) {
+      console.log(e);
+      return e.sqlmessage ?? e;
+    }
+  }
+
+  getUsers = async (id) => {
+    try {
+      const currentClass = await this.findOne(id);
+      return ({
+        teacher: await this.teacherRepository.findOneBy({classes: currentClass}),
+        students: (await this.studentRepository.findBy({classes: currentClass}) ?? [])
+      });
     } catch (e) {
       console.log(e);
       return e.sqlmessage ?? e;
@@ -60,17 +81,6 @@ export class ClassroomService extends GenericService<Classroom> {
     try {
       const oldClass = await this.findOne(id)
       await super.update(id, dto);
-      return {...(await this.teacherService.findOne(oldClass.teacher)), user: true}
-    } catch (e) {
-      console.log(e);
-      return e.sqlmessage ?? e;
-    }
-  }
-
-  async deleteClass(id: any): Promise<DeleteResult> {
-    try {
-      const oldClass = await this.findOne(id)
-      await super.delete(id);
       return {...(await this.teacherService.findOne(oldClass.teacher)), user: true}
     } catch (e) {
       console.log(e);
@@ -117,5 +127,18 @@ export class ClassroomService extends GenericService<Classroom> {
     }
   }
 
-
+  async deleteClass(id) {
+    try {
+      const oldClass = await this.findOne(id)
+      const courses = await this.getAllCourses(id)
+      for (const e of courses) {
+        await this.courseService.delete(e.id)
+      }
+      await this.delete(id)
+      return {...(await this.teacherService.findOne(oldClass.teacher)), user: true}
+    } catch (e) {
+      console.log(e);
+      return e.sqlmessage ?? e;
+    }
+  }
 }

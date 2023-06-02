@@ -6,12 +6,11 @@ import {
     ModalBody,
     ModalCloseButton,
     ModalFooter,
-    ModalHeader,
-    Textarea
+    ModalHeader
 } from "@chakra-ui/react";
 import {Field, Form, Formik} from "formik";
 
-export default function StudentModal({handleSubmit, onClose, values = {name: ''}}) {
+export default function StudentModal({handleSubmit, onClose, values = {email: ''}}) {
     return (
         <><ModalHeader>Enroll Student</ModalHeader><ModalCloseButton/><Formik
             initialValues={values}
@@ -20,7 +19,7 @@ export default function StudentModal({handleSubmit, onClose, values = {name: ''}
             {(formikProps) => (
                 <Form>
                     <ModalBody>
-                        <Field name="name">
+                        <Field name="email">
                             {({field}) => (
                                 <FormControl>
                                     <FormLabel>Student's email</FormLabel>
