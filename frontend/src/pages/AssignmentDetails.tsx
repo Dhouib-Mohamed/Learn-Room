@@ -48,8 +48,11 @@ function AssignmentDetails() {
         setSubmit(result)
     }
     useEffect(() => {
-        getAssignment(),
             getResponseAssignment()
+    }, [])
+    useEffect(() => {
+        getAssignment()
+
     }, [update])
     const deleteAssignment = async () => {
         await remove("assignment/" + id)
