@@ -176,7 +176,7 @@ function AssignmentDetails() {
                             </Formik>
 
                         </> :
-                        assignment.responseAssignments?.map((e) => <AssignmentResponse e={e}/>)
+                        assignment.responseAssignments?.map((e) => <AssignmentResponse e={e} assignment={assignment}/>)
                     }
                 </Flex>
             </div>
@@ -191,7 +191,8 @@ function AssignmentDetails() {
     );
 }
 
-const AssignmentResponse = ({e}) => {
+const AssignmentResponse = ({e , assignment}) => {
+    const [validationError, setValidationError] = useState(false);
     const [score, setScore] = useState(e.score)
     const {setErrorModal} = useContext(ErrorContext);
 
@@ -199,15 +200,45 @@ const AssignmentResponse = ({e}) => {
         const result = await patch("response-assignment/validate/" + id, {score}, setErrorModal)
     }
     return (
-        <Flex margin={10}>
-            <div>{e.content}</div>
-            <Input value={score} onChange={(e) => {
-                setScore(+e.target.value)
-            }}></Input>
-            <Button onClick={() => {
-                validate(e.id)
-            }}>Validate</Button>
-        </Flex>
+        <Flex margin={10} flexDirection="column">
+        <div style={{ width: "100%" }}>{e.content}</div>
+        <div style={{ display: "flex", justifyContent: "flex-end" ,marginBottom:"5px"}}>
+          <p style={{ margin: "7px", marginRight: "10px" }}>Score:</p>
+          <Input
+            style={{ marginRight: "10px", width: "100px" }}
+            value={score}
+            onChange={(e) => {
+                if (+e.target.value > assignment.points){
+                    setValidationError(true);
+                }
+                else{setValidationError(false);
+                    setScore(+e.target.value);}
+              
+            }}
+          />
+          {validationError && (
+      <p style={{ color: "red", margin: "0",fontSize:"10px", marginRight: "10px" }}>
+        Score shouldnt exceed assignment points!
+      </p>
+    )}
+        </div>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            width={"90px"}
+            height={"35px"}
+            colorScheme="custom"
+            backgroundColor="#69bfb6"
+            rounded="full"
+            onClick={() => {
+              validate(e.id);
+            }}
+          >
+            Validate
+          </Button>
+        </div>
+      </Flex>
+      
+
     )
 }
 
