@@ -1,7 +1,9 @@
-import {Column, Entity, JoinColumn, JoinTable, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {IsEmail} from "class-validator";
 import {Exclude} from "class-transformer";
 import {Classroom} from "../../classroom/entities/classroom.entity";
+import {ResponseAssignment} from "../../response_assignment/entities/response_assignment.entity";
+import {ResponseTask} from "../../response_task/entities/response_task.entity";
 
 @Entity('student')
 export class Student {
@@ -20,4 +22,9 @@ export class Student {
     @ManyToMany(() => Classroom, (e) => e.students, {eager: true})
     classes: Classroom[]
 
+    @OneToMany(() => ResponseTask  , (e) => e.student)
+    responseTasks: ResponseTask[]
+
+    @OneToMany(() => ResponseAssignment  , (e) => e.student)
+    responseAssignments: ResponseAssignment[]
 }

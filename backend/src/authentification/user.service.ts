@@ -1,6 +1,5 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {SignInDto} from "./dto/sign-in.dto";
-import {SignUpDto} from "./dto/sign-up.dto";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {Teacher} from "../teacher/entities/teacher.entity";
@@ -40,22 +39,40 @@ export class UserService {
         }
     }
 
-    async signup(SignUpDto: SignUpDto) {
+    async signup(SignUpDto) {
+
         try {
-            const repository = SignUpDto.user ? this.teacherRepository : this.studentRepository
-            const user: any = await repository.save({
-                ...SignUpDto,
-                avatar_color: "#" + Math.floor(Math.random() * 16777215).toString(16),
-                classes: []
-            })
-            if (!user) {
-                throw new NotFoundException()
+            let user
+            if(SignUpDto.user){
+
+                const user  = await this.teacherRepository.save({
+                    ...SignUpDto,
+                    avatar_color: "#" + Math.floor(Math.random() * 16777215).toString(16),
+                    classes: []
+                });
             }
+            else {
+
+                const user  = await this.studentRepository.save({
+                    ...SignUpDto,
+                    avatar_color: "#" + Math.floor(Math.random() * 16777215).toString(16),
+                    classes: []
+                });
+            }
+
+
+            if (!user) {
+                throw new NotFoundException();
+            }
+
             user.password = user.password.length
-            user.user = SignUpDto.user
-            return user
+            user.user = SignUpDto.user;
+            return user;
         } catch (e) {
-            return e.sqlMessage ?? e
+            // Handle and log the error appropriately
+            console.error(e);
+            throw new Error('An error occurred during signup.');
         }
     }
 }
+

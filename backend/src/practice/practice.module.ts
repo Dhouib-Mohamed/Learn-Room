@@ -16,6 +16,7 @@ import {Teacher} from "../teacher/entities/teacher.entity";
     TypeOrmModule.forFeature([Teacher]),
     CourseModule
   ],
+  exports: [PracticeService],
   controllers: [PracticeController],
   providers: [PracticeService]
 })

@@ -11,6 +11,7 @@ import {Teacher} from "../teacher/entities/teacher.entity";
 @Module({
     controllers: [TaskController],
     providers: [TaskService],
+    exports: [TaskService],
     imports: [
         TypeOrmModule.forFeature([Task]),
         TypeOrmModule.forFeature([Course]),
