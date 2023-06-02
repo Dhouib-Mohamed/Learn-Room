@@ -1,12 +1,12 @@
-import { Button, Flex, Modal, ModalContent, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import {Button, Flex, Modal, ModalContent, ModalOverlay, useDisclosure} from "@chakra-ui/react";
 import Course from "../components/Course";
 import EmptyStatePlaceholder from "../components/EmptyStatePlaceholder";
 import CourseModal from "../modals/course";
-import { useHistory } from 'react-router-dom';
-import { get, post } from "../helpers/helpers";
-import { useContext, useEffect, useState } from "react";
-import { getItem } from "../../utils/localStorage";
-import { ErrorContext } from "../context/error";
+import {useHistory} from 'react-router-dom';
+import {get, post} from "../helpers/helpers";
+import {useContext, useEffect, useState} from "react";
+import {getItem} from "../../utils/localStorage";
+import {ErrorContext} from "../context/error";
 
 
 const CourseList = ({ id }) => {
@@ -20,7 +20,6 @@ const CourseList = ({ id }) => {
         const result = await get("classroom/course/" + id,setErrorModal)
         console.log("courselist", result)
         setCourses(result)
-
     }
 
     useEffect(() => {
@@ -43,13 +42,13 @@ const CourseList = ({ id }) => {
     return (
         <>
             {courses.length > 0 ?
-                <Flex direction={"column"}>
+                <Flex direction={"column"} marginTop={10}>
                     {courses?.map((course) => (
-                        <div style={{marginBottom:"10px"}}>
+                        <div style={{marginBottom: "10px"}}>
                             <Course
                                 key={course.id}
                                 course={course}
-                                classroomId={id} /></div>
+                                classroomId={id}/></div>
                     ))}
                 </Flex>
                 : <EmptyStatePlaceholder user={getItem("user").user ? "teacher" : "student"} type={"course"} />}

@@ -8,6 +8,7 @@ import {
     FormErrorMessage,
     FormLabel,
     IconButton,
+    Input,
     Menu,
     MenuButton,
     MenuItem,
@@ -34,7 +35,13 @@ function AssignmentDetails() {
     const [update, setUpdate] = useState(true)
     const [submit, setSubmit] = useState({content: ""})
     const {isOpen, onOpen, onClose} = useDisclosure();
-    const [assignment, setAssignment] = useState({name: "", content: "", deadline: "", teacher: {}})
+    const [assignment, setAssignment] = useState({
+        name: "",
+        content: "",
+        deadline: "",
+        teacher: {},
+        responseAssignments: []
+    })
     const history = useHistory();
 
     const getAssignment = async () => {
@@ -46,8 +53,8 @@ function AssignmentDetails() {
         setSubmit(result)
     }
     useEffect(() => {
-        getAssignment(),
-            getResponseAssignment()
+        getAssignment();
+        getResponseAssignment()
     }, [update])
     const deleteAssignment = async () => {
         await remove("assignment/" + id,setErrorModal)
@@ -88,6 +95,8 @@ function AssignmentDetails() {
     function handleSubmit2() {
         submitAssignment()
     }
+
+    console.log("err:", assignment.responseAssignments)
 
     return (
         <>
@@ -131,11 +140,11 @@ function AssignmentDetails() {
                     <div style={{ width: "100%" }}>
                         <pre style={{ whiteSpace: "pre-wrap" }}>{assignment.content}</pre>
                     </div>
-                    {getItem("user").user ? null:
+                    {!getItem("user").user ?
                         <>
-                            <br />
+                            <br/>
                             <Formik
-                                initialValues={{content:submit.content}}
+                                initialValues={{content: submit.content}}
                                 onSubmit={handleSubmit2}
                                 validate={validateForm}
                             >
@@ -143,7 +152,7 @@ function AssignmentDetails() {
                                     <Form>
 
                                         <Field name="content">
-                                            {({field, form}) => (
+                                            {({form}) => (
                                                 <FormControl isInvalid={form.errors.content && form.touched.content}>
                                                     <FormLabel>Description</FormLabel>
                                                     <Textarea value={submit.content} onChange={(e) => {
@@ -166,20 +175,40 @@ function AssignmentDetails() {
                                 )}
                             </Formik>
 
-                        </>
-                        //change it
+                        </> :
+                        assignment.responseAssignments?.map((e) => <AssignmentResponse e={e}/>)
                     }
                 </Flex>
             </div>
-            <Footer />
+            <Footer/>
             <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
+                <ModalOverlay/>
                 <ModalContent>
-                    <AssignmentModal onClose={onClose} handleSubmit={handleSubmit} values={assignment} />
+                    <AssignmentModal onClose={onClose} handleSubmit={handleSubmit} values={assignment}/>
                 </ModalContent>
             </Modal>
         </>
     );
+}
+
+const AssignmentResponse = ({e}) => {
+    const [score, setScore] = useState(e.score)
+    const {setErrorModal} = useContext(ErrorContext);
+
+    const validate = async (id) => {
+        const result = await patch("response-assignment/validate/" + id, {score}, setErrorModal)
+    }
+    return (
+        <Flex margin={10}>
+            <div>{e.content}</div>
+            <Input value={score} onChange={(e) => {
+                setScore(+e.target.value)
+            }}></Input>
+            <Button onClick={() => {
+                validate(e.id)
+            }}>Validate</Button>
+        </Flex>
+    )
 }
 
 export default AssignmentDetails;
