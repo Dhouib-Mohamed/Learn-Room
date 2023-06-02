@@ -55,7 +55,7 @@ const post = async (url, body,setError) => {
         console.error('Error:', error.message);
     }
 }
-const patch = async (url, body,setError) => {
+const patch = async (url, body ,setError) => {
     try {
         const response = await fetch(
             BASE_URL + url,

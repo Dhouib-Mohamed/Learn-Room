@@ -15,13 +15,13 @@ import {
     ModalOverlay,
     useDisclosure
 } from "@chakra-ui/react";
-import { useHistory, useParams } from 'react-router-dom';
-import { getItem } from "../../utils/localStorage";
-import { AiOutlineMore } from "react-icons/ai";
-import { useContext, useEffect, useState } from "react";
-import { get, patch, remove } from "../helpers/helpers";
+import {useHistory, useParams} from 'react-router-dom';
+import {getItem} from "../../utils/localStorage";
+import {AiOutlineMore} from "react-icons/ai";
+import {useContext, useEffect, useState} from "react";
+import {get, patch, remove} from "../helpers/helpers";
 import TaskModal from "../modals/task";
-import { ErrorContext } from '../context/error';
+import {ErrorContext} from '../context/error';
 
 function TaskDetails() {
     let { id } = useParams();
@@ -29,12 +29,24 @@ function TaskDetails() {
     console.log(id)
     const [update, setUpdate] = useState(false)
     const {isOpen, onOpen, onClose} = useDisclosure();
+    const [submit, setSubmit] = useState({completed:false}) ;
     const [task, setTask] = useState({name: "", content: "", deadline: "", teacher: {}})
     const history = useHistory();
+
+
     const getCourse = async () => {
         const result = await get("task/" + id,setErrorModal)
         setTask(result)
     }
+    const getResponseTask = async () => {
+        const result = await get("response-task/" + id + "/"+ getItem("user").id ,setErrorModal)
+        setSubmit(result)
+    }
+    console.log("submit : ", submit)
+    useEffect(() => {
+        getResponseTask()
+        console.log("1")
+    }, [submit])
     useEffect(() => {
         getCourse()
     }, [update])
@@ -46,15 +58,26 @@ function TaskDetails() {
     const editTask = async (data) => {
         const result = await patch("task/" + id, data,setErrorModal)
         console.log("res:", result)
+        console.log(3)
         onClose();
         setUpdate(!update)
     }
 
     const handleSubmit = (values) => {
-
+        console.log(2)
         editTask(values)
 
     };
+    const submitTask = async () => {
+
+        const result = await patch("response-task/" + submit?.id ,{} ,setErrorModal)
+        console.log("res:", result)
+        onClose();
+        setSubmit(result)
+    }
+
+
+
     return (
         <>
             <Flex style={{ minHeight: "89vh", }}>
@@ -99,8 +122,9 @@ function TaskDetails() {
                         <>
                             <Divider width="100%" my={4} borderColor={"#A6A6A6"} borderWidth="0.75px" />
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: "center" }}>
-                                <TaskButton />
-                            </div></>
+                                <TaskButton handleChange={submitTask}  completed={submit?.completed} />
+                            </div>
+                        </>
                     }
                 </Flex>
             </Flex>
@@ -116,3 +140,5 @@ function TaskDetails() {
 }
 
 export default TaskDetails;
+
+

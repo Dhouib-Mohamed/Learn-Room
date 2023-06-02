@@ -18,14 +18,14 @@ import {
     Textarea,
     useDisclosure
 } from "@chakra-ui/react";
-import { getItem } from "../../utils/localStorage";
-import { AiOutlineMore } from "react-icons/ai";
-import { useContext, useEffect, useState } from "react";
-import { get, patch, remove } from "../helpers/helpers";
+import {getItem} from "../../utils/localStorage";
+import {AiOutlineMore} from "react-icons/ai";
+import {useContext, useEffect, useState} from "react";
+import {get, patch, remove} from "../helpers/helpers";
 import AssignmentModal from "../modals/assignment";
-import { useHistory, useParams } from 'react-router-dom';
-import { Formik, Form, Field } from 'formik';
-import { ErrorContext } from '../context/error';
+import {useHistory, useParams} from 'react-router-dom';
+import {Field, Form, Formik} from 'formik';
+import {ErrorContext} from '../context/error';
 
 
 function AssignmentDetails() {
@@ -93,7 +93,7 @@ function AssignmentDetails() {
     }
 
     function handleSubmit2(values) {
-        submitAssignment(values)
+        submitAssignment({ content: values.content })
     }
 
     return (

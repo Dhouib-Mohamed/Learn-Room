@@ -22,7 +22,11 @@ export class ResponseTaskService extends GenericService<ResponseTask> {
         try {
             const task = await this.TaskService.findOne(idTask);
             const student = await this.StudentService.findOne(idStudent)
-            return await this.responseTaskRepository.findOneBy({student, task})
+            const response =  await this.responseTaskRepository.findOneBy({student, task})
+            if(response){
+                return response
+            }
+            return await this.responseTaskRepository.save({completed:false, task , student})
 
         } catch (e) {
             return e.sqlmessage ?? e;
