@@ -43,9 +43,11 @@ export class UserService {
 
         try {
             let user
+
+            console.log(SignUpDto)
             if(SignUpDto.user){
 
-                const user  = await this.teacherRepository.save({
+                 user  = await this.teacherRepository.save({
                     ...SignUpDto,
                     avatar_color: "#" + Math.floor(Math.random() * 16777215).toString(16),
                     classes: []
@@ -53,7 +55,7 @@ export class UserService {
             }
             else {
 
-                const user  = await this.studentRepository.save({
+              user  = await this.studentRepository.save({
                     ...SignUpDto,
                     avatar_color: "#" + Math.floor(Math.random() * 16777215).toString(16),
                     classes: []
