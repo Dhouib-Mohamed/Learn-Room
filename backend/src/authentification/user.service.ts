@@ -6,8 +6,8 @@ import {Teacher} from "../teacher/entities/teacher.entity";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {Student} from "../student/entities/student.entity";
+import {ClassroomService} from "../classroom/classroom.service";
 import * as bcrypt from 'bcrypt';
-import { Console } from 'console';
 
 // const salt= bcrypt.genSalt();
 // console.log(salt)
@@ -17,6 +17,7 @@ export class UserService {
     constructor(
         private readonly teacherService: TeacherService,
         private readonly studentService: StudentService,
+        private readonly classService: ClassroomService,
         @InjectRepository(Teacher)
         private teacherRepository: Repository<Teacher>,
         @InjectRepository(Student)
@@ -35,7 +36,7 @@ export class UserService {
                 const hashedMdp = await bcrypt.hash(SignInDto.password, process.env.salt);
                 if (hashedMdp !== teacher.password) {
                     throw new NotFoundException(`Incorrect Password`);
-                } 
+                }
                 // teacher.password = teacher.password.length
 
                 return {...teacher, user: true}
@@ -97,6 +98,32 @@ export class UserService {
             return user;
         } catch (e) {
             console.log("erreur")
+            return (e)
+        }
+    }
+
+    async getAll(id, type) {
+        try {
+            let classes
+            if (type) {
+                const teacher = await this.teacherService.findOne(id)
+                classes = await this.classService.findByCriteria({teacher: teacher})
+            } else {
+                const student = await this.studentService.findOne(id)
+                classes = await this.classService.findByCriteria({students: student})
+            }
+            console.log(classes)
+            let courses = []
+            let tasks = []
+            let assignments = []
+            for (const e of classes) {
+                courses = [...courses, ...(await this.classService.getAllCourses(e.id))]
+                tasks = [...tasks, ...(await this.classService.getAllTasks(e.id))]
+                assignments = [...assignments, ...(await this.classService.getAllAssignments(e.id))]
+            }
+            console.log()
+            return {courses, tasks, assignments}
+        } catch (e) {
             return (e)
         }
     }
