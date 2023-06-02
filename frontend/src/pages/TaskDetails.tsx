@@ -59,10 +59,8 @@ function TaskDetails() {
         <>
             <Flex style={{ minHeight: "89vh", }}>
                 <Header />
-                <br />
-                <br />
                 <Flex style={{
-                    flexDirection: "column", width: "100%", justifyContent: "center", margin: "40px 100px"
+                    flexDirection: "column", width: "100%", margin: "30px 100px"
                 }}>
 
                     <Flex flexDirection={"row"}>

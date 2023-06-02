@@ -9,7 +9,7 @@ export class ResponseAssignmentController {
 
 
 
-  @Get(':id/idstudent')
+  @Get(':id/:idstudent')
   getTask(@Param('id') id , @Param('isstudent') idstudent) {
     return this.responseAssignmentService.getResponse(id,idstudent);
   }
