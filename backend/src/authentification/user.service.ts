@@ -30,8 +30,7 @@ export class UserService {
             }
             throw new NotFoundException("Email Not Found")
         } catch (e) {
-            console.log(e)
-            return e.sqlMessage ?? e
+            return (e)
         }
     }
 
@@ -68,9 +67,7 @@ export class UserService {
             user.user = SignUpDto.user;
             return user;
         } catch (e) {
-            // Handle and log the error appropriately
-            console.error(e);
-            throw new Error('An error occurred during signup.');
+            return (e)
         }
     }
 }
