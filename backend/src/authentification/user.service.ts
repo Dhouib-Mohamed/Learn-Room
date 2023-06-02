@@ -15,13 +15,14 @@ export class UserService {
         @InjectRepository(Teacher)
         private teacherRepository: Repository<Teacher>,
         @InjectRepository(Student)
-        private classRepository: Repository<Student>,
+        private studentRepository: Repository<Student>,
     ) {
     }
 
     async signIn(SignInDto: SignInDto) {
         try {
-            const teacher: any = await this.teacherService.findOneByCriteria({email: SignInDto.email})
+            const teacher: any = await this.teacherRepository.findOneBy({email: SignInDto.email})
+            console.log(teacher)
             if (teacher) {
                 if (teacher.password !== SignInDto.password) {
                     throw new NotFoundException("Password Not Found")
@@ -29,7 +30,9 @@ export class UserService {
                 teacher.password = teacher.password.length
                 return {...teacher, user: true}
             }
-            const student: any = await this.studentService.findOneByCriteria({email: SignInDto.email})
+            console.log(teacher)
+            const student: any = await this.studentRepository.findOneBy({email: SignInDto.email})
+            console.log(student)
             if (student) {
                 if (student.password !== SignInDto.password) {
                     throw new NotFoundException("Password Not Found")
@@ -59,14 +62,12 @@ export class UserService {
                     classes: []
                 });
             } else {
-
                 user = await this.studentService.create({
                     ...SignUpDto,
                     avatar_color: "#" + Math.floor(Math.random() * 16777215).toString(16),
                     classes: []
                 });
             }
-
 
             if (!user) {
                 throw new NotFoundException();
