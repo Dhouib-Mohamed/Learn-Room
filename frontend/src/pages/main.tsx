@@ -39,7 +39,7 @@ export default function Main() {
             <ClassroomList classrooms={classroom}/>
             {getItem("user").user ?
                 <Button rounded={"full"} onClick={onOpen1} size={"lg"} style={{
-                    backgroundColor: "#20b2aa",
+                    backgroundColor: "#66B0F0",
                     color: "white",
                     marginLeft: "45%",
                     marginTop: "20px",
@@ -51,7 +51,7 @@ export default function Main() {
                     marginLeft: "45%",
                     marginTop: "20px",
                     marginBottom: "50px"
-                }}>Add Classroom</Button>
+                }}>enroll into Classroom</Button>
             }
 
             <Modal isOpen={isOpen1} onClose={onClose1}>

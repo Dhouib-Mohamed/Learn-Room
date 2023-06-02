@@ -20,8 +20,15 @@ export class ResponseAssignmentService extends GenericService<ResponseAssignment
     getResponse = async (idAssignment, idStudent) => {
         try {
             const assignment = await this.PracticeService.findOne(idAssignment);
-            const student = await this.StudentService.findOne(idStudent)
-            return await this.responsePracticeRepository.findOneBy({student, assignment})
+            console.log(assignment)
+            const student = await this.StudentService.findOne(idStudent);
+            console.log(student)
+            const response = await this.responsePracticeRepository.findOneBy({student, assignment})
+           if(response){
+               return response
+           }
+           return await this.responsePracticeRepository.save({content:"", assignment , student})
+
 
         } catch (e) {
             return e.sqlmessage ?? e;

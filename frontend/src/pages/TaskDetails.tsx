@@ -15,11 +15,11 @@ import {
     ModalOverlay,
     useDisclosure
 } from "@chakra-ui/react";
-import { useHistory, useParams } from 'react-router-dom';
-import { getItem } from "../../utils/localStorage";
-import { AiOutlineMore } from "react-icons/ai";
-import { useEffect, useState } from "react";
-import { get, patch, remove } from "../helpers/helpers";
+import {useHistory, useParams} from 'react-router-dom';
+import {getItem} from "../../utils/localStorage";
+import {AiOutlineMore} from "react-icons/ai";
+import {useEffect, useState} from "react";
+import {get, patch, remove} from "../helpers/helpers";
 import TaskModal from "../modals/task";
 
 function TaskDetails() {
@@ -57,10 +57,8 @@ function TaskDetails() {
         <>
             <Flex style={{ minHeight: "89vh", }}>
                 <Header />
-                <br />
-                <br />
                 <Flex style={{
-                    flexDirection: "column", width: "100%", justifyContent: "center", margin: "40px 100px"
+                    flexDirection: "column", width: "100%", margin: "30px 100px"
                 }}>
 
                     <Flex flexDirection={"row"}>

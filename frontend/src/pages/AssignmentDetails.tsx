@@ -8,41 +8,48 @@ import {
     FormErrorMessage,
     FormLabel,
     IconButton,
-    Input,
     Menu,
     MenuButton,
     MenuItem,
     MenuList,
     Modal,
-    ModalBody,
     ModalContent,
-    ModalFooter,
     ModalOverlay,
     Textarea,
     useDisclosure
 } from "@chakra-ui/react";
-import { getItem } from "../../utils/localStorage";
-import { AiOutlineMore } from "react-icons/ai";
-import { useEffect, useState } from "react";
-import { get, patch, remove } from "../helpers/helpers";
+import {getItem} from "../../utils/localStorage";
+import {AiOutlineMore} from "react-icons/ai";
+import {useEffect, useState} from "react";
+import {get, patch, remove} from "../helpers/helpers";
 import AssignmentModal from "../modals/assignment";
-import { useHistory, useParams } from 'react-router-dom';
-import { Formik, Form, Field } from 'formik';
+import {useHistory, useParams} from 'react-router-dom';
+import {Field, Form, Formik} from 'formik';
 
 
 function AssignmentDetails() {
     let { id } = useParams();
     console.log(id)
     const [update, setUpdate] = useState(true)
+    const [submit, setSubmit] = useState({})
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [assignment, setAssignment] = useState({ name: "", content: "", deadline: "", teacher: {} })
     const history = useHistory();
+
+
+
     const getAssignment = async () => {
         const result = await get("assignment/" + id)
         setAssignment(result)
     }
+    const getResponseAssignment = async () => {
+        const result = await get("response-assignment/" + id + "/"+ getItem("user").id )
+        console.log("resuklt assign",result)
+        setSubmit(result)
+    }
     useEffect(() => {
-        getAssignment()
+        getAssignment(),
+            getResponseAssignment()
     }, [update])
     const deleteAssignment = async () => {
         await remove("assignment/" + id)
@@ -70,15 +77,27 @@ function AssignmentDetails() {
         }
         return errors;
     };
-    
+
+
+    const submitAssignment = async (data) => {
+
+        const result = await patch("response-assignment/" + submit.id , data)
+        console.log("res:", result)
+        onClose();
+        setSubmit(result)
+    }
+
+    function handleSubmit2(values) {
+        submitAssignment(values)
+    }
+
     return (
         <>
             <div style={{ minHeight: "89vh", }}>
                 <Header />
 
                 <Flex style={{
-                    flexDirection: "column", justifyContent: "center", margin: "20px 100px"
-                }}>
+                    flexDirection: "column", margin: "0px 100px" }}>
 
                     <Flex flexDirection={"row"}>
                         <div style={{ width: "99%" }}>
@@ -117,8 +136,8 @@ function AssignmentDetails() {
                         <>
                             <br />
                             <Formik
-                                initialValues={{content:""}}
-                                onSubmit={handleSubmit}
+                                initialValues={{content:submit.content}}
+                                onSubmit={handleSubmit2}
                                 validate={validateForm}
                             >
                                 {(formikProps) => (
@@ -133,30 +152,18 @@ function AssignmentDetails() {
                                                     </FormControl>
                                                 )}
                                             </Field>
-                                        
-                                        {/* <ModalFooter>
-                                            <Button
-                                                type="submit"
-                                                isLoading={formikProps.isSubmitting}
-                                                rounded="full" colorScheme="custom" color="#FFF" bgColor="#66B0F0"
-                                            >
-                                                Submit
-                                            </Button>
-                                            <Button onClick={onClose} rounded="full" colorScheme="custom" color="grey" bgColor="#FFF" borderWidth="1px" borderColor="grey" ml={4}>
-                                                Cancel
-                                            </Button>
-                                        </ModalFooter> */}
+                                        <br />
+                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: "center" }}>
+                                            <Button colorScheme="custom" color="grey"
+                                                    bgColor="#FFF"
+                                                    borderWidth="1px"
+                                                    borderColor="grey" rounded="full" type="submit" my="4" >Submit homework</Button>
+                                        </div>
+
                                     </Form>
                                 )}
                             </Formik>
-                            <br />
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: "center" }}>
-                                <Button colorScheme="custom" color="grey"
-                                    bgColor="#FFF"
-                                    borderWidth="1px"
-                                    borderColor="grey" rounded="full" type="submit" my="4" onClick={() => {
-                                    }}>Submit homework</Button>
-                            </div>
+
                         </> 
                         //change it 
                         }
