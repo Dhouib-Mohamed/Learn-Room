@@ -1,4 +1,4 @@
-import i1 from "../assets/science.jpeg";
+import i1 from "../assets/math.jpg";
 import i3 from "../assets/science.jpeg";
 import i5 from "../assets/conception-elements-biologie_1300-177.webp";
 import i7 from "../assets/finance.jpg";
