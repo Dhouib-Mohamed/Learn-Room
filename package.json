@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "all:start": "concurrently \"cd backend && nest start\" \"cd frontend && npm run dev\"",
+    "all:start": "concurrently \"cd backend && npm run backend:run\" \"cd frontend && npm run frontend:run\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {

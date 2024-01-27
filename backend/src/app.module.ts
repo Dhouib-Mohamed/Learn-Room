@@ -25,16 +25,16 @@ dotenv.config();
 @Module({
     imports: [ClassroomModule, CourseModule, PracticeModule, UserModule, TaskModule, TeacherModule, ResponseTaskModule , ResponseAssignmentModule ,
         TypeOrmModule.forRoot({
-            type: "mysql",
+            type: 'postgres', // Set the database type to PostgreSQL
             host: process.env.DB_HOST,
             port: parseInt(process.env.DB_PORT),
             username: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
             database: process.env.DB_NAME,
-               // synchronize: true,
-            autoLoadEntities : true ,
-            entities: [Teacher, Student, Course, Classroom, Practice, ResponseTask , ResponseAssignment]
-        })
+            autoLoadEntities: true,
+            // synchronize: true, // You can enable synchronization for development, but disable it in production
+            entities: [Teacher, Student, Course, Classroom, Practice, ResponseTask, ResponseAssignment],
+        }),
     ],
   controllers: [AppController],
   providers: [AppService],
